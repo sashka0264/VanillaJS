@@ -67,36 +67,6 @@
 /* Контрл шифт / */
 // Контрл /  
 
-let money = +prompt("Ваш бюджет на месяц?", ''),
-    time = prompt("Введите дату в формате YYYY-MM-DD", ''),
-    a, b;
-
-let appData = {
-    budget: money,
-    timeData: time,
-    expenses: {},
-    optionalExpenses: {},
-    income: [],
-    savings: false
-};
-
-for (let i=0; i < 1; i++) {
-
-    a = prompt("Введите обязательную статью расходов в этом месяце", ''),
-    b = prompt("Во сколько обойдется?", '');
-
-    if ( (typeof(a))=== 'string' && (typeof(b))=== 'string' && 
-        (typeof(a)) != null && (typeof(b)) != null && 
-        a != '' && b != '' && a.length < 50) {
-
-        console.log("done");
-        appData.expenses.a1 = a;
-        appData.expenses.a2 = b; 
-    } else {
-        i--;
-    }
-};
-
 
 // let i=0;
 
@@ -145,6 +115,38 @@ for (let i=0; i < 1; i++) {
 // }
 
 // while (i < 1);
+
+let money = +prompt("Ваш бюджет на месяц?", ''),
+    time = prompt("Введите дату в формате YYYY-MM-DD", ''),
+    a, b;
+
+let appData = {
+    budget: money,
+    timeData: time,
+    expenses: {},
+    optionalExpenses: {},
+    income: [],
+    savings: false
+};
+
+for (let i=0; i < 1; i++) {
+
+    a = prompt("Введите обязательную статью расходов в этом месяце", ''),
+    b = prompt("Во сколько обойдется?", '');
+
+    if ( (typeof(a))=== 'string' && (typeof(b))=== 'string' && 
+        (typeof(a)) != null && (typeof(b)) != null && 
+        a != '' && b != '' && a.length < 50) {
+
+        console.log("done");
+        appData.expenses.a1 = a;
+        appData.expenses.a2 = b; 
+    } else {
+        i--;
+    }
+};
+
+
 
 
 appData.moneyPerDay = money / 30;
