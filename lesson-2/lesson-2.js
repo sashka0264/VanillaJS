@@ -139,9 +139,11 @@ for (let i=0; i < 1; i++) {
         a != '' && b != '' && a.length < 50) {
 
         console.log("done");
-        appData.expenses.a1 = a;
-        appData.expenses.a2 = b; 
+        appData.expenses[a] = b;
     } else {
+        alert("Ваши ответы не должны быть пустыми, " +
+        "больше 50 символов, а числовое значение суммы " +
+        "расходов должно быть больше 0");
         i--;
     }
 };
