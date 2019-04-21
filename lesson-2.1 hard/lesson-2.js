@@ -6,7 +6,7 @@ let week = ["Monday", "Tuesday", "Wednesday", "Thursday",
 
     
 
-for (let a = 0; a < 7;) {
+for (let a = 0; a < 7; a++) {
     if (a < 5) {
         document.write(week[a] + "<br>");
     }
@@ -17,7 +17,6 @@ for (let a = 0; a < 7;) {
     if (a == 6) {
         document.write("<b><i>" + week[a] + "</i></b><br>");
     }
-    a++;
 }
 
 
