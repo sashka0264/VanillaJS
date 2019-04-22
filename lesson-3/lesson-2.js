@@ -192,14 +192,10 @@ function checkSavings() {
 checkSavings();
 
 function chooseOptExpenses() {
-    appData.optionalExpenses[1] = 
-    prompt("Статья необязательных расходов?");
-
-    appData.optionalExpenses[2] = 
-    prompt("Статья необязательных расходов?");
-
-    appData.optionalExpenses[3] = 
-    prompt("Статья необязательных расходов?");
+    for (let i = 1; i < 4; i++) {
+        appData.optionalExpenses[i] = 
+        prompt("Статья необязательных расходов?");
+    }
 }
 
-// chooseOptExpenses();
+chooseOptExpenses();
