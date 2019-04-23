@@ -42,7 +42,7 @@ function check() {
     let text;
     for (let i = 0; i < 1; i++) {
         text = prompt("Введите что-нибудь");
-        if (typeof (text) == "string") {} else {
+        if (!isNaN(text) || text === null) {
             alert("Аргумент передан не как строка");
             i--;
         }
