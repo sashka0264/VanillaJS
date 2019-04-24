@@ -196,13 +196,17 @@ let appData = {
         }
         for (let i = 0; i < 1; i++) {
             let others = prompt("Может что-то еще? (только одно)", "");
-            // ВОТ ТУТ У МЕНЯ ВОПРОС - КАК СДЕЛАТЬ ТАК, ЧТОБЫ МОЖНО БЫЛО
-            // ВВЕСТИ НЕ ТОЛЬКО 1 И ПРОИСХОДИЛА СОРТИРОВКА?
+
             if (!isNaN(others) || others === null) {
                 alert("Аргумент передан не как строка");
                 i--;
+
             } else {
-                appData.income.push(others);
+
+                others = others.split(", ").map(function(elem, i, arr) {
+                    appData.income.push(elem);
+                });
+
             }
 
         }
@@ -215,7 +219,20 @@ let appData = {
 
     showAll: function() {
         for (let key in appData) {
-            console.log("Свойство " + key + " имеет значение " + appData[key]);
+            console.log("Свойство " + key);
         }
+    },
+
+    init: function() {
+        appData.chooseExpenses();
+        appData.detectDayBudget();
+        appData.detectLevel();
+        appData.checkSavings();
+        appData.chooseOptExpenses();
+        appData.chooseIncome();
+        appData.showAll();
     }
 };
+
+appData.init();
+
