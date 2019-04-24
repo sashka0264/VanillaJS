@@ -196,7 +196,8 @@ let appData = {
         }
         for (let i = 0; i < 1; i++) {
             let others = prompt("Может что-то еще? (только одно)", "");
-
+            // ВОТ ТУТ У МЕНЯ ВОПРОС - КАК СДЕЛАТЬ ТАК, ЧТОБЫ МОЖНО БЫЛО
+            // ВВЕСТИ НЕ ТОЛЬКО 1 И ПРОИСХОДИЛА СОРТИРОВКА?
             if (!isNaN(others) || others === null) {
                 alert("Аргумент передан не как строка");
                 i--;
@@ -206,7 +207,7 @@ let appData = {
 
         }
         appData.income.sort();
-        
+
         appData.income.forEach(function(item, i) {
             alert("Способы доп. заработка: " + (i+1) + " - " + item );
         });
