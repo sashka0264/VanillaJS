@@ -31,30 +31,39 @@ function main() {
         expenses4 = document.querySelector("#expenses_4"),
         money, time, a, b;
 
-
     expensesItemBtn.disabled = true;
     expensesItemBtn.style.backgroundImage = "none";
-
     optionalexpensesBtn.disabled = true;
     optionalexpensesBtn.style.backgroundImage = "none";
-
     countBudgetBtn.disabled = true;
     countBudgetBtn.style.backgroundImage = "none";
-
-    
-
     chooseSum.disabled = true;
     choosePercent.disabled = true;
-
     optionalExpenses1.disabled = true;
     optionalExpenses2.disabled = true;
     optionalExpenses3.disabled = true;
-
     expenses1.disabled = true;
     expenses2.disabled = true;
     expenses3.disabled = true;
     expenses4.disabled = true;
 
+    expenses2.addEventListener('input', function () {
+        expenses2.value = expenses2.value.replace(/[^0-9+]/, '');
+    });
+    expenses4.addEventListener('input', function () {
+        expenses4.value = expenses4.value.replace(/[^0-9+]/, '');
+    });
+
+    
+    optionalExpenses1.addEventListener('input', function () {
+        optionalExpenses1.value = optionalExpenses1.value.replace(/[^а-я]/, '');
+    });
+    optionalExpenses2.addEventListener('input', function () {
+        optionalExpenses2.value = optionalExpenses2.value.replace(/[^а-я]/, '');
+    });
+    optionalExpenses3.addEventListener('input', function () {
+        optionalExpenses3.value = optionalExpenses3.value.replace(/[^а-я]/, '');
+    });
 
     expensesItem.forEach(function (item, i, array) {
 
@@ -64,11 +73,11 @@ function main() {
                 (array[2].value != "" && array[3].value != "")) {
 
                 expensesItemBtn.style.backgroundImage =
-                "linear-gradient(336deg,#ffbd75,#ff964b),linear-gradient(#fff,#fff)"
+                    "linear-gradient(336deg,#ffbd75,#ff964b),linear-gradient(#fff,#fff)"
                 expensesItemBtn.disabled = false;
 
                 countBudgetBtn.style.backgroundImage =
-                "linear-gradient(336deg,#ffbd75,#ff964b),linear-gradient(#fff,#fff)"
+                    "linear-gradient(336deg,#ffbd75,#ff964b),linear-gradient(#fff,#fff)"
                 countBudgetBtn.disabled = false;
             } else {
                 expensesItemBtn.disabled = true;
@@ -88,7 +97,7 @@ function main() {
                 array[2].value != "") {
 
                 optionalexpensesBtn.style.backgroundImage =
-                "linear-gradient(336deg,#ffbd75,#ff964b),linear-gradient(#fff,#fff)";
+                    "linear-gradient(336deg,#ffbd75,#ff964b),linear-gradient(#fff,#fff)";
                 optionalexpensesBtn.disabled = false;
             } else {
                 optionalexpensesBtn.disabled = true;
@@ -98,12 +107,14 @@ function main() {
     });
 
 
+    
+
 
     startBtn.addEventListener("click", function () {
         chooseIncome.disabled = false;
         savings.disabled = false;
 
-        
+
 
         optionalExpenses1.disabled = false;
         optionalExpenses2.disabled = false;
@@ -130,7 +141,7 @@ function main() {
         yearValue.value = new Date(Date.parse(time)).getFullYear();
         monthValue.value = new Date(Date.parse(time)).getMonth() + 1;
         dayValue.value = new Date(Date.parse(time)).getDate();
-        
+
         startBtn.disabled = true;
         startBtn.style.backgroundImage = "none";
     });
@@ -166,11 +177,13 @@ function main() {
 
     optionalexpensesBtn.addEventListener("click", function () {
 
+        optionalexpensesValue.textContent = "";
+
         for (let i = 0; i < optionalexpensesItem.length; i++) {
             let opt = optionalexpensesItem[i].value;
 
             appData.optionalExpenses[i] = opt;
-            optionalexpensesValue.textContent = appData.optionalExpenses[i] + " ";
+            optionalexpensesValue.textContent += appData.optionalExpenses[i] + " ";
         }
 
     });
