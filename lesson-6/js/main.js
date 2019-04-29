@@ -46,6 +46,7 @@ function main() {
     expenses2.disabled = true;
     expenses3.disabled = true;
     expenses4.disabled = true;
+    savings.disabled = true;
 
     expenses2.addEventListener('input', function () {
         expenses2.value = expenses2.value.replace(/[^0-9+]/, '');
@@ -54,7 +55,7 @@ function main() {
         expenses4.value = expenses4.value.replace(/[^0-9+]/, '');
     });
 
-    
+
     optionalExpenses1.addEventListener('input', function () {
         optionalExpenses1.value = optionalExpenses1.value.replace(/[^а-я]/, '');
     });
@@ -107,7 +108,7 @@ function main() {
     });
 
 
-    
+
 
 
     startBtn.addEventListener("click", function () {
@@ -128,11 +129,22 @@ function main() {
 
         time = prompt("Введите дату в формате YYYY-MM-DD", '');
         money = +prompt("Ваш бюджет на месяц?", '');
+        let times = time.split("-");
+
+        while (time == "" || time == null || times.length != 3 ||
+            times[1] < 1 || times[1] > 13 || times[2] < 1 || times[2] > 32 ||
+            times[1] == null || times[2] == null) {
+
+            time = prompt("Введите корректную дату в формате YYYY-MM-DD", "");
+            times = time.split("-");
+        }
 
         while (isNaN(money) || money == "" || money == null) {
             money = +prompt("Ваш бюджет на месяц? " +
                 "Введите корректный ответ.", '');
         }
+
+
 
         appData.budget = money;
         appData.timeData = time;
@@ -184,8 +196,14 @@ function main() {
 
             appData.optionalExpenses[i] = opt;
             optionalexpensesValue.textContent += appData.optionalExpenses[i] + " ";
-        }
 
+
+
+
+
+        }
+        optionalexpensesValue.textContent = optionalexpensesValue.textContent.trim();
+        optionalexpensesValue.textContent = optionalexpensesValue.textContent.replace(/ /g, ", ");
     });
 
     countBudgetBtn.addEventListener("click", function () {
@@ -221,7 +239,14 @@ function main() {
             appData.savings = false;
 
             chooseIncome.disabled = true;
-            savings.disabled = true;
+
+            chooseSum.disabled = true;
+            choosePercent.disabled = true;
+
+            chooseSum.value = "";
+            choosePercent.value = "";
+            monthsavingsValue.textContent = "";
+            yearsavingsValue.textContent = "";
         } else {
             appData.savings = true;
 
