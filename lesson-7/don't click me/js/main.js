@@ -21,7 +21,8 @@ function main() {
     // });
 
     let btn = document.querySelector("#btn"),
-        cube = document.querySelector("#cube");
+        cube = document.querySelector("#cube"),
+        box = document.querySelector("#box");
 
     function bemind() {
         let pos = 0;
@@ -59,7 +60,12 @@ function main() {
 
     }
 
-    
+    // window.addEventListener("click", function(event) {
+    //     console.log(event.target);
+
+    //     event.target.style.display = "none";
+    // });
+
     btn.addEventListener("click", bemind);
 }
 main();
