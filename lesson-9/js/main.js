@@ -1,21 +1,24 @@
 window.addEventListener("DOMContentLoaded", function () {
   // 'use strict';
+  // то что обсуждается в уроке, используется без "use strict"
 
-  // function User(name, id) {
-  //   this.name = name;
-  //   this.id = id;
-  //   this.human = true;
-  //   this.hello = function () {
-  //     console.log("hello " + this.name);
-  //   };
-  // }
+   
+  function User(name, id) {
+    this.name = name;
+    this.id = id;
+    this.human = true;
+    this.hello = function () {
+      console.log(`hello ${this.name}`);
+    };
+  }
 
   // User.prototype.exit = function(name) {
   //   console.log("Пользователь " + this.name + " ушел");
   // };
 
-  // let ivan = new User('Иван', 25),
-  //   alex = new User("Алекс", 20);
+
+  let ivan = new User('Иван', 25),
+    alex = new User("Алекс", 20);
 
   // console.log(User);
 
@@ -62,9 +65,7 @@ window.addEventListener("DOMContentLoaded", function () {
   //   console.log(this);
   //   // получаем обьект john, так как функция ссылается на него 
   //   console.log(this.name + surname);
-
   // }
-
   // console.log(sayName.call(user, "Smith"));
   // console.log(sayName.apply(user, ["Snow"]));
   // // с помощью этих двух методов мы можем насильно привязать контекст вызова
