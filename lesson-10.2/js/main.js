@@ -50,6 +50,7 @@ window.addEventListener("DOMContentLoaded", () => {
             arrow.classList.remove("on");
             formtwo.style.cssText = "visibility: hidden";
 
+            inputFirstCountry.value = "";
             inputFirstCountry.placeholder = "+375 (__) ___ __ __";
             inputSecondCountry.placeholder = "+7 (___) ___ __ __";
         } else {
@@ -58,6 +59,7 @@ window.addEventListener("DOMContentLoaded", () => {
             arrow.classList.remove("on");
             formtwo.style.cssText = "visibility: hidden";
 
+            inputFirstCountry.value = "";
             inputSecondCountry.placeholder = "+375 (__) ___ __ __";
             inputFirstCountry.placeholder = "+7 (___) ___ __ __";
         }
