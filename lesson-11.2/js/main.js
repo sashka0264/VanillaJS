@@ -27,11 +27,11 @@ window.addEventListener("DOMContentLoaded", function () {
             if (data.cars[i].category == "germany") {
 
               let newElement = document.createElement("div");
-              newElement.textContent = "ПРивет";
+              newElement.textContent = "Текст";
               
-              document.appendChild(newElement);
+              // document.appendChild(newElement);
               
-              console.log(data.cars[i].img);
+              console.log(data.cars[i]);
               
             }
           }
