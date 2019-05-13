@@ -4,7 +4,7 @@ window.addEventListener("DOMContentLoaded", function () {
     let del = document.querySelectorAll(y);
 
     for (let i = 0; i < del.length; i++) {
-      del[i].style.cssText = "display: none";
+      del[i].parentNode.removeChild(del[i]);
     }
   };
 
