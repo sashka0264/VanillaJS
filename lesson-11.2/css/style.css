@@ -7,9 +7,17 @@
   outline: none;
 }
 
-.inputStyle {
+.on {
   display: inline-block;
+}
+
+.off {
+  display: none;
+}
+
+.inputStyle {
   margin: 30px;
+  display: inline-block;
 }
 
 .box {
