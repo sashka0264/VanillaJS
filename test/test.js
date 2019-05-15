@@ -10,7 +10,6 @@ let result = arr.reduce(function(sum, elem) {
 
 // Сам тест
 
-
 let assert = require('chai').assert;
 
 
@@ -26,6 +25,6 @@ describe("arr", function() {
     it("Получаем сумму чисел массива", function() {
         assert.equal(result, 7);
     });
-})
+});
 // Сам тест 
 

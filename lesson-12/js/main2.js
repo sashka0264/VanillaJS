@@ -2,7 +2,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
     let drink = 0;
 
-
     function shoot(arrow) {
         console.log("Вы сделали выстрел...");
         let promise = new Promise(function (resolve, reject) {
@@ -23,7 +22,6 @@ window.addEventListener("DOMContentLoaded", function () {
         console.log("Вы проиграли");
     }
 
-
     function buyBeer() {
         console.log("Вам купили пиво");
     }
@@ -35,6 +33,7 @@ window.addEventListener("DOMContentLoaded", function () {
     shoot({})
         .then(mark => console.log("Вы попали в цель!"))
         .then(win)
+
         // если что-то пошло не так, есть метод catch
         .catch(loose);
 
