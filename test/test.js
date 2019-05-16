@@ -10,7 +10,7 @@ let result = arr.reduce(function(sum, elem) {
 
 // Сам тест
 
-let assert = require('chai').assert;
+// let assert = require('chai').assert;
 
 
 describe("sayName", function() {
