@@ -16,11 +16,11 @@
         <div class="modal_contact">
           <h3>Заполните форму и мы свяжемся с вами</h3>
           <div class="form">
-              <form action="#" class="form-inline contactform_select">
+              <form action="mail.php" method="POST" class="form-inline contactform_select">
                 <div class="input-group">
                   <div class="input-group-addon"><i class="fa fa-user " aria-hidden="true"></i>
                   </div>
-                  <input class="contactform_name form-control" type="text" placeholder="Ваше имя" required minlength="2" name="name">
+                  <input class="contactform_name form-control" type="text" placeholder="Ваше имя" required minlength="2" name="username">
                 </div>            
                 <div class="input-group">
                   <div class="input-group-addon contactform_phone"><i class="fa fa-phone" aria-hidden="true"></i></div>
@@ -29,7 +29,7 @@
                 <div class="input-group">
                   <div class="input-group-addon contactform_mail"><i class="fa fa-envelope" aria-hidden="true" ></i>
                   </div>
-                  <input class="contactform_mail form-control" type="email" placeholder="E-mail"  required name="mail">
+                  <input class="contactform_mail form-control" type="email" placeholder="E-mail"  required name="email">
                 </div>
                 <textarea cols="30" rows="3" placeholder="Сообщение" name="message"></textarea>
                 <div class="police center-block">
