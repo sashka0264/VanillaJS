@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       let elemLi = document.createElement("li");
       elemLi.innerHTML = alphabet[i];
-
+      check();
       elemUl.appendChild(elemLi);
       placeForABC.appendChild(elemUl);
     }
@@ -107,10 +107,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 
-  
 
 
-// CANVAS
+
+  // CANVAS
 
   let canvas = () => {
     let myStickman = document.querySelector("#stickman"),
@@ -124,19 +124,19 @@ window.addEventListener('DOMContentLoaded', () => {
     // указываем ширину линий в px
   };
   // Основные настройки canvas
-    
+
 
 
   const animate = () => {
     let drawMe = lives;
-    drawArray[drawMe]();
+    drawArray[drawMe](drawMe);
   };
 
 
 
   const head = () => {
     let myStickman = document.querySelector("#stickman"),
-        context = myStickman.getContext("2d");
+      context = myStickman.getContext("2d");
 
     context.beginPath();
 
@@ -145,11 +145,11 @@ window.addEventListener('DOMContentLoaded', () => {
     context.stroke();
     // отрисовка головы
   };
-  
+
 
   const draw = ($pathFromx, $pathFromy, $pathTox, $pathToy) => {
     let myStickman = document.querySelector("#stickman"),
-        context = myStickman.getContext("2d");
+      context = myStickman.getContext("2d");
 
     context.moveTo($pathFromx, $pathFromy);
     context.lineTo($pathTox, $pathToy);
@@ -187,31 +187,52 @@ window.addEventListener('DOMContentLoaded', () => {
   const rightLeg = () => {
     draw(60, 70, 100, 100);
   };
-  
+
   const leftLeg = () => {
     draw(60, 70, 20, 100);
   };
 
-  let drawArray = [rightLeg, leftLeg, rightArm, leftArm, torso, 
-    head, frame4, frame3, frame2, frame1];
-  
-
-// CANVAS
+  let drawArray = [rightLeg, leftLeg, rightArm, leftArm, torso,
+    head, frame4, frame3, frame2, frame1
+  ];
 
 
-  const Check = () => {
-    elemLi.addEventListener("click", () => {
-      let context = (this.innerHTML);
-      
-      this.classList.add("active");
+  // CANVAS
 
-      for (let i = 0; i < word.length; i++) {
-        // проверяем каждую букву слова на наличие нашей буквы
-        if (word[i] === context) {
-          invent[i].innerHTML = context;
+
+  const check = () => {
+
+    let elemLi = document.querySelectorAll("li");
+
+    elemLi.forEach((item) => {
+
+      item.addEventListener("click", (e) => {
+        // console.log(e.target)
+        let context = ((e.target).innerHTML);
+
+        (e.target).classList.add("active");
+
+        for (let i = 0; i < word.length; i++) {
+          // проверяем каждую букву слова на наличие нашей буквы
+          if (word[i] === context) {
+            invent[i].innerHTML = context;
+            counter += 1;
+          }
         }
-      }
+
+        let j = word.indexOf(context);
+        // проверяем наличие буквы в слове
+        if (j === -1) {
+          lives -= 1;
+          commentLives();
+          animate();
+        } else {
+          commentLives();
+        }
+      });
     });
+
+
   };
 
 
@@ -237,6 +258,10 @@ window.addEventListener('DOMContentLoaded', () => {
     word = word.replace(/ /g, "-");
 
     console.log(word);
+    lives = 10;
+    counter = 0;
+    space = 0;
+
     createAlphabet();
     selectTopic();
     result();
@@ -244,5 +269,33 @@ window.addEventListener('DOMContentLoaded', () => {
     canvas();
   };
   play();
+
+  // getHelp.addEventListener('click', function () {
+
+  //   hints = [
+  //     ["Подсказка", "Подсказка", "Подсказка", "Подсказка", "Подсказка", "Подсказка", "Подсказка"],
+  //     ["Подсказка", "Подсказка", "Подсказка", "Подсказка", "Подсказка"],
+  //     ["Подсказка", "Подсказка", "Подсказка", "Подсказка", "Подсказка"]
+  //   ];
+
+  //   // Определяем выбранную категорию и выбранное слово
+  //   let categoryIndex = categories.indexOf(chosenCategory);
+  //   let hintIndex = chosenCategory.indexOf(word);
+  //   // И из этих параметров берем нужную подсказку
+  //   showClue.innerHTML = "Подсказка: - " + hints[categoryIndex][hintIndex];
+  // });
+
+  // // Сброс игры
+  // reset.addEventListener('click', function () {
+  //   // Удаляем старое слово
+  //   correct.parentNode.removeChild(correct);
+  //   letters.parentNode.removeChild(letters);
+  //   // Убираем подсказку
+  //   showClue.innerHTML = "";
+  //   // Очищаем поле для рисования
+  //   context.clearRect(0, 0, 400, 400);
+  //   // Опять вызываем функцию игры
+  //   play();
+  // });
 
 });

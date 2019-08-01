@@ -1,5 +1,6 @@
 'use strict';
 
+
 //  Стандарт es6 - это всегда должно быть написано вверху, как doctype и некоторые ошибки прошлого работать не будут:
 
 // Если бы верхнего стандарта не было, то код внизу сработал бы, а не выдавал ошибку, что так делать нельзя:
@@ -149,41 +150,50 @@
 // Теперь мы получим false
 
 
-let money = +prompt("Ваш бюджет на месяц? Вводить только число.");
-let time = prompt("Введите дату в формате YYYY-MM-DD");
+// let money = +prompt("Ваш бюджет на месяц? Вводить только число.");
+// let time = prompt("Введите дату в формате YYYY-MM-DD");
 
-let timeData = time;
+// let timeData = time;
 
 
-let answerone = prompt("Введите обязательную статью расходов в этом месяце");
-let answertwo = prompt("Во сколько обойдется?"); 
+// let answerone = prompt("Введите обязательную статью расходов в этом месяце");
+// let answertwo = prompt("Во сколько обойдется?"); 
 
-let expenses = {
-    "Ответ на первый вопрос":answerone,
-    "Ответ на второй вопрос":answertwo
+// let expenses = {
+//     "Ответ на первый вопрос":answerone,
+//     "Ответ на второй вопрос":answertwo
+// };
+
+// let optionalExpenses;
+// let income;
+// let savings = false;
+
+// var appData = {
+//     money, 
+//     timeData,
+//     expenses,
+//     optionalExpenses,
+//     income,
+//     savings  
+// }
+
+// let budget = money/30;
+
+// console.log("Бюджет:", appData.money);
+// console.log("Данные времени:", appData.timeData);
+// console.log("Объект с обязательными расходами:", appData.expenses);
+// console.log("Объект с необязательными расходами:", appData.optionalExpenses);
+// console.log("Массив данных с доп. доходом:", appData.income);
+// console.log("Свойство savings:", appData.savings);
+// console.log("Ваш бюджет на 1 день :", budget);
+
+let func2 = (x) => {
+    console.log(x+5);
+  };
+
+let func1 = () => {
+  let x = 5;
+  func2(x);
 };
 
-let optionalExpenses;
-let income;
-let savings = false;
-
-var appData = {
-    money, 
-    timeData,
-    expenses,
-    optionalExpenses,
-    income,
-    savings  
-}
-
-let budget = money/30;
-
-console.log("Бюджет:", appData.money);
-console.log("Данные времени:", appData.timeData);
-console.log("Объект с обязательными расходами:", appData.expenses);
-console.log("Объект с необязательными расходами:", appData.optionalExpenses);
-console.log("Массив данных с доп. доходом:", appData.income);
-console.log("Свойство savings:", appData.savings);
-console.log("Ваш бюджет на 1 день :", budget);
-
-
+func1();

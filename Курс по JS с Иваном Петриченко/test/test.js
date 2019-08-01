@@ -13,9 +13,9 @@ let result = arr.reduce(function(sum, elem) {
 // let assert = require('chai').assert;
 
 
-describe("sayName", function() {
+describe("sum ", function() {
     
-    it("Получаем фразу с новым именем", function() {
+    it("Функция sum должна возвращать тип данных true", function() {
         assert.typeOf(sayName("DSsimon"), "string");
     });
 });
