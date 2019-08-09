@@ -15,8 +15,12 @@ arr1.forEach( (item, i) => {
 
 // 2 Цель: создать функцию, которая проверяет, является ли строка палиндромом:
 
-/* let str1 = 'abcdedcba',
+/* let str1 = '1abcdedcba1',
     str2 = 'abScded';
+
+str1 = str1.toLowerCase();
+str2 = str2.toLowerCase();
+// Обязательно! Не забываей об этом!
     
 let sortFunc = (str) => {
     let arr = str.split("");
@@ -82,30 +86,210 @@ for (let i = 0; i < x.length; i++) {
 
 // 5 Проверка массива на монотонность
 
-let arr1 = [0, 1, 5, 9, 15], 
-    arr2 = [0, 1, 1, 5, 9, 9, 15], 
-    arr3 = [15, 8, 4, 2, 1], 
-    arr4 = [0, 1, 5, 15, 4], 
-    x = true;
+/* let arr3 = [0, 1, 5, 9, 15],
+    arr4 = [0, 1, 1, 5, 9, 9, 15],
+    arr2 = [15, 8, 4, 2, 1],
+    arr1 = [0, 1, 5, 15, 4],
+    arr5 = [10, 0, 0, -20];
 
-let sortFunc = (arr) => {
-    arr.forEach( (item, i) => {
+let x = "", z = "", y = "значения одинаковы";
 
-        if (i !== 0) {
-            if ( arr[i] >= arr[i-1] ) {
-                
-            } else {
-                x = false;
-            }
-        } 
+for (let i = 0; i < arr1.length; i++) {
+    if (i !== 0) {
 
-        if (i == arr.length-1) {
-            console.log(x);
+        if (arr1[i] >= arr1[i-1]) {
+           
+        } else {
+            x = "не возрастает";
+            i = (arr1.lenght - 1);
         }
-    });
-};
 
-sortFunc(arr1);
-sortFunc(arr2);
-sortFunc(arr3);
-sortFunc(arr4);
+    } 
+}
+// Проверка, возрастает ли массив
+
+for (let i = 0; i < arr1.length; i++) {
+    if (i !== 0) {
+
+        if (arr1[i] <= arr1[i-1]) {
+           
+        } else {
+            z = "не убывает";
+            i = (arr1.lenght - 1);
+        }
+
+    } 
+}
+// Проверка, убывает ли массив
+
+for (let i = 0; i < arr1.length; i++) {
+    if (i !== 0) {
+
+        if (arr1[i] == arr1[i-1]) {
+           
+        } else {
+            y = "значения разные";
+            i = (arr1.lenght - 1);
+        }
+
+    } 
+}
+
+if (x == "не возрастает" && z == "не убывает" && y == "значения разные") {
+    console.log("Массив НЕ монотонный");
+} else {
+    console.log("Массив монотонный");
+} */
+
+// 6 Изучение конструкторов в игровом формате
+
+/* class Soldier {
+    constructor(name, weapon, damage, armor) {
+        this.name = name;
+        this.health = 300;
+        this.weapon = weapon;
+        this.damage = damage;
+        this.armor = armor;
+    }
+}
+
+let user1 = new Soldier("Санек", "СВД 1963", 1000, 0);
+let user2 = new Soldier("Rudolf", "Люгер 1901", 200, 800);
+
+let game = () => {
+    let x = Math.floor((Math.random() * 10));
+
+    if (x > 4) {
+        console.log(`${user1.name} целится из ${user1.weapon}`);
+        setTimeout(() => {
+            console.log("Раздался громкий выстрел");
+            user2.health = (user2.health + user2.armor) - user1.damage;
+            setTimeout(() => {
+                if (user2.health <= 0) {
+                    console.log(`${user2.name} был убит`);
+                } else {
+                    console.log(`${user2.name} ранен`);
+                    setTimeout(() => {
+                        game();
+                    }, 3000);
+                }
+            }, 2000);
+        }, 3000);
+    }
+
+    if (x <= 4) {
+        console.log(`${user2.name} целится из ${user2.weapon}`);
+        setTimeout(() => {
+            console.log("Раздался громкий выстрел");
+            user1.health = (user1.health + user1.armor) - user2.damage;
+            setTimeout(() => {
+                if (user1.health <= 0) {
+                    console.log(`${user1.name} был убит`);
+                } else {
+                    console.log(`${user1.name} ранен`);
+                    setTimeout(() => {
+                        game();
+                    }, 3000);
+                }
+            }, 2000);
+        }, 3000);
+    }
+};
+game(); */
+
+// 7 Создать массив arr = [] и записать в него 7 любых многозначных 
+// чисел в виде строк. Вывести в консоль только те, что начинаются с 
+// цифры 3 или 7 (Должны присутствовать в массиве) 
+
+/* let arr = [243, 11, 35, 0, 3000, 776, 910]; 
+
+let sortFunc = (arr) => { 
+for (let i = 0; i < arr.length; i++) { 
+if (arr[i].toString()[0] == "3" || arr[i].toString()[0] == "7") { 
+console.log(arr[i]); 
+} 
+} 
+}; 
+sortFunc(arr); */
+
+// 8 У вас есть str = “урок-3-был слишком легким”. Сделать так, чтобы строка 
+// начиналась с большой буквы. Замените все “-” на пробелы. Вывести в консоль 
+// то, что получилось. Из получившейся строки вырезать слово “легким”, в этом 
+// же слове заменить 2 последние буквы на букву “о”. Вывести на экран то, что 
+// получилось 
+
+/*let str = "урок-3-был слишком легким"; 
+str = str[0].toUpperCase() + str.slice(1); 
+str = str.replace(/-/g, " "); 
+str = str.slice(19); 
+str = str.replace("им", "о"); 
+console.log(str);*/
+
+// 9 У вас есть массив arr = [20, 33, 1, “Человек”, 2, 3]. Вывести в консоль 
+// квадратный корень из суммы кубов его элементов (Да, человека нужно исключить) 
+
+/*let arr = [20, 33, "1", "Человек", 2, 3]; 
+
+let account = (arr) => { 
+for (let i = 0; i < arr.length; i++) { 
+
+if (typeof(+arr[i]) == "number" && isNaN(arr[i]) !== true) { 
+arr[i] = arr[i]**3; 
+} else { 
+arr.splice(i, 1); 
+i--; 
+} 
+} 
+// console.log(arr); 
+
+let result = 0; 
+for (let i = 0; i < arr.length; i++) { 
+result = result + arr[i]; 
+} 
+console.log(Math.sqrt(result)); 
+}; 
+account(arr);*/
+
+// 10 Создайте функцию, которая принимает 1 аргумент (название произвольное) 
+// Если как аргумент передана не строка - функция оповещает об этом пользователя 
+// В полученной (как аргумент) строке функция должна убрать все пробелы в 
+// начале и в конце. Если строка более 50 знаков - то после 50го символа часть 
+// текста скрывается и вместо них появляются три точки (...) 
+
+/*let x = " 1234512345123451234512345123451234512345123451234512345 "; 
+
+let clearFucn = (x) => { 
+
+if (typeof (x) == "string") { 
+
+x = x.split(""); 
+
+x.reverse(); 
+
+let revFunc = () => { 
+for (let i = 0; i < x.length; i++) { 
+if (x[i] == " ") { 
+x.splice(i, 1); 
+i--; 
+} else { 
+i = x.length - 1; 
+} 
+} 
+}; 
+
+revFunc(x); 
+x.reverse(); 
+revFunc(x); 
+
+if (x[50] !== undefined) { 
+
+x = x.slice(0, 50); 
+x.push(".", ".", "."); 
+} 
+x = x.join(""); 
+console.log(x); 
+} else { 
+console.log("Аргумент передан не как строка"); 
+} 
+}; 
+clearFucn(x);*/

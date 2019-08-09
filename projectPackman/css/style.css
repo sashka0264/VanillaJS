@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya:400,500');
+
+* {
+	
+}
+
+.center {
+  margin: 0 auto;
+	text-align: center;
+  width: 100%;
+  padding: 0;
+}
+
+body{
+	margin-top: 12px;
+	background-color: white;
+	overflow-y:hidden;
+}
+
+#fontface {
+	font-family: 'Alegreya', serif;
+	position: absolute;
+	visibility: hidden;
+}
+
+h1 {
+  font-family: 'Alegreya', serif;
+	font-size: 3rem;
+	padding: .5em;
+	font-weight: 500;
+	text-shadow: -5px 9px 25px rgba(255, 150, 150, .75);
+  text-align: center;
+  color: red;
+	text-decoration-line: underline;
+}
+
+p {
+	font-family: 'Alegreya', serif;
+	font-size: 1em;
+	padding: 1em;
+	font-weight: 400;
+	text-shadow: -5px 9px 25px rgba(255, 150, 150, .75);
+	text-align: center;
+	color: red;
+}
+
+.pacman {
+	width: 33px;
+	height: 33px;
+	margin: 0px;
+	outline: 1px dotted purple;
+	background: url("../cat.png");
+	background-size: cover;
+}
+
+.wall {
+	width: 33px;
+	height: 33px;
+	margin: 0px;
+	/* outline: 1px dotted purple; */
+	background: url(../block.jpg);
+	background-size: cover;
+}
+
+.coin {
+	width: 33px;
+	height: 33px;
+	margin: 0px;
+	outline: 1px dotted purple;
+	background: url("../d.jpg");
+	background-size: cover;
+}
+
+.ground {
+	width: 33px;
+	height: 33px;
+	margin: 0px;
+	outline: 1px dotted purple;
+	background-color: white ;
+}
+
+.ghost {
+	width: 33px;
+	height: 33px;
+	margin: 0px;
+	outline: 1px dotted purple;
+	background-color: red;
+}
+
+div {
+	vertical-align: top;
+	display: inline-block;
+}
+
+#world {
+	margin: 0 auto;
+}
