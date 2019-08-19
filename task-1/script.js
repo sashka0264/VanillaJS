@@ -40,4 +40,47 @@ switch (true) {
         console.log(`Произошла ошибка, ${x}`);
 }*/
 
-// 3
+// 3 В переменной day лежит какое-то число из интервала от 1 до 31. В переменной
+// month лежит какое-то число из интервала от 1 до 12. Определите в какую декаду
+//  месяца попадает это число (в первую, вторую или третью). B выпишите время 
+// года, используя switch.
+
+/*let day = ((Math.random() * 30) + 1).toFixed(),
+    month = ((Math.random() * 11) + 1).toFixed(),
+    resultM,
+    resultD;
+
+switch (true) {
+    case (day >= 1) && (day <= 10):
+        resultD = `Первая декада ${month} месяца`;
+        break;
+    case (day >= 11) && (day <= 20):
+        resultD = `Вторая декада ${month} месяца`;
+        break;
+    case (day >= 21) && (day <= 31):
+        resultD = `Третья декада ${month} месяца`;
+        break;
+    default: 
+        resultD = "Ошибка";
+        break;
+}
+
+switch (true) {
+    case (month <= 11) && (month >= 9):
+        resultM = "осень";
+        break;
+    case (month == 12) || ( (month >= 1) && (month <= 2) ):
+        resultM = "зима";
+        break;
+    case (month <= 5) && (month >= 3):
+        resultM = "весна";
+        break;
+    case (month <= 8) && (month >= 6):
+        resultM = "лето";
+        break;
+    default: 
+        resultM = "Ошибка";
+        break;
+}
+
+console.log(`${resultD}, на дворе ${resultM}.`);*/
