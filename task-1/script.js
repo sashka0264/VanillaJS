@@ -85,7 +85,7 @@ switch (true) {
 
 console.log(`${resultD}, на дворе ${resultM}.`);*/
 
-// 4 С помощью цикла while найдите сумму четных чисел от 1 до 1000
+// 4 С помощью цикла while найдите сумму четных чисел от 1 до 1000.
 
 /*let x = 0, result = 0;
 
@@ -120,3 +120,66 @@ let x = () => {
 };
 x();*/
 
+// 6 Даны переменные a и b. Отнимите от a переменную b и результат присвойте
+// переменной c. Сделайте так, чтобы в любом случае в переменную c записалось 
+// положительное значение. 
+
+/*let a = (Math.random()*10 ).toFixed(),
+    b = (Math.random()*10 ).toFixed(), 
+    c;
+c = Math.abs(a - b);
+console.log(`|${a} - ${b}| = ${c}`);*/
+
+// 7 Напишите функцию, которая будет находить факториал числа.
+
+/*let factorialis = () => {
+    let x = +prompt("Введите число для расчета:"),
+        arr = [],
+        result = 1;
+
+    for (let i = 1; i <= x; i++) {
+        arr.push(i);
+    }
+    arr.forEach( (i) => {
+        if (i !== 0) {
+            result = result * arr[i-1];
+        }
+    });
+    console.log(`!${x} = ${result}`);
+};
+factorialis();*/
+
+// 8 Дан объект. Получите массив его ключей.
+
+/*let obj = {js:'test', jq: 'hello', css: 'world'};
+let result,
+    result2 = [];
+
+result = Object.keys(obj);
+console.log(result);
+
+for (let key in obj) {
+    result2.push(key);
+}
+console.log(result2);*/
+
+// Дано рандомное число от 1 до 10. Проверьте, простое ли оно.
+
+/*let x = (Math.random()*9 + 1).toFixed(),
+    result = `Число ${x} простое`;
+
+
+for (let i = 2; i < x; i++) {
+    
+    if (x % i !== 0) {
+        
+    } else {
+        result = `Число ${x} НЕ простое`;
+    }   
+}
+
+if (x == 1) {
+    result = `Число ${x} НЕ простое`;
+}
+
+console.log(result);*/
