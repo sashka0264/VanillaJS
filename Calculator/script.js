@@ -20,6 +20,8 @@ window.addEventListener("DOMContentLoaded", () => {
             } else {
                 result.textContent = x;
             }
+            // Если result.textContent изначально 0, то точка не будет 
+            // перезаписывать это значение, а подставится после 0
 
 
             if (items[i].classList.contains("calculator-buttons__item-symbol") == true &&
