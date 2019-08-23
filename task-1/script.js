@@ -140,11 +140,10 @@ console.log(`|${a} - ${b}| = ${c}`);*/
         arr.push(i);
     }
 
-    arr.forEach( (i) => {
-        if (i !== 0) {
-            result *= arr[i-1];
-        }
+    result = arr.reduce( (last, next) => {
+        return (last * next);
     });
+
     console.log(`!${x} = ${result}`);
 };
 factorialis(5);*/
