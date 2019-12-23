@@ -1,86 +1,92 @@
 let input = document.querySelector("#time"),
-    mode = document.querySelector("#mode"),
-    divDate = document.querySelector(".date"),
-    country = document.querySelector("#country");
+  mode = document.querySelector("#mode"),
+  left = document.querySelector("#left"),
+  country = document.querySelector("#country");
 
-let addZero = (num) => {
-  if (num >= 0 && num < 10) {
-    return '0' + num;
-  } else {
-    return num;
-  }
-};
+class timeService {
+  request = new XMLHttpRequest();
+  timerSeconds = 10;
 
-let liveTime = () => {
-  let request = new XMLHttpRequest();
-  // главный обьект для работы с запросом
-
-  if (country.options[country.selectedIndex].value == "Россия") {
-    request.open("GET", "http://worldtimeapi.org/api/timezone/Europe/Moscow");
+  start = () => {
+    this.connectTime();
+    this.listenTime();
   }
 
-  if (country.options[country.selectedIndex].value == "Токио") {
-    request.open("GET", "http://worldtimeapi.org/api/timezone/Asia/Tokyo");
-  }
-
-  if (country.options[country.selectedIndex].value == "Нью-Йорк") {
-    request.open("GET", "http://worldtimeapi.org/api/timezone/America/New_York");
-  }
-
-
-  request.send();
-  // выполняем запрос
-
-  request.addEventListener("readystatechange", function () {
-
-    if (request.readyState === 4 && request.status == 200) {
-      let data = JSON.parse(request.response);
-
-      // data = Date.parse(data);
-      
-      data = data.datetime.substring(0, data.datetime.length - 6);
-
-      // console.log(Date.parse(data));
-      // input.value = Date.parse(data);
-
-      let nowDate = new Date(Date.parse(data));
-
-      let hours = nowDate.getHours();
-      
-      if (mode.options[mode.selectedIndex].value == "24 hours") {
-          hours = nowDate.getHours();
+  connectTime = () => {
+    let timerId = setInterval(() => {
+      this.timerSeconds--;
+      left.textContent = (!!this.timerSeconds) ? `${this.zeroHelper(this.timerSeconds)} сек.` : "connecting...";
+    }, 1000);
+    switch (country.options[country.selectedIndex].value) {
+      case "Россия": {
+        this.openRequest("Europe/Moscow");
+        break;
       }
-
-      if (mode.options[mode.selectedIndex].value == "12 hours") {
-        hours = nowDate.getHours();
-
-        if (hours >= 12) {
-          hours = hours - 12;
-        } else {
-          hours = hours;
-        }
+      case "Токио": {
+        this.openRequest("Asia/Tokyo");
+        break;
       }
-
-      input.value = nowDate.getFullYear() + " год " + (nowDate.getMonth()+1) + " месяц " +
-        nowDate.getDate() + " день, " + addZero(hours) + ":" +
-        addZero(nowDate.getMinutes()) + ":" + addZero(nowDate.getSeconds());
-
-    } else {
-
-      // console.log("Что-то пошло не так");
+      case "Нью-Йорк": {
+        this.openRequest("America/New_York");
+        break;
+      }
+      default: {
+        console.err("Что-то пошло не так...")
+        break;
+      }
     }
-  });
-  setTimeout(liveTime, 10000);
-};
-liveTime();
+    setTimeout(() => {
+      clearInterval(timerId);
+      this.timerSeconds = 10;
+      this.connectTime()
+    }, 10000);
+  }
+  // done
 
-let timer = () => {
-  let date = new Date();
-  date = addZero(date.getHours()) + ":" + addZero(date.getMinutes()) + ":" + addZero(date.getSeconds());
-  
-  divDate.textContent = date;
+  openRequest = (state) => {
+    this.request.open("GET", `http://worldtimeapi.org/api/timezone/${state}`);
+    this.request.send();
+  }
+  // done
 
-  setTimeout(timer, 1000)
-};
-timer();
-// ends
+
+  listenTime = () => {
+    this.request.addEventListener("readystatechange", () => {
+      if (this.request.readyState === 4 && this.request.status == 200) {
+        let data = JSON.parse(this.request.response);
+        data = data.datetime.substring(0, data.datetime.length - 6);
+        this.dateHelper(
+          new Date(Date.parse(data))
+        )
+      }
+    });
+  }
+
+  zeroHelper = (n) => {
+    if (n >= 0 && n < 10) return '0' + n;
+    else return n;
+  }
+
+  dateHelper = (date) => {
+    let hours = date.getHours();
+
+    if (mode.options[mode.selectedIndex].value == "24 hours") {
+      hours = date.getHours();
+    }
+
+    if (mode.options[mode.selectedIndex].value == "12 hours") {
+      hours = date.getHours();
+
+      if (hours >= 12) {
+        hours = hours - 12;
+      } else {
+        hours = hours;
+      }
+    }
+
+    input.value = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}
+    ${this.zeroHelper(hours)}:${this.zeroHelper(date.getMinutes())}:${this.zeroHelper(date.getSeconds())}`
+  }
+}
+let service = new timeService();
+service.start();
