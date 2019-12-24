@@ -85,5 +85,3 @@ class timeService {
 
 const service = new timeService();
 service.start();
-let x = false;
-let y = x && console.log("EEWEWEWE")
