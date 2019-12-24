@@ -1,4 +1,4 @@
-let input = document.querySelector("#time"),
+const input = document.querySelector("#time"),
   mode = document.querySelector("#mode"),
   left = document.querySelector("#left"),
   country = document.querySelector("#country");
@@ -13,7 +13,7 @@ class timeService {
   }
 
   connectTime = () => {
-    let timerId = setInterval(() => {
+    const timerId = setInterval(() => {
       this.timerSeconds--;
       left.textContent = (!!this.timerSeconds) ? `${this.zeroHelper(this.timerSeconds)} сек.` : "connecting...";
     }, 1000);
@@ -41,14 +41,11 @@ class timeService {
       this.connectTime()
     }, 10000);
   }
-  // done
 
   openRequest = (state) => {
     this.request.open("GET", `http://worldtimeapi.org/api/timezone/${state}`);
     this.request.send();
   }
-  // done
-
 
   listenTime = () => {
     this.request.addEventListener("readystatechange", () => {
@@ -69,24 +66,24 @@ class timeService {
 
   dateHelper = (date) => {
     let hours = date.getHours();
-
-    if (mode.options[mode.selectedIndex].value == "24 hours") {
-      hours = date.getHours();
-    }
-
-    if (mode.options[mode.selectedIndex].value == "12 hours") {
-      hours = date.getHours();
-
-      if (hours >= 12) {
-        hours = hours - 12;
-      } else {
-        hours = hours;
+    switch (mode.options[mode.selectedIndex].value) {
+      case "12 hours": {
+        hours = (hours >= 12) ? (hours - 12) : hours;
+        break;
+      }
+      case "24 hours": {
+        break;
+      }
+      default: {
+        console.error("Что-то пошло не так...")
       }
     }
-
-    input.value = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}
+    input.textContent = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}
     ${this.zeroHelper(hours)}:${this.zeroHelper(date.getMinutes())}:${this.zeroHelper(date.getSeconds())}`
   }
 }
-let service = new timeService();
+
+const service = new timeService();
 service.start();
+let x = false;
+let y = x && console.log("EEWEWEWE")
