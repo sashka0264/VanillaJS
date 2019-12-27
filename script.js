@@ -6,28 +6,23 @@ const input = document.querySelector("#time"),
 class timeService {
   request = new XMLHttpRequest();
   timerSeconds = 10;
-
+  
   start = () => {
-    this.connectTime();
-    this.listenTime();
-  }
-
-  connectTime = () => {
     const timerId = setInterval(() => {
       this.timerSeconds--;
       left.textContent = (!!this.timerSeconds) ? `${this.zeroHelper(this.timerSeconds)} сек.` : "connecting...";
     }, 1000);
     switch (country.options[country.selectedIndex].value) {
       case "Россия": {
-        this.openRequest("Europe/Moscow");
+        this.requestHelper("Europe/Moscow");
         break;
       }
       case "Токио": {
-        this.openRequest("Asia/Tokyo");
+        this.requestHelper("Asia/Tokyo");
         break;
       }
       case "Нью-Йорк": {
-        this.openRequest("America/New_York");
+        this.requestHelper("America/New_York");
         break;
       }
       default: {
@@ -35,19 +30,7 @@ class timeService {
         break;
       }
     }
-    setTimeout(() => {
-      clearInterval(timerId);
-      this.timerSeconds = 10;
-      this.connectTime()
-    }, 10000);
-  }
 
-  openRequest = (state) => {
-    this.request.open("GET", `http://worldtimeapi.org/api/timezone/${state}`);
-    this.request.send();
-  }
-
-  listenTime = () => {
     this.request.addEventListener("readystatechange", () => {
       if (this.request.readyState === 4 && this.request.status == 200) {
         let data = JSON.parse(this.request.response);
@@ -57,6 +40,17 @@ class timeService {
         )
       }
     });
+
+    setTimeout(() => {
+      clearInterval(timerId);
+      this.timerSeconds = 10;
+      this.start()
+    }, 10000);
+  }
+
+  requestHelper = (state) => {
+    this.request.open("GET", `http://worldtimeapi.org/api/timezone/${state}`);
+    this.request.send();
   }
 
   zeroHelper = (n) => {
@@ -85,3 +79,4 @@ class timeService {
 
 const service = new timeService();
 service.start();
+
