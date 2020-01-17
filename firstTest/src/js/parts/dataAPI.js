@@ -1,14 +1,64 @@
 class DataAPI {
   constructor() {
-    this.base = 'https://api.punkapi.com/v2/beers';
+    this.dataLength = 325;
+    this.pageLength = 25;
+    this.usePage = 1;
+    this.base = `https://api.punkapi.com/v2/beers?page=1&per_page=${this.pageLength}`;
     this.name = '';
     this.minABV = '';
     this.maxABV = '';
+    this.minIBU = '';
+    this.maxIBU = '';
+    this.minEBC = '';
+    this.maxEBC = '';
+    this.yeast = '';
+    this.food = '';
+  }
+
+  setFoor(newFood) {
+    if (newFood) {
+      this.food = `&food=${newFood}`;
+    } else {
+      this.food = '';
+    }
+    console.log(this.food);
+  }
+
+  setYeast(newYeast) {
+    if (newYeast) {
+      this.yeast = `&yeast=${newYeast}`;
+    } else {
+      this.yeast = '';
+    }
+  }
+
+  getUsePage() {
+    return this.usePage;
+  }
+
+  getPages() {
+    return this.dataLength / this.pageLength;
+  }
+
+  setMinEBC(newEBC) {
+    if (newEBC) {
+      this.minEBC = `&ebc_gt=${newEBC}`;
+    } else {
+      this.minEBC = '';
+    }
+  }
+
+  setMaxEBC(newEBC) {
+    if (newEBC) {
+      this.maxEBC = `&ebc_lt=${newEBC}`;
+    } else {
+      this.maxEBC = '';
+    }
   }
 
   setBeerName(newName) {
     if (newName) {
-      this.name = `?beer_name=${newName}`;
+      this.name = `&beer_name=${newName}`;
     } else {
       this.name = '';
     }
@@ -16,7 +66,7 @@ class DataAPI {
 
   setMinABV(newABV) {
     if (newABV) {
-      this.minABV = `?abv_gt=${newABV}`;
+      this.minABV = `&abv_gt=${newABV}`;
     } else {
       this.minABV = '';
     }
@@ -24,24 +74,37 @@ class DataAPI {
 
   setMaxABV(newABV) {
     if (newABV) {
-      if (this.minABV) {
-        this.maxABV = `&abv_lt=${newABV}`;
-      } else {
-        this.maxABV = `?abv_lt=${newABV}`;
-      }
+      this.maxABV = `&abv_lt=${newABV}`;
     } else {
       this.maxABV = '';
     }
   }
 
+  setMinIBU(newIBU) {
+    if (newIBU) {
+      this.minIBU = `&ibu_gt=${newIBU}`;
+    } else {
+      this.minIBU = '';
+    }
+  }
+
+  setMaxIBU(newIBU) {
+    if (newIBU) {
+      this.maxIBU = `&ibu_lt=${newIBU}`;
+    } else {
+      this.maxIBU = '';
+    }
+  }
+
   getData() {
-    return fetch(`${this.base}${this.name}${this.minABV}${this.maxABV}`)
+    console.log(`${this.base}${this.name}${this.minABV}${this.maxABV}${this.minIBU}${this.maxIBU}`);
+    return fetch(`${this.base}${this.name}${this.minABV}${this.maxABV}${this.minIBU}${this.maxIBU}${this.minEBC}${this.maxEBC}${this.yeast}`)
       .then((data) => data.json())
       .then((data) => data);
   }
 
   getDataS() {
-    return fetch(`${this.base}${this.name}${this.minABV}?abv_lt=41&abv_gt=30`)
+    return fetch(`https://api.punkapi.com/v2/beers?food=Spicy chicken`)
       .then((data) => data.json())
       .then((data) => data);
   }

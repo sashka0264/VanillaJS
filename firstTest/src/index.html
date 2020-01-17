@@ -9,30 +9,45 @@
 </head>
 
 <body>
-
-  <div class="sort">
-    <div>
-      <input id="sortByName" placeholder="Ввелите название">
-    </div>
-
-    <div>
-      <input id="sortByMinABV" placeholder="min ABV"> <input id="sortByMaxABV" placeholder="max ABV">
-    </div>
-
-    <div>
-      <input id="sortByMinIBU" placeholder="min IBU"> <input id="sortByMaxIBU" placeholder="max IBU">
-    </div>
-
+  <div class="container">
+    <div class="sort">
+      <div class="sort-block">
+        <input id="sortByName" placeholder="Ввелите название">
+      </div class="sort-block">
   
-    
+      <div class="sort-block">
+        <input id="sortByMinABV" placeholder="min ABV"> <input id="sortByMaxABV" placeholder="max ABV">
+      </div>
+  
+      <div class="sort-block">
+        <input id="sortByMinIBU" placeholder="min IBU"> <input id="sortByMaxIBU" placeholder="max IBU">
+      </div>
+  
+      <div class="sort-block">
+        <input id="sortByMinEBC" placeholder="min EBC"> <input id="sortByMaxEBC" placeholder="max EBC">
+      </div>
 
-    дрожжи,
-    brewed_before,
-    brewed_after,
-    хмель,
-    солод,
-    питание
-    <button id="sortButton">Начать поиск</button>
+      <div class="sort-block">
+        <input id="sortByYeast" placeholder="yeast"> 
+      </div>
+
+      <div class="sort-block">
+        <input id="sortByFood" placeholder="food"> 
+      </div>
+
+      <button id="sortButton">Начать поиск</button>
+      
+      <ul id=pages class="pages"></ul>
+      
+  
+      дрожжи,
+      brewed_before,
+      brewed_after,
+      хмель,
+      солод,
+      питание
+      
+    </div>
   </div>
 
   <script src="../dist/js/bundle.js"></script>

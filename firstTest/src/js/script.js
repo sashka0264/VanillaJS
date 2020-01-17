@@ -2,11 +2,14 @@ import DataAPI from './parts/dataAPI';
 import searchPanel from './parts/searchPanel';
 import cardCreator from './parts/cardCreator';
 import renderControl from './parts/renderControl';
+import pages from './parts/pages';
 
 document.addEventListener('DOMContentLoaded', () => {
   const dataAPI = new DataAPI();
   const sortButton = document.getElementById('sortButton');
+  const block = document.querySelector('.container');
   searchPanel(dataAPI);
+  pages(dataAPI);
 
   sortButton.addEventListener('click', () => {
     const cards = renderControl();
@@ -15,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then((data) => cardCreator(data))
       .then((data) => data.forEach((item) => {
         cards.appendChild(item);
-        document.body.appendChild(cards);
+        block.appendChild(cards);
       }));
   });
 
@@ -25,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then((data) => cardCreator(data))
     .then((data) => data.forEach((item) => {
       cards.appendChild(item);
-      document.body.appendChild(cards);
+      block.appendChild(cards);
     }));
 
 });
