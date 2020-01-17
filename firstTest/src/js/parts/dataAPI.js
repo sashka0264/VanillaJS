@@ -13,15 +13,32 @@ class DataAPI {
     this.maxEBC = '';
     this.yeast = '';
     this.food = '';
+    this.malt = '';
+    this.hops = '';
   }
 
-  setFoor(newFood) {
+  setHops(newHops) {
+    if (newHops) {
+      this.hops = `&hops=${newHops}`;
+    } else {
+      this.hops = '';
+    }
+  }
+
+  setMalt(newMalt) {
+    if (newMalt) {
+      this.malt = `&malt=${newMalt}`;
+    } else {
+      this.malt = '';
+    }
+  }
+
+  setFood(newFood) {
     if (newFood) {
       this.food = `&food=${newFood}`;
     } else {
       this.food = '';
     }
-    console.log(this.food);
   }
 
   setYeast(newYeast) {
@@ -97,8 +114,8 @@ class DataAPI {
   }
 
   getData() {
-    console.log(`${this.base}${this.name}${this.minABV}${this.maxABV}${this.minIBU}${this.maxIBU}`);
-    return fetch(`${this.base}${this.name}${this.minABV}${this.maxABV}${this.minIBU}${this.maxIBU}${this.minEBC}${this.maxEBC}${this.yeast}`)
+    return fetch(`${this.base}${this.name}${this.minABV}${this.maxABV}`
+    + `${this.minIBU}${this.maxIBU}${this.minEBC}${this.maxEBC}${this.yeast}${this.food}${this.malt}${this.hops}`)
       .then((data) => data.json())
       .then((data) => data);
   }

@@ -8,6 +8,8 @@ const searchPanel = (dataAPI) => {
   const sortByMaxEBC = document.getElementById('sortByMaxEBC');
   const sortByYeast = document.getElementById('sortByYeast');
   const sortByFood = document.getElementById('sortByFood');
+  const sortByMalt = document.getElementById('sortByMalt');
+  const sortByHops = document.getElementById('sortByHops');
 
   sortByName.addEventListener('input', (e) => dataAPI.setBeerName(e.target.value));
   sortByMinABV.addEventListener('input', (e) => dataAPI.setMinABV(e.target.value));
@@ -19,7 +21,9 @@ const searchPanel = (dataAPI) => {
   sortByMinEBC.addEventListener('input', (e) => dataAPI.setMinEBC(e.target.value));
   sortByMaxEBC.addEventListener('input', (e) => dataAPI.setMaxEBC(e.target.value));
   sortByYeast.addEventListener('input', (e) => dataAPI.setYeast(e.target.value));
-  sortByFood.addEventListener('input', (e) => dataAPI.setYeast(e.target.value));
+  sortByFood.addEventListener('input', (e) => dataAPI.setFood(e.target.value));
+  sortByMalt.addEventListener('input', (e) => dataAPI.setMalt(e.target.value));
+  sortByHops.addEventListener('input', (e) => dataAPI.setHops(e.target.value));
 };
 
 export default searchPanel;

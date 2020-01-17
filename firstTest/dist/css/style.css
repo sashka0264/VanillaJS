@@ -4,6 +4,7 @@ body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   outline: none;
+  background: #edeef0;
 }
 
 button {
@@ -24,17 +25,19 @@ button {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .cards-card {
-  -webkit-box-shadow: 0 0 40px rgba(0, 0, 0, 0.1) inset;
-          box-shadow: 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  -webkit-box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+          box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
   background-color: white;
-  border: 1px solid black;
   -ms-flex-preferred-size: 23%;
       flex-basis: 23%;
   padding: 5px;
-  margin: 5px;
+  margin-top: 20px;
 }
 
 .cards-card img {
@@ -55,6 +58,8 @@ button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -63,6 +68,16 @@ button {
       -ms-flex-align: start;
           align-items: flex-start;
   margin-top: 30px;
+  background-color: white;
+  padding: 15px;
+  -webkit-box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+          box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+}
+
+.sort-button {
+  background-color: #7e8593;
+  color: white;
+  padding: 10px 25px;
 }
 
 .sort-block {
@@ -70,6 +85,7 @@ button {
 }
 
 .sort-block input {
+  padding: 5px;
   margin-right: 10px;
   -webkit-box-shadow: 0 0 40px rgba(0, 0, 0, 0.1) inset;
           box-shadow: 0 0 40px rgba(0, 0, 0, 0.1) inset;

@@ -116,16 +116,16 @@ var cardCreator = function cardCreator(arr) {
         if (value === 'volume') {
           el.textContent = "\u041E\u0431\u044C\u0435\u043C: ".concat(item[value].value, " ").concat(item[value].unit);
         } else if (value === 'ingredients') {
-          var str = 'Состав: '; // console.log(item[value].malt)
-
+          var malt = '(MALT): ';
+          var hops = '(HOPS): ';
+          var yeast = "(YEAST): ".concat(item[value].yeast);
           item[value].malt.forEach(function (item) {
-            str += "".concat(item.name, " ").concat(item.amount.value, " ").concat(item.amount.unit, "; ");
+            malt += "".concat(item.name, " ").concat(item.amount.value, " ").concat(item.amount.unit, "; ");
           });
           item[value].hops.forEach(function (item) {
-            str += "".concat(item.name, " ").concat(item.amount.value, " ").concat(item.amount.unit, "; ");
+            hops += "".concat(item.name, " ").concat(item.amount.value, " ").concat(item.amount.unit, "; ");
           });
-          str += item[value].yeast;
-          el.textContent = str;
+          el.textContent = "\u0421\u043E\u0441\u0442\u0430\u0432: ".concat(malt, " ").concat(hops, " ").concat(yeast);
         } else if (value === 'brewers_tips') {
           el.textContent = "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435: ".concat(item[value]);
         } else {
@@ -177,18 +177,36 @@ function () {
     this.maxEBC = '';
     this.yeast = '';
     this.food = '';
+    this.malt = '';
+    this.hops = '';
   }
 
   _createClass(DataAPI, [{
-    key: "setFoor",
-    value: function setFoor(newFood) {
+    key: "setHops",
+    value: function setHops(newHops) {
+      if (newHops) {
+        this.hops = "&hops=".concat(newHops);
+      } else {
+        this.hops = '';
+      }
+    }
+  }, {
+    key: "setMalt",
+    value: function setMalt(newMalt) {
+      if (newMalt) {
+        this.malt = "&malt=".concat(newMalt);
+      } else {
+        this.malt = '';
+      }
+    }
+  }, {
+    key: "setFood",
+    value: function setFood(newFood) {
       if (newFood) {
         this.food = "&food=".concat(newFood);
       } else {
         this.food = '';
       }
-
-      console.log(this.food);
     }
   }, {
     key: "setYeast",
@@ -275,8 +293,7 @@ function () {
   }, {
     key: "getData",
     value: function getData() {
-      console.log("".concat(this.base).concat(this.name).concat(this.minABV).concat(this.maxABV).concat(this.minIBU).concat(this.maxIBU));
-      return fetch("".concat(this.base).concat(this.name).concat(this.minABV).concat(this.maxABV).concat(this.minIBU).concat(this.maxIBU).concat(this.minEBC).concat(this.maxEBC).concat(this.yeast)).then(function (data) {
+      return fetch("".concat(this.base).concat(this.name).concat(this.minABV).concat(this.maxABV) + "".concat(this.minIBU).concat(this.maxIBU).concat(this.minEBC).concat(this.maxEBC).concat(this.yeast).concat(this.food).concat(this.malt).concat(this.hops)).then(function (data) {
         return data.json();
       }).then(function (data) {
         return data;
@@ -373,6 +390,8 @@ var searchPanel = function searchPanel(dataAPI) {
   var sortByMaxEBC = document.getElementById('sortByMaxEBC');
   var sortByYeast = document.getElementById('sortByYeast');
   var sortByFood = document.getElementById('sortByFood');
+  var sortByMalt = document.getElementById('sortByMalt');
+  var sortByHops = document.getElementById('sortByHops');
   sortByName.addEventListener('input', function (e) {
     return dataAPI.setBeerName(e.target.value);
   });
@@ -401,7 +420,13 @@ var searchPanel = function searchPanel(dataAPI) {
     return dataAPI.setYeast(e.target.value);
   });
   sortByFood.addEventListener('input', function (e) {
-    return dataAPI.setYeast(e.target.value);
+    return dataAPI.setFood(e.target.value);
+  });
+  sortByMalt.addEventListener('input', function (e) {
+    return dataAPI.setMalt(e.target.value);
+  });
+  sortByHops.addEventListener('input', function (e) {
+    return dataAPI.setHops(e.target.value);
   });
 };
 

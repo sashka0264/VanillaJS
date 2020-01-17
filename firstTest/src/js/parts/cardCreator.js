@@ -17,20 +17,21 @@ const cardCreator = (arr) => arr.map((item) => {
       if (value === 'volume') {
         el.textContent = `Обьем: ${item[value].value} ${item[value].unit}`;
       } else if (value === 'ingredients') {
-        let str = 'Состав: ';
-        // console.log(item[value].malt)
+        let malt = '(MALT): ';
+        let hops = '(HOPS): ';
+        const yeast = `(YEAST): ${item[value].yeast}`;
         item[value].malt.forEach((item) => {
-          str += `${item.name} ${item.amount.value} ${item.amount.unit}; `;
+          malt += `${item.name} ${item.amount.value} ${item.amount.unit}; `;
         });
         item[value].hops.forEach((item) => {
-          str += `${item.name} ${item.amount.value} ${item.amount.unit}; `;
+          hops += `${item.name} ${item.amount.value} ${item.amount.unit}; `;
         });
 
-        str += item[value].yeast;
-        el.textContent = str;
+        el.textContent = `Состав: ${malt} ${hops} ${yeast}`;
+
       } else if (value === 'brewers_tips') {
         el.textContent = `Описание: ${item[value]}`;
-      }  else {
+      } else {
         el.textContent = `${value}: ${item[value]}`;
       }
     }

@@ -11,42 +11,29 @@
 <body>
   <div class="container">
     <div class="sort">
+      
       <div class="sort-block">
-        <input id="sortByName" placeholder="Ввелите название">
+        <input id="sortByName" placeholder="name">
+        <input id="sortByYeast" placeholder="yeast"> 
+        <input id="sortByFood" placeholder="food"> 
+        <input id="sortByMalt" placeholder="malt"> 
+        <input id="sortByHops" placeholder="hops"> 
       </div class="sort-block">
-  
+
       <div class="sort-block">
         <input id="sortByMinABV" placeholder="min ABV"> <input id="sortByMaxABV" placeholder="max ABV">
-      </div>
-  
-      <div class="sort-block">
         <input id="sortByMinIBU" placeholder="min IBU"> <input id="sortByMaxIBU" placeholder="max IBU">
-      </div>
-  
-      <div class="sort-block">
         <input id="sortByMinEBC" placeholder="min EBC"> <input id="sortByMaxEBC" placeholder="max EBC">
       </div>
 
       <div class="sort-block">
-        <input id="sortByYeast" placeholder="yeast"> 
+        <input id="periodFrom" placeholder="from (e.g. mm-yyyy)"> <input id="periodTo" placeholder="to (e.g. mm-yyyy)">
       </div>
 
-      <div class="sort-block">
-        <input id="sortByFood" placeholder="food"> 
-      </div>
-
-      <button id="sortButton">Начать поиск</button>
+      <button id="sortButton" class="sort-button">Начать поиск</button>
       
       <ul id=pages class="pages"></ul>
-      
-  
-      дрожжи,
-      brewed_before,
-      brewed_after,
-      хмель,
-      солод,
-      питание
-      
+       
     </div>
   </div>
 
