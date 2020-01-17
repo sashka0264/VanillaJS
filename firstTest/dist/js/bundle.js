@@ -93,15 +93,48 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+var dataAPI = {
+  getSingleBeer: function getSingleBeer() {
+    return new Promise(function (res, rej) {
+      fetch('https://api.punkapi.com/v2/beers/1').then(function (data) {
+        return data.json();
+      }).then(function (data) {
+        return res(data);
+      });
+    });
+  },
+  getTwoBeer: function getTwoBeer() {
+    return new Promise(function (res, rej) {
+      fetch('https://api.punkapi.com/v2/beers?page=1&per_page=2').then(function (data) {
+        return data.json();
+      }).then(function (data) {
+        return res(data);
+      });
+    });
+  }
+};
+
+var transform = function transform(arr) {
+  return arr.map(function (item) {
+    var card = document.createElement('div');
+    card.classList.add('cards-card');
+    Object.keys(item).forEach(function (value) {
+      var el = document.createElement('div');
+      el.textContent = "".concat(value, " = ").concat(item[value]);
+      card.appendChild(el);
+    });
+    return card;
+  });
+};
+
 document.addEventListener('DOMContentLoaded', function () {
-  var cards = document.getElementById("cards");
-  fetch('https://api.punkapi.com/v2/beers/1').then(function (res) {
-    return res.json();
-  }).then(function (res) {
-    var arr = res.map(function (item) {
-      console.log(item);
-      return item;
-    }); // console.log(arr);
+  var cards = document.getElementById('cards');
+  dataAPI.getTwoBeer().then(function (data) {
+    return transform(data);
+  }).then(function (data) {
+    return data.forEach(function (item) {
+      return cards.appendChild(item);
+    });
   });
 });
 
