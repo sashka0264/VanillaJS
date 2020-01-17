@@ -86,54 +86,214 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/js/script.js":
-/*!**************************!*\
-  !*** ./src/js/script.js ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./src/js/parts/cardCreator.js":
+/*!*************************************!*\
+  !*** ./src/js/parts/cardCreator.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var dataAPI = {
-  getSingleBeer: function getSingleBeer() {
-    return new Promise(function (res, rej) {
-      fetch('https://api.punkapi.com/v2/beers/1').then(function (data) {
-        return data.json();
-      }).then(function (data) {
-        return res(data);
-      });
-    });
-  },
-  getTwoBeer: function getTwoBeer() {
-    return new Promise(function (res, rej) {
-      fetch('https://api.punkapi.com/v2/beers?page=1&per_page=2').then(function (data) {
-        return data.json();
-      }).then(function (data) {
-        return res(data);
-      });
-    });
-  }
-};
-
-var transform = function transform(arr) {
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var cardCreator = function cardCreator(arr) {
   return arr.map(function (item) {
     var card = document.createElement('div');
     card.classList.add('cards-card');
     Object.keys(item).forEach(function (value) {
-      var el = document.createElement('div');
-      el.textContent = "".concat(value, " = ").concat(item[value]);
+      var el;
+
+      if (value === 'image_url') {
+        el = document.createElement('img');
+        el.src = item[value];
+      } else {
+        el = document.createElement('div');
+        el.textContent = "".concat(value, " = ").concat(item[value]);
+      }
+
       card.appendChild(el);
     });
     return card;
   });
 };
 
+/* harmony default export */ __webpack_exports__["default"] = (cardCreator);
+
+/***/ }),
+
+/***/ "./src/js/parts/dataAPI.js":
+/*!*********************************!*\
+  !*** ./src/js/parts/dataAPI.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var DataAPI =
+/*#__PURE__*/
+function () {
+  function DataAPI() {
+    _classCallCheck(this, DataAPI);
+
+    this.base = 'https://api.punkapi.com/v2/beers';
+    this.name = '';
+    this.minABV = '';
+    this.maxABV = '';
+  }
+
+  _createClass(DataAPI, [{
+    key: "setBeerName",
+    value: function setBeerName(newName) {
+      if (newName) {
+        this.name = "?beer_name=".concat(newName);
+      } else {
+        this.name = '';
+      }
+    }
+  }, {
+    key: "setMinABV",
+    value: function setMinABV(newABV) {
+      if (newABV) {
+        this.minABV = "?abv_gt=".concat(newABV);
+      } else {
+        this.minABV = '';
+      }
+    }
+  }, {
+    key: "setMaxABV",
+    value: function setMaxABV(newABV) {
+      if (newABV) {
+        if (this.minABV) {
+          this.maxABV = "&abv_lt=".concat(newABV);
+        } else {
+          this.maxABV = "?abv_lt=".concat(newABV);
+        }
+      } else {
+        this.maxABV = '';
+      }
+    }
+  }, {
+    key: "getData",
+    value: function getData() {
+      return fetch("".concat(this.base).concat(this.name).concat(this.minABV).concat(this.maxABV)).then(function (data) {
+        return data.json();
+      }).then(function (data) {
+        return data;
+      });
+    }
+  }, {
+    key: "getDataS",
+    value: function getDataS() {
+      return fetch("".concat(this.base).concat(this.name).concat(this.minABV, "?abv_lt=41&abv_gt=30")).then(function (data) {
+        return data.json();
+      }).then(function (data) {
+        return data;
+      });
+    }
+  }]);
+
+  return DataAPI;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (DataAPI);
+
+/***/ }),
+
+/***/ "./src/js/parts/renderControl.js":
+/*!***************************************!*\
+  !*** ./src/js/parts/renderControl.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var renderControl = function renderControl() {
+  var oldCards = document.getElementById('cards');
+  if (oldCards) oldCards.remove();
+  var cards = document.createElement('div');
+  cards.classList.add('cards');
+  cards.id = 'cards';
+  return cards;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (renderControl);
+
+/***/ }),
+
+/***/ "./src/js/parts/searchPanel.js":
+/*!*************************************!*\
+  !*** ./src/js/parts/searchPanel.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var searchPanel = function searchPanel(dataAPI) {
+  var sortByName = document.getElementById('sortByName');
+  var sortByMinABV = document.getElementById('sortByMinABV');
+  var sortByMaxABV = document.getElementById('sortByMaxABV');
+  sortByName.addEventListener('input', function (e) {
+    return dataAPI.setBeerName(e.target.value);
+  });
+  sortByMinABV.addEventListener('input', function (e) {
+    return dataAPI.setMinABV(e.target.value);
+  });
+  sortByMaxABV.addEventListener('input', function (e) {
+    return dataAPI.setMaxABV(e.target.value);
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (searchPanel);
+
+/***/ }),
+
+/***/ "./src/js/script.js":
+/*!**************************!*\
+  !*** ./src/js/script.js ***!
+  \**************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _parts_dataAPI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./parts/dataAPI */ "./src/js/parts/dataAPI.js");
+/* harmony import */ var _parts_searchPanel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parts/searchPanel */ "./src/js/parts/searchPanel.js");
+/* harmony import */ var _parts_cardCreator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./parts/cardCreator */ "./src/js/parts/cardCreator.js");
+/* harmony import */ var _parts_renderControl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./parts/renderControl */ "./src/js/parts/renderControl.js");
+
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
-  var cards = document.getElementById('cards');
-  dataAPI.getTwoBeer().then(function (data) {
-    return transform(data);
+  var dataAPI = new _parts_dataAPI__WEBPACK_IMPORTED_MODULE_0__["default"]();
+  var sortButton = document.getElementById('sortButton');
+  Object(_parts_searchPanel__WEBPACK_IMPORTED_MODULE_1__["default"])(dataAPI);
+  sortButton.addEventListener('click', function () {
+    var cards = Object(_parts_renderControl__WEBPACK_IMPORTED_MODULE_3__["default"])();
+    dataAPI.getData().then(function (data) {
+      return Object(_parts_cardCreator__WEBPACK_IMPORTED_MODULE_2__["default"])(data);
+    }).then(function (data) {
+      return data.forEach(function (item) {
+        cards.appendChild(item);
+        document.body.appendChild(cards);
+      });
+    });
+  });
+  var cards = Object(_parts_renderControl__WEBPACK_IMPORTED_MODULE_3__["default"])();
+  dataAPI.getDataS().then(function (data) {
+    return Object(_parts_cardCreator__WEBPACK_IMPORTED_MODULE_2__["default"])(data);
   }).then(function (data) {
     return data.forEach(function (item) {
-      return cards.appendChild(item);
+      cards.appendChild(item);
+      document.body.appendChild(cards);
     });
   });
 });
