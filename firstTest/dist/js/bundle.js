@@ -86,6 +86,72 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/js/parts/basket.js":
+/*!********************************!*\
+  !*** ./src/js/parts/basket.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Basket =
+/*#__PURE__*/
+function () {
+  function Basket() {
+    _classCallCheck(this, Basket);
+
+    if (localStorage['beers-basket'] === undefined) {
+      this.checklist = [];
+    } else {
+      this.checklist = JSON.parse(localStorage['beers-basket']);
+    }
+
+    console.log(this.checklist);
+  }
+
+  _createClass(Basket, [{
+    key: "addProduct",
+    value: function addProduct(newProduct) {
+      this.checklist = [].concat(_toConsumableArray(this.checklist), [newProduct]);
+      localStorage.setItem('beers-basket', JSON.stringify(this.checklist));
+    }
+  }, {
+    key: "getChecklist",
+    value: function getChecklist() {
+      return this.checklist;
+    }
+  }, {
+    key: "removeProduct",
+    value: function removeProduct(id) {
+      this.checklist = this.checklist.filter(function (item) {
+        return item.id !== id;
+      });
+      localStorage.setItem('beers-basket', JSON.stringify(this.checklist));
+    }
+  }]);
+
+  return Basket;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (Basket);
+
+/***/ }),
+
 /***/ "./src/js/parts/cardCreator.js":
 /*!*************************************!*\
   !*** ./src/js/parts/cardCreator.js ***!
@@ -95,12 +161,23 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var cardCreator = function cardCreator(arr) {
+var cardCreator = function cardCreator(arr, basketList) {
   return arr.map(function (item) {
+    console.log(basketList);
     var card = document.createElement('div');
     card.classList.add('cards-card');
+    var checked = false;
     Object.keys(item).forEach(function (value) {
       // console.log(value, item[value])
+      if (value === 'id') {
+        card.id = item[value];
+        basketList.forEach(function (item) {
+          if (item.id === card.id) {
+            checked = true;
+          }
+        });
+      }
+
       if (value === 'contributed_by') {
         return;
       }
@@ -135,6 +212,14 @@ var cardCreator = function cardCreator(arr) {
 
       card.appendChild(el);
     });
+    var checkBlock = document.createElement('div');
+    checkBlock.textContent = 'Добавить товар';
+    var check = document.createElement('input');
+    check.type = 'checkbox';
+    check.checked = checked;
+    checkBlock.classList.add('cards-card__add');
+    checkBlock.appendChild(check);
+    card.appendChild(checkBlock);
     return card;
   });
 };
@@ -380,57 +465,92 @@ var renderControl = function renderControl() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var searchPanel = function searchPanel(dataAPI) {
-  var sortByName = document.getElementById('sortByName');
-  var sortByMinABV = document.getElementById('sortByMinABV');
-  var sortByMaxABV = document.getElementById('sortByMaxABV');
-  var sortByMinIBU = document.getElementById('sortByMinIBU');
-  var sortByMaxIBU = document.getElementById('sortByMaxIBU');
-  var sortByMinEBC = document.getElementById('sortByMinEBC');
-  var sortByMaxEBC = document.getElementById('sortByMaxEBC');
-  var sortByYeast = document.getElementById('sortByYeast');
-  var sortByFood = document.getElementById('sortByFood');
-  var sortByMalt = document.getElementById('sortByMalt');
-  var sortByHops = document.getElementById('sortByHops');
-  sortByName.addEventListener('input', function (e) {
-    return dataAPI.setBeerName(e.target.value);
-  });
-  sortByMinABV.addEventListener('input', function (e) {
-    return dataAPI.setMinABV(e.target.value);
-  });
-  sortByMaxABV.addEventListener('input', function (e) {
-    return dataAPI.setMaxABV(e.target.value);
-  });
-  sortByMinIBU.addEventListener('input', function (e) {
-    return dataAPI.setMinIBU(e.target.value);
-  });
-  sortByMinIBU.addEventListener('input', function (e) {
-    return dataAPI.setMinIBU(e.target.value);
-  });
-  sortByMaxIBU.addEventListener('input', function (e) {
-    return dataAPI.setMaxIBU(e.target.value);
-  });
-  sortByMinEBC.addEventListener('input', function (e) {
-    return dataAPI.setMinEBC(e.target.value);
-  });
-  sortByMaxEBC.addEventListener('input', function (e) {
-    return dataAPI.setMaxEBC(e.target.value);
-  });
-  sortByYeast.addEventListener('input', function (e) {
-    return dataAPI.setYeast(e.target.value);
-  });
-  sortByFood.addEventListener('input', function (e) {
-    return dataAPI.setFood(e.target.value);
-  });
-  sortByMalt.addEventListener('input', function (e) {
-    return dataAPI.setMalt(e.target.value);
-  });
-  sortByHops.addEventListener('input', function (e) {
-    return dataAPI.setHops(e.target.value);
+var searchPanel = function searchPanel(dataAPI, basket, updateDomBasket) {
+  var sort = document.getElementById('sort');
+  sort.addEventListener('input', function (e) {
+    var _e$target = e.target,
+        value = _e$target.value,
+        checked = _e$target.checked;
+
+    switch (e.target.id) {
+      case 'sortByName':
+        dataAPI.setBeerName(value);
+        break;
+
+      case 'sortByMinABV':
+        dataAPI.setMinABV(value);
+        break;
+
+      case 'sortByMaxABV':
+        dataAPI.setMaxABV(value);
+        break;
+
+      case 'sortByMinIBU':
+        dataAPI.setMinIBU(value);
+        break;
+
+      case 'sortByMaxIBU':
+        dataAPI.setMaxIBU(value);
+        break;
+
+      case 'sortByMinEBC':
+        dataAPI.setMinEBC(value);
+        break;
+
+      case 'sortByMaxEBC':
+        dataAPI.setMaxEBC(value);
+        break;
+
+      case 'sortByYeast':
+        dataAPI.setYeast(value);
+        break;
+
+      case 'sortByFood':
+        dataAPI.setFood(value);
+        break;
+
+      case 'sortByMalt':
+        dataAPI.setMalt(value);
+        break;
+
+      case 'sortByHops':
+        dataAPI.setHops(value);
+        break;
+
+      default:
+        if (checked) {
+          basket.addProduct({
+            id: e.target.parentElement.parentElement.id
+          });
+        } else {
+          basket.removeProduct(e.target.parentElement.parentElement.id);
+        }
+
+        updateDomBasket(basket.getChecklist().length);
+        break;
+    }
   });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (searchPanel);
+
+/***/ }),
+
+/***/ "./src/js/parts/updateDomBasket.js":
+/*!*****************************************!*\
+  !*** ./src/js/parts/updateDomBasket.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var updateDomBasket = function updateDomBasket(countLength) {
+  var count = document.getElementById('basket-count');
+  count.textContent = countLength;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (updateDomBasket);
 
 /***/ }),
 
@@ -444,10 +564,14 @@ var searchPanel = function searchPanel(dataAPI) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _parts_dataAPI__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./parts/dataAPI */ "./src/js/parts/dataAPI.js");
-/* harmony import */ var _parts_searchPanel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parts/searchPanel */ "./src/js/parts/searchPanel.js");
-/* harmony import */ var _parts_cardCreator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./parts/cardCreator */ "./src/js/parts/cardCreator.js");
-/* harmony import */ var _parts_renderControl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./parts/renderControl */ "./src/js/parts/renderControl.js");
-/* harmony import */ var _parts_pages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./parts/pages */ "./src/js/parts/pages.js");
+/* harmony import */ var _parts_basket__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parts/basket */ "./src/js/parts/basket.js");
+/* harmony import */ var _parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./parts/updateDomBasket */ "./src/js/parts/updateDomBasket.js");
+/* harmony import */ var _parts_searchPanel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./parts/searchPanel */ "./src/js/parts/searchPanel.js");
+/* harmony import */ var _parts_cardCreator__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./parts/cardCreator */ "./src/js/parts/cardCreator.js");
+/* harmony import */ var _parts_renderControl__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./parts/renderControl */ "./src/js/parts/renderControl.js");
+/* harmony import */ var _parts_pages__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./parts/pages */ "./src/js/parts/pages.js");
+
+
 
 
 
@@ -455,14 +579,16 @@ __webpack_require__.r(__webpack_exports__);
 
 document.addEventListener('DOMContentLoaded', function () {
   var dataAPI = new _parts_dataAPI__WEBPACK_IMPORTED_MODULE_0__["default"]();
+  var basket = new _parts_basket__WEBPACK_IMPORTED_MODULE_1__["default"]();
   var sortButton = document.getElementById('sortButton');
-  var block = document.querySelector('.container');
-  Object(_parts_searchPanel__WEBPACK_IMPORTED_MODULE_1__["default"])(dataAPI);
-  Object(_parts_pages__WEBPACK_IMPORTED_MODULE_4__["default"])(dataAPI);
+  var block = document.getElementById('sort');
+  Object(_parts_searchPanel__WEBPACK_IMPORTED_MODULE_3__["default"])(dataAPI, basket, _parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"]);
+  Object(_parts_pages__WEBPACK_IMPORTED_MODULE_6__["default"])(dataAPI);
+  Object(_parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"])(basket.getChecklist().length);
   sortButton.addEventListener('click', function () {
-    var cards = Object(_parts_renderControl__WEBPACK_IMPORTED_MODULE_3__["default"])();
+    var cards = Object(_parts_renderControl__WEBPACK_IMPORTED_MODULE_5__["default"])();
     dataAPI.getData().then(function (data) {
-      return Object(_parts_cardCreator__WEBPACK_IMPORTED_MODULE_2__["default"])(data);
+      return Object(_parts_cardCreator__WEBPACK_IMPORTED_MODULE_4__["default"])(data, basket.getChecklist());
     }).then(function (data) {
       return data.forEach(function (item) {
         cards.appendChild(item);
@@ -470,9 +596,9 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   });
-  var cards = Object(_parts_renderControl__WEBPACK_IMPORTED_MODULE_3__["default"])();
+  var cards = Object(_parts_renderControl__WEBPACK_IMPORTED_MODULE_5__["default"])();
   dataAPI.getDataS().then(function (data) {
-    return Object(_parts_cardCreator__WEBPACK_IMPORTED_MODULE_2__["default"])(data);
+    return Object(_parts_cardCreator__WEBPACK_IMPORTED_MODULE_4__["default"])(data, basket.getChecklist());
   }).then(function (data) {
     return data.forEach(function (item) {
       cards.appendChild(item);

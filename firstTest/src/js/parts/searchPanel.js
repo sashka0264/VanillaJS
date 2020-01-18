@@ -1,29 +1,52 @@
-const searchPanel = (dataAPI) => {
-  const sortByName = document.getElementById('sortByName');
-  const sortByMinABV = document.getElementById('sortByMinABV');
-  const sortByMaxABV = document.getElementById('sortByMaxABV');
-  const sortByMinIBU = document.getElementById('sortByMinIBU');
-  const sortByMaxIBU = document.getElementById('sortByMaxIBU');
-  const sortByMinEBC = document.getElementById('sortByMinEBC');
-  const sortByMaxEBC = document.getElementById('sortByMaxEBC');
-  const sortByYeast = document.getElementById('sortByYeast');
-  const sortByFood = document.getElementById('sortByFood');
-  const sortByMalt = document.getElementById('sortByMalt');
-  const sortByHops = document.getElementById('sortByHops');
+const searchPanel = (dataAPI, basket, updateDomBasket) => {
+  const sort = document.getElementById('sort');
 
-  sortByName.addEventListener('input', (e) => dataAPI.setBeerName(e.target.value));
-  sortByMinABV.addEventListener('input', (e) => dataAPI.setMinABV(e.target.value));
-  sortByMaxABV.addEventListener('input', (e) => dataAPI.setMaxABV(e.target.value));
-  sortByMinIBU.addEventListener('input', (e) => dataAPI.setMinIBU(e.target.value));
-  sortByMinIBU.addEventListener('input', (e) => dataAPI.setMinIBU(e.target.value));
-  sortByMaxIBU.addEventListener('input', (e) => dataAPI.setMaxIBU(e.target.value));
-
-  sortByMinEBC.addEventListener('input', (e) => dataAPI.setMinEBC(e.target.value));
-  sortByMaxEBC.addEventListener('input', (e) => dataAPI.setMaxEBC(e.target.value));
-  sortByYeast.addEventListener('input', (e) => dataAPI.setYeast(e.target.value));
-  sortByFood.addEventListener('input', (e) => dataAPI.setFood(e.target.value));
-  sortByMalt.addEventListener('input', (e) => dataAPI.setMalt(e.target.value));
-  sortByHops.addEventListener('input', (e) => dataAPI.setHops(e.target.value));
+  sort.addEventListener('input', (e) => {
+    const { value, checked } = e.target;
+    switch (e.target.id) {
+      case 'sortByName':
+        dataAPI.setBeerName(value);
+        break;
+      case 'sortByMinABV':
+        dataAPI.setMinABV(value);
+        break;
+      case 'sortByMaxABV':
+        dataAPI.setMaxABV(value);
+        break;
+      case 'sortByMinIBU':
+        dataAPI.setMinIBU(value);
+        break;
+      case 'sortByMaxIBU':
+        dataAPI.setMaxIBU(value);
+        break;
+      case 'sortByMinEBC':
+        dataAPI.setMinEBC(value);
+        break;
+      case 'sortByMaxEBC':
+        dataAPI.setMaxEBC(value);
+        break;
+      case 'sortByYeast':
+        dataAPI.setYeast(value);
+        break;
+      case 'sortByFood':
+        dataAPI.setFood(value);
+        break;
+      case 'sortByMalt':
+        dataAPI.setMalt(value);
+        break;
+      case 'sortByHops':
+        dataAPI.setHops(value);
+        break;
+      default:
+        if (checked) {
+          basket.addProduct({ id: e.target.parentElement.parentElement.id });
+        } else {
+          basket.removeProduct(e.target.parentElement.parentElement.id);
+        }
+        updateDomBasket(basket.getChecklist().length);
+        break;
+    }
+  });
 };
 
 export default searchPanel;

@@ -1,9 +1,22 @@
-const cardCreator = (arr) => arr.map((item) => {
+const cardCreator = (arr, basketList) => arr.map((item) => {
+  console.log(basketList)
   const card = document.createElement('div');
   card.classList.add('cards-card');
 
+  let checked = false;
+
   Object.keys(item).forEach((value) => {
     // console.log(value, item[value])
+    if (value === 'id') {
+      card.id = item[value];
+
+      basketList.forEach((item) => {
+        if (item.id === card.id) {
+          checked = true;
+        }
+      });
+    }
+
     if (value === 'contributed_by') {
       return;
     }
@@ -28,7 +41,6 @@ const cardCreator = (arr) => arr.map((item) => {
         });
 
         el.textContent = `Состав: ${malt} ${hops} ${yeast}`;
-
       } else if (value === 'brewers_tips') {
         el.textContent = `Описание: ${item[value]}`;
       } else {
@@ -37,6 +49,15 @@ const cardCreator = (arr) => arr.map((item) => {
     }
     card.appendChild(el);
   });
+
+  const checkBlock = document.createElement('div');
+  checkBlock.textContent = 'Добавить товар';
+  const check = document.createElement('input');
+  check.type = 'checkbox';
+  check.checked = checked;
+  checkBlock.classList.add('cards-card__add');
+  checkBlock.appendChild(check);
+  card.appendChild(checkBlock);
 
   return card;
 });

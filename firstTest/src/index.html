@@ -10,32 +10,44 @@
 
 <body>
   <div class="container">
-    <div class="sort">
-      
-      <div class="sort-block">
-        <input id="sortByName" placeholder="name">
-        <input id="sortByYeast" placeholder="yeast"> 
-        <input id="sortByFood" placeholder="food"> 
-        <input id="sortByMalt" placeholder="malt"> 
-        <input id="sortByHops" placeholder="hops"> 
-      </div class="sort-block">
+    <nav class="navbar">
+      <button class="navbar-login">Зарегистрироваться</button>
 
-      <div class="sort-block">
-        <input id="sortByMinABV" placeholder="min ABV"> <input id="sortByMaxABV" placeholder="max ABV">
-        <input id="sortByMinIBU" placeholder="min IBU"> <input id="sortByMaxIBU" placeholder="max IBU">
-        <input id="sortByMinEBC" placeholder="min EBC"> <input id="sortByMaxEBC" placeholder="max EBC">
+      <div class="navbar-basket">
+        <div class="count" id ="basket-count">0</div> 
+        <img src="./img/basket.png">
+      </div>
+    </nav>
+
+
+    <div class="sort" id="sort">
+
+      <div class="sort-panel">
+        <div class="sort-panel__block">
+          <input id="sortByName" placeholder="name">
+          <input id="sortByYeast" placeholder="yeast"> 
+          <input id="sortByFood" placeholder="food"> 
+          <input id="sortByMalt" placeholder="malt"> 
+          <input id="sortByHops" placeholder="hops"> 
+        </div>
+
+        <div class="sort-panel__block">
+          <input id="sortByMinABV" placeholder="min ABV"> <input id="sortByMaxABV" placeholder="max ABV">
+          <input id="sortByMinIBU" placeholder="min IBU"> <input id="sortByMaxIBU" placeholder="max IBU">
+          <input id="sortByMinEBC" placeholder="min EBC"> <input id="sortByMaxEBC" placeholder="max EBC">
+        </div>
+
+        <div class="sort-panel__block">
+          <input id="periodFrom" placeholder="from (e.g. mm-yyyy)"> <input id="periodTo" placeholder="to (e.g. mm-yyyy)">
+        </div>
+
+        <button id="sortButton" class="sort-panel__button">Начать поиск</button>
       </div>
 
-      <div class="sort-block">
-        <input id="periodFrom" placeholder="from (e.g. mm-yyyy)"> <input id="periodTo" placeholder="to (e.g. mm-yyyy)">
-      </div>
+      <ul id=pages class="sort-list"></ul>
 
-      <button id="sortButton" class="sort-button">Начать поиск</button>
-      
-      <ul id=pages class="pages"></ul>
-       
     </div>
-  </div>
+  </nav>
 
   <script src="../dist/js/bundle.js"></script>
 </body>

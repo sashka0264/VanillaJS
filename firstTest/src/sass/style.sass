@@ -7,6 +7,8 @@ body
 
 button
   border: none
+  &:hover 
+    cursor: pointer
   
 .container 
   width: 90%
@@ -25,6 +27,12 @@ button
     flex-basis: 23%
     padding: 5px
     margin-top: 20px
+    position: relative
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    &__add 
+      font-weight: bold
     & img 
       width: 75px
       height: 185px
@@ -39,29 +47,56 @@ button
   flex-wrap: wrap
   flex-direction: column
   align-items: flex-start
-  margin-top: 30px
   background-color: white
   padding: 15px
   box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8
-  &-button 
-    background-color: darken(#edeef0, 40%)
-    color: white
-    padding: 10px 25px
-  &-block
-    margin-bottom: 10px
-    & input 
-      padding: 5px
-      margin-right: 10px
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.1) inset
-
-.pages
+  padding-top: 80px
+  &-panel
+    &__button 
+      background-color: darken(#edeef0, 40%)
+      color: white
+      padding: 10px 25px
+    &__block
+      margin-bottom: 10px
+      & input 
+        padding: 5px
+        margin-right: 10px
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.1) inset
+  &-list
+    display: flex
+    list-style-type: none
+    justify-content: flex-start
+    padding: 0
+    &_activePage
+      font-weight: bold
+    & li 
+      margin-right: 5px
+      &:hover 
+        cursor: pointer
+      
+.navbar 
+  width: inherit
   display: flex
-  list-style-type: none
-  justify-content: flex-start
-  padding: 0
-  &_activePage
-    font-weight: bold
-  & li 
-    margin-right: 5px
-    &:hover 
-      cursor: pointer
+  justify-content: space-between
+  background-color: #fafafb
+  transition: box-shadow cubic-bezier(.165, .84, .44, 1) .25s
+  border-bottom: 3px solid #7e8593
+  position: fixed
+  z-index: 1000
+  display: flex
+  padding-top: 10px
+  padding-bottom: 10px
+  &-basket 
+    display: flex
+    align-items: center
+    justify-content: space-around
+    margin-right: 50px
+    & img 
+      width: 50px
+      margin-left: 10px
+      margin-top: -10px
+      &:hover
+        cursor: pointer
+  &-login
+    margin-left: 40px
+    
