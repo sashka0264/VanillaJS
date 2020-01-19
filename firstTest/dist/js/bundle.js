@@ -186,7 +186,7 @@ function () {
     this.dataLength = 325;
     this.pageLength = 25;
     this.usePage = 1;
-    this.base = "https://api.punkapi.com/v2/beers?page=1&per_page=".concat(this.pageLength);
+    this.base = "https://api.punkapi.com/v2/beers?page=".concat(this.usePage, "&per_page=").concat(this.pageLength);
     this.name = '';
     this.minABV = '';
     this.maxABV = '';
@@ -198,9 +198,35 @@ function () {
     this.food = '';
     this.malt = '';
     this.hops = '';
+    this.periodTo = '';
+    this.periodFrom = '';
   }
 
   _createClass(DataAPI, [{
+    key: "setUsePage",
+    value: function setUsePage(nextPage) {
+      this.usePage = nextPage;
+      this.base = "https://api.punkapi.com/v2/beers?page=".concat(this.usePage, "&per_page=").concat(this.pageLength);
+    }
+  }, {
+    key: "setPeriodFrom",
+    value: function setPeriodFrom(period) {
+      if (period) {
+        this.periodFrom = "&brewed_after=".concat(period);
+      } else {
+        this.periodFrom = '';
+      }
+    }
+  }, {
+    key: "setPeriodTo",
+    value: function setPeriodTo(period) {
+      if (period) {
+        this.periodTo = "&brewed_before=".concat(period);
+      } else {
+        this.periodTo = '';
+      }
+    }
+  }, {
     key: "setHops",
     value: function setHops(newHops) {
       if (newHops) {
@@ -313,7 +339,6 @@ function () {
     key: "getBasketData",
     value: function getBasketData() {
       var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-      console.log("".concat(this.base, "&ids=").concat(str));
       return fetch("".concat(this.base, "&ids=").concat(str)).then(function (data) {
         return data.json();
       }).then(function (data) {
@@ -323,16 +348,8 @@ function () {
   }, {
     key: "getData",
     value: function getData() {
-      return fetch("".concat(this.base).concat(this.name).concat(this.minABV).concat(this.maxABV) + "".concat(this.minIBU).concat(this.maxIBU).concat(this.minEBC).concat(this.maxEBC).concat(this.yeast).concat(this.food).concat(this.malt).concat(this.hops)).then(function (data) {
-        return data.json();
-      }).then(function (data) {
-        return data;
-      });
-    }
-  }, {
-    key: "getDataS",
-    value: function getDataS() {
-      return fetch("https://api.punkapi.com/v2/beers?food=Spicy chicken").then(function (data) {
+      console.log("".concat(this.base).concat(this.name).concat(this.minABV).concat(this.maxABV).concat(this.minIBU).concat(this.maxIBU).concat(this.minEBC) + "".concat(this.maxEBC).concat(this.yeast).concat(this.food).concat(this.malt).concat(this.hops).concat(this.periodTo).concat(this.periodFrom));
+      return fetch("".concat(this.base).concat(this.name).concat(this.minABV).concat(this.maxABV).concat(this.minIBU).concat(this.maxIBU).concat(this.minEBC) + "".concat(this.maxEBC).concat(this.yeast).concat(this.food).concat(this.malt).concat(this.hops).concat(this.periodTo).concat(this.periodFrom)).then(function (data) {
         return data.json();
       }).then(function (data) {
         return data;
@@ -479,7 +496,7 @@ var login = function login() {};
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var pages = function pages(dataAPI) {
+var pages = function pages(dataAPI, basket, cardCreator, renderControl, block) {
   var parent = document.getElementById('pages');
   var pagesLength = dataAPI.getPages();
   var usePage = dataAPI.getUsePage();
@@ -487,13 +504,30 @@ var pages = function pages(dataAPI) {
   for (var i = 1; i <= pagesLength; i += 1) {
     var li = document.createElement('li');
     li.textContent = i;
-    if (i === usePage) li.classList.add('pages_activePage');
+    if (i === usePage) li.classList.add('sort-list_activePage');
     parent.appendChild(li);
   }
 
   parent.addEventListener('click', function (e) {
     if (e.target.tagName === 'LI') {
-      console.log(e.target.textContent);
+      for (var _i = 0; _i < pagesLength; _i += 1) {
+        if (parent.children[_i].textContent !== e.target.textContent) {
+          parent.children[_i].classList.remove('sort-list_activePage');
+        } else {
+          parent.children[_i].classList.add('sort-list_activePage');
+        }
+      }
+
+      dataAPI.setUsePage(e.target.textContent);
+      var cards = renderControl();
+      dataAPI.getData().then(function (data) {
+        return cardCreator(data, basket.getChecklist());
+      }).then(function (data) {
+        return data.forEach(function (item) {
+          cards.appendChild(item);
+          block.appendChild(cards);
+        });
+      });
     }
   });
 };
@@ -515,12 +549,12 @@ var popup = function popup() {
   var popupElement = document.getElementById('popup');
   var loginButton = document.getElementById('login');
   popupElement.addEventListener('click', function (e) {
-    if (e.target.id === 'popup-close' || e.target === popup) {
-      popup.classList.remove('popup_active');
+    if (e.target.id === 'popup-close' || e.target === popupElement) {
+      popupElement.classList.remove('popup_active');
     }
   });
   loginButton.addEventListener('click', function () {
-    popup.classList.add('popup_active');
+    popupElement.classList.add('popup_active');
   });
 };
 
@@ -611,6 +645,14 @@ var searchPanel = function searchPanel(dataAPI, basket, updateDomBasket) {
         dataAPI.setHops(value);
         break;
 
+      case 'periodTo':
+        dataAPI.setPeriodTo(value);
+        break;
+
+      case 'periodFrom':
+        dataAPI.setPeriodFrom(value);
+        break;
+
       default:
         if (checked) {
           basket.addProduct({
@@ -685,14 +727,13 @@ document.addEventListener('DOMContentLoaded', function () {
   var sortButton = document.getElementById('sortButton');
   var block = document.getElementById('sort');
   Object(_parts_searchPanel__WEBPACK_IMPORTED_MODULE_4__["default"])(dataAPI, basket, _parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"]);
-  Object(_parts_pages__WEBPACK_IMPORTED_MODULE_7__["default"])(dataAPI);
+  Object(_parts_pages__WEBPACK_IMPORTED_MODULE_7__["default"])(dataAPI, basket, _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], block);
   Object(_parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"])(basket);
   Object(_parts_basketShow__WEBPACK_IMPORTED_MODULE_3__["default"])(basket, dataAPI, _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block, _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"]);
   Object(_parts_popup__WEBPACK_IMPORTED_MODULE_8__["default"])();
   Object(_parts_login__WEBPACK_IMPORTED_MODULE_9__["default"])();
   sortButton.addEventListener('click', function () {
     basket.setBasketStatus(false);
-    console.log(basket.getBasketStatus());
     var cards = Object(_parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"])();
     dataAPI.getData().then(function (data) {
       return Object(_parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"])(data, basket.getChecklist());

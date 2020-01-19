@@ -1,4 +1,4 @@
-const pages = (dataAPI) => {
+const pages = (dataAPI, basket, cardCreator, renderControl, block) => {
   const parent = document.getElementById('pages');
 
   const pagesLength = dataAPI.getPages();
@@ -7,16 +7,31 @@ const pages = (dataAPI) => {
   for (let i = 1; i <= pagesLength; i += 1) {
     const li = document.createElement('li');
     li.textContent = i;
-    if (i === usePage) li.classList.add('pages_activePage');
+    if (i === usePage) li.classList.add('sort-list_activePage');
 
     parent.appendChild(li);
   }
 
   parent.addEventListener('click', (e) => {
     if (e.target.tagName === 'LI') {
-      console.log(e.target.textContent);
+      for (let i = 0; i < pagesLength; i += 1) {
+        if (parent.children[i].textContent !== e.target.textContent) {
+          parent.children[i].classList.remove('sort-list_activePage');
+        } else {
+          parent.children[i].classList.add('sort-list_activePage');
+        }
+      }
+      dataAPI.setUsePage(e.target.textContent);
+      const cards = renderControl();
+
+      dataAPI.getData()
+        .then((data) => cardCreator(data, basket.getChecklist()))
+        .then((data) => data.forEach((item) => {
+          cards.appendChild(item);
+          block.appendChild(cards);
+        }));
     }
-  })
+  });
 };
 
 export default pages;

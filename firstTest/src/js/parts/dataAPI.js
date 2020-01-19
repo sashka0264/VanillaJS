@@ -3,7 +3,7 @@ class DataAPI {
     this.dataLength = 325;
     this.pageLength = 25;
     this.usePage = 1;
-    this.base = `https://api.punkapi.com/v2/beers?page=1&per_page=${this.pageLength}`;
+    this.base = `https://api.punkapi.com/v2/beers?page=${this.usePage}&per_page=${this.pageLength}`;
     this.name = '';
     this.minABV = '';
     this.maxABV = '';
@@ -15,6 +15,29 @@ class DataAPI {
     this.food = '';
     this.malt = '';
     this.hops = '';
+    this.periodTo = '';
+    this.periodFrom = '';
+  }
+
+  setUsePage(nextPage) {
+    this.usePage = nextPage;
+    this.base = `https://api.punkapi.com/v2/beers?page=${this.usePage}&per_page=${this.pageLength}`;
+  }
+
+  setPeriodFrom(period) {
+    if (period) {
+      this.periodFrom = `&brewed_after=${period}`;
+    } else {
+      this.periodFrom = '';
+    }
+  }
+
+  setPeriodTo(period) {
+    if (period) {
+      this.periodTo = `&brewed_before=${period}`;
+    } else {
+      this.periodTo = '';
+    }
   }
 
   setHops(newHops) {
@@ -114,7 +137,6 @@ class DataAPI {
   }
 
   getBasketData(str = '') {
-    console.log(`${this.base}&ids=${str}`)
     return fetch(`${this.base}&ids=${str}`)
       .then((data) => data.json())
       .then((data) => data);
@@ -122,14 +144,10 @@ class DataAPI {
 
 
   getData() {
-    return fetch(`${this.base}${this.name}${this.minABV}${this.maxABV}`
-    + `${this.minIBU}${this.maxIBU}${this.minEBC}${this.maxEBC}${this.yeast}${this.food}${this.malt}${this.hops}`)
-      .then((data) => data.json())
-      .then((data) => data);
-  }
-
-  getDataS() {
-    return fetch(`https://api.punkapi.com/v2/beers?food=Spicy chicken`)
+    console.log(`${this.base}${this.name}${this.minABV}${this.maxABV}${this.minIBU}${this.maxIBU}${this.minEBC}`
+    + `${this.maxEBC}${this.yeast}${this.food}${this.malt}${this.hops}${this.periodTo}${this.periodFrom}`)
+    return fetch(`${this.base}${this.name}${this.minABV}${this.maxABV}${this.minIBU}${this.maxIBU}${this.minEBC}`
+    + `${this.maxEBC}${this.yeast}${this.food}${this.malt}${this.hops}${this.periodTo}${this.periodFrom}`)
       .then((data) => data.json())
       .then((data) => data);
   }

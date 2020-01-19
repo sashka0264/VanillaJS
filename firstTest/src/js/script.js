@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sortButton = document.getElementById('sortButton');
   const block = document.getElementById('sort');
   searchPanel(dataAPI, basket, updateDomBasket);
-  pages(dataAPI);
+  pages(dataAPI, basket, cardCreator, renderControl, block);
   updateDomBasket(basket);
   basketShow(basket, dataAPI, cardCreator, block, renderControl);
   popup();
@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   sortButton.addEventListener('click', () => {
     basket.setBasketStatus(false);
-    console.log(basket.getBasketStatus())
     const cards = renderControl();
 
     dataAPI.getData()

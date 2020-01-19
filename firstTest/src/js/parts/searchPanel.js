@@ -37,6 +37,12 @@ const searchPanel = (dataAPI, basket, updateDomBasket) => {
       case 'sortByHops':
         dataAPI.setHops(value);
         break;
+      case 'periodTo':
+        dataAPI.setPeriodTo(value);
+        break;
+      case 'periodFrom':
+        dataAPI.setPeriodFrom(value);
+        break;
       default:
         if (checked) {
           basket.addProduct({ id: e.target.parentElement.parentElement.id });

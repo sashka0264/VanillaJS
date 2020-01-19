@@ -3,13 +3,13 @@ const popup = () => {
   const loginButton = document.getElementById('login');
 
   popupElement.addEventListener('click', (e) => {
-    if (e.target.id === 'popup-close' || e.target === popup) {
-      popup.classList.remove('popup_active');
+    if (e.target.id === 'popup-close' || e.target === popupElement) {
+      popupElement.classList.remove('popup_active');
     }
   });
 
   loginButton.addEventListener('click', () => {
-    popup.classList.add('popup_active');
+    popupElement.classList.add('popup_active');
   });
 };
 
