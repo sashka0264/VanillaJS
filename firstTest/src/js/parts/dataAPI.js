@@ -113,6 +113,14 @@ class DataAPI {
     }
   }
 
+  getBasketData(str = '') {
+    console.log(`${this.base}&ids=${str}`)
+    return fetch(`${this.base}&ids=${str}`)
+      .then((data) => data.json())
+      .then((data) => data);
+  }
+
+
   getData() {
     return fetch(`${this.base}${this.name}${this.minABV}${this.maxABV}`
     + `${this.minIBU}${this.maxIBU}${this.minEBC}${this.maxEBC}${this.yeast}${this.food}${this.malt}${this.hops}`)

@@ -43,7 +43,8 @@ const searchPanel = (dataAPI, basket, updateDomBasket) => {
         } else {
           basket.removeProduct(e.target.parentElement.parentElement.id);
         }
-        updateDomBasket(basket.getChecklist().length);
+        updateDomBasket(basket);
+        if (basket.getBasketStatus()) e.target.parentElement.parentElement.remove();
         break;
     }
   });

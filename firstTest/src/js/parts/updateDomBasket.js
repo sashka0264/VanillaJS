@@ -1,7 +1,8 @@
-const updateDomBasket = (countLength) => {
+const updateDomBasket = (basket) => {
   const count = document.getElementById('basket-count');
+  const basketList = basket.getChecklist();
 
-  count.textContent = countLength;
+  count.textContent = basketList.length;
 };
 
 export default updateDomBasket;

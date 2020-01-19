@@ -1,7 +1,6 @@
 const cardCreator = (arr, basketList) => arr.map((item) => {
-  console.log(basketList)
   const card = document.createElement('div');
-  card.classList.add('cards-card');
+  card.classList.add('sort-cards__card');
 
   let checked = false;
 
@@ -10,8 +9,8 @@ const cardCreator = (arr, basketList) => arr.map((item) => {
     if (value === 'id') {
       card.id = item[value];
 
-      basketList.forEach((item) => {
-        if (item.id === card.id) {
+      basketList.forEach((el) => {
+        if (el.id === card.id) {
           checked = true;
         }
       });
@@ -55,7 +54,7 @@ const cardCreator = (arr, basketList) => arr.map((item) => {
   const check = document.createElement('input');
   check.type = 'checkbox';
   check.checked = checked;
-  checkBlock.classList.add('cards-card__add');
+  checkBlock.classList.add('sort-cards__card-add');
   checkBlock.appendChild(check);
   card.appendChild(checkBlock);
 

@@ -1,10 +1,13 @@
-import DataAPI from './parts/dataAPI';
-import Basket from './parts/basket';
+import DataAPI from './parts/DataAPI';
+import Basket from './parts/Basket';
 import updateDomBasket from './parts/updateDomBasket';
+import basketShow from './parts/basketShow';
 import searchPanel from './parts/searchPanel';
 import cardCreator from './parts/cardCreator';
 import renderControl from './parts/renderControl';
 import pages from './parts/pages';
+import popup from './parts/popup';
+import login from './parts/login';
 
 document.addEventListener('DOMContentLoaded', () => {
   const dataAPI = new DataAPI();
@@ -13,9 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const block = document.getElementById('sort');
   searchPanel(dataAPI, basket, updateDomBasket);
   pages(dataAPI);
-  updateDomBasket(basket.getChecklist().length);
+  updateDomBasket(basket);
+  basketShow(basket, dataAPI, cardCreator, block, renderControl);
+  popup();
+  login();
 
   sortButton.addEventListener('click', () => {
+    basket.setBasketStatus(false);
+    console.log(basket.getBasketStatus())
     const cards = renderControl();
 
     dataAPI.getData()
@@ -25,14 +33,4 @@ document.addEventListener('DOMContentLoaded', () => {
         block.appendChild(cards);
       }));
   });
-
-  const cards = renderControl();
-
-  dataAPI.getDataS()
-    .then((data) => cardCreator(data, basket.getChecklist()))
-    .then((data) => data.forEach((item) => {
-      cards.appendChild(item);
-      block.appendChild(cards);
-    }));
-
 });

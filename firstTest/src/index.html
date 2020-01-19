@@ -9,45 +9,66 @@
 </head>
 
 <body>
-  <div class="container">
-    <nav class="navbar">
-      <button class="navbar-login">Зарегистрироваться</button>
+  
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-block">
+        <button class="navbar-login" id="login">Log in</button>
 
-      <div class="navbar-basket">
-        <div class="count" id ="basket-count">0</div> 
-        <img src="./img/basket.png">
+        <div class="navbar-basket">
+          <div class="navbar-basket__count" id ="basket-count">0</div> 
+          <img class="navbar-basket__show" id="basket-show" src="./img/basket.png">
+        </div>
       </div>
-    </nav>
-
-
-    <div class="sort" id="sort">
-
-      <div class="sort-panel">
-        <div class="sort-panel__block">
-          <input id="sortByName" placeholder="name">
-          <input id="sortByYeast" placeholder="yeast"> 
-          <input id="sortByFood" placeholder="food"> 
-          <input id="sortByMalt" placeholder="malt"> 
-          <input id="sortByHops" placeholder="hops"> 
-        </div>
-
-        <div class="sort-panel__block">
-          <input id="sortByMinABV" placeholder="min ABV"> <input id="sortByMaxABV" placeholder="max ABV">
-          <input id="sortByMinIBU" placeholder="min IBU"> <input id="sortByMaxIBU" placeholder="max IBU">
-          <input id="sortByMinEBC" placeholder="min EBC"> <input id="sortByMaxEBC" placeholder="max EBC">
-        </div>
-
-        <div class="sort-panel__block">
-          <input id="periodFrom" placeholder="from (e.g. mm-yyyy)"> <input id="periodTo" placeholder="to (e.g. mm-yyyy)">
-        </div>
-
-        <button id="sortButton" class="sort-panel__button">Начать поиск</button>
-      </div>
-
-      <ul id=pages class="sort-list"></ul>
-
     </div>
   </nav>
+
+
+  <section class="sort">
+    <div class="container">
+      <div class="sort-block" id="sort">
+        <div class="sort-panel">
+          <div class="sort-panel__block">
+            <input id="sortByName" placeholder="Name">
+            <input id="sortByYeast" placeholder="Yeast"> 
+            <input id="sortByFood" placeholder="Food"> 
+            <input id="sortByMalt" placeholder="Malt"> 
+            <input id="sortByHops" placeholder="Hops"> 
+          </div>
+
+          <div class="sort-panel__block">
+            <input id="sortByMinABV" placeholder="Min ABV"> <input id="sortByMaxABV" placeholder="Max ABV">
+            <input id="sortByMinIBU" placeholder="Min IBU"> <input id="sortByMaxIBU" placeholder="Max IBU">
+            <input id="sortByMinEBC" placeholder="Min EBC"> <input id="sortByMaxEBC" placeholder="Max EBC">
+          </div>
+
+          <div class="sort-panel__block">
+            <input id="periodFrom" placeholder="From (e.g. mm-yyyy)"> <input id="periodTo" placeholder="To (e.g. mm-yyyy)">
+          </div>
+
+          <button id="sortButton" class="sort-panel__button">Search</button>
+        </div>
+
+        <ul id=pages class="sort-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="popup" id="popup">
+    <div class="popup-dialog">
+        <div class="popup-content">
+            <button class="popup-close" id="popup-close">&times;</button>
+            
+            <input placeholder="ФИО">
+            <input placeholder="Дата рождения">
+            <input placeholder="Пароль">
+            <input placeholder="Почта">
+
+            <button class="popup-submit">Log in</button>
+        </div>
+    </div>
+  </div>
+
 
   <script src="../dist/js/bundle.js"></script>
 </body>
