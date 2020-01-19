@@ -32,4 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
         block.appendChild(cards);
       }));
   });
+
+  const cards = renderControl();
+
+  dataAPI.getData()
+    .then((data) => cardCreator(data, basket.getChecklist()))
+    .then((data) => data.forEach((item) => {
+      cards.appendChild(item);
+      block.appendChild(cards);
+    }));
 });

@@ -744,6 +744,15 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   });
+  var cards = Object(_parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"])();
+  dataAPI.getData().then(function (data) {
+    return Object(_parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"])(data, basket.getChecklist());
+  }).then(function (data) {
+    return data.forEach(function (item) {
+      cards.appendChild(item);
+      block.appendChild(cards);
+    });
+  });
 });
 
 /***/ })
