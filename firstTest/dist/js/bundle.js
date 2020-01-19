@@ -412,7 +412,14 @@ var cardCreator = function cardCreator(arr, basketList) {
     card.classList.add('sort-cards__card');
     var checked = false;
     Object.keys(item).forEach(function (value) {
-      // console.log(value, item[value])
+      if (value === 'boil_volume') {
+        return;
+      }
+
+      if (value === 'method') {
+        return;
+      }
+
       if (value === 'id') {
         card.id = item[value];
         basketList.forEach(function (el) {
@@ -420,6 +427,7 @@ var cardCreator = function cardCreator(arr, basketList) {
             checked = true;
           }
         });
+        return;
       }
 
       if (value === 'contributed_by') {
@@ -457,7 +465,7 @@ var cardCreator = function cardCreator(arr, basketList) {
       card.appendChild(el);
     });
     var checkBlock = document.createElement('div');
-    checkBlock.textContent = 'Добавить товар';
+    checkBlock.textContent = 'Добавить в корзину';
     var check = document.createElement('input');
     check.type = 'checkbox';
     check.checked = checked;
@@ -593,8 +601,21 @@ var renderControl = function renderControl() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var searchPanel = function searchPanel(dataAPI, basket, updateDomBasket) {
+var searchPanel = function searchPanel(dataAPI, basket, updateDomBasket, renderControl, cardCreator, block) {
   var sort = document.getElementById('sort');
+  var sortButton = document.getElementById('sortButton');
+  sortButton.addEventListener('click', function () {
+    basket.setBasketStatus(false);
+    var cards = renderControl();
+    dataAPI.getData().then(function (data) {
+      return cardCreator(data, basket.getChecklist());
+    }).then(function (data) {
+      return data.forEach(function (item) {
+        cards.appendChild(item);
+        block.appendChild(cards);
+      });
+    });
+  });
   sort.addEventListener('input', function (e) {
     var _e$target = e.target,
         value = _e$target.value,
@@ -724,26 +745,13 @@ __webpack_require__.r(__webpack_exports__);
 document.addEventListener('DOMContentLoaded', function () {
   var dataAPI = new _parts_DataAPI__WEBPACK_IMPORTED_MODULE_0__["default"]();
   var basket = new _parts_Basket__WEBPACK_IMPORTED_MODULE_1__["default"]();
-  var sortButton = document.getElementById('sortButton');
   var block = document.getElementById('sort');
-  Object(_parts_searchPanel__WEBPACK_IMPORTED_MODULE_4__["default"])(dataAPI, basket, _parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"]);
+  Object(_parts_searchPanel__WEBPACK_IMPORTED_MODULE_4__["default"])(dataAPI, basket, _parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"], _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block);
   Object(_parts_pages__WEBPACK_IMPORTED_MODULE_7__["default"])(dataAPI, basket, _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], block);
   Object(_parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"])(basket);
   Object(_parts_basketShow__WEBPACK_IMPORTED_MODULE_3__["default"])(basket, dataAPI, _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block, _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"]);
   Object(_parts_popup__WEBPACK_IMPORTED_MODULE_8__["default"])();
   Object(_parts_login__WEBPACK_IMPORTED_MODULE_9__["default"])();
-  sortButton.addEventListener('click', function () {
-    basket.setBasketStatus(false);
-    var cards = Object(_parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"])();
-    dataAPI.getData().then(function (data) {
-      return Object(_parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"])(data, basket.getChecklist());
-    }).then(function (data) {
-      return data.forEach(function (item) {
-        cards.appendChild(item);
-        block.appendChild(cards);
-      });
-    });
-  });
   var cards = Object(_parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"])();
   dataAPI.getData().then(function (data) {
     return Object(_parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"])(data, basket.getChecklist());

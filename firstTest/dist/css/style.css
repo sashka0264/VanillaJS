@@ -129,9 +129,9 @@ body input {
   -webkit-box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
           box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
   background-color: white;
-  -ms-flex-preferred-size: 23%;
-      flex-basis: 23%;
-  padding: 5px;
+  -ms-flex-preferred-size: 30%;
+      flex-basis: 30%;
+  padding: 10px;
   margin-top: 20px;
   position: relative;
   display: -webkit-box;
@@ -148,6 +148,7 @@ body input {
 
 .sort-cards__card-add {
   font-weight: bold;
+  margin-left: auto;
 }
 
 .sort-cards__card img {

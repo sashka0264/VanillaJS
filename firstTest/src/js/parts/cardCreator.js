@@ -5,7 +5,12 @@ const cardCreator = (arr, basketList) => arr.map((item) => {
   let checked = false;
 
   Object.keys(item).forEach((value) => {
-    // console.log(value, item[value])
+    if (value === 'boil_volume') {
+      return;
+    }
+    if (value === 'method') {
+      return;
+    }
     if (value === 'id') {
       card.id = item[value];
 
@@ -14,6 +19,7 @@ const cardCreator = (arr, basketList) => arr.map((item) => {
           checked = true;
         }
       });
+      return;
     }
 
     if (value === 'contributed_by') {
@@ -50,7 +56,7 @@ const cardCreator = (arr, basketList) => arr.map((item) => {
   });
 
   const checkBlock = document.createElement('div');
-  checkBlock.textContent = 'Добавить товар';
+  checkBlock.textContent = 'Добавить в корзину';
   const check = document.createElement('input');
   check.type = 'checkbox';
   check.checked = checked;

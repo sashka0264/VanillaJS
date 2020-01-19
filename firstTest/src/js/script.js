@@ -12,26 +12,14 @@ import login from './parts/login';
 document.addEventListener('DOMContentLoaded', () => {
   const dataAPI = new DataAPI();
   const basket = new Basket();
-  const sortButton = document.getElementById('sortButton');
   const block = document.getElementById('sort');
-  searchPanel(dataAPI, basket, updateDomBasket);
+  searchPanel(dataAPI, basket, updateDomBasket, renderControl, cardCreator, block);
   pages(dataAPI, basket, cardCreator, renderControl, block);
   updateDomBasket(basket);
   basketShow(basket, dataAPI, cardCreator, block, renderControl);
   popup();
   login();
 
-  sortButton.addEventListener('click', () => {
-    basket.setBasketStatus(false);
-    const cards = renderControl();
-
-    dataAPI.getData()
-      .then((data) => cardCreator(data, basket.getChecklist()))
-      .then((data) => data.forEach((item) => {
-        cards.appendChild(item);
-        block.appendChild(cards);
-      }));
-  });
 
   const cards = renderControl();
 

@@ -1,5 +1,18 @@
-const searchPanel = (dataAPI, basket, updateDomBasket) => {
+const searchPanel = (dataAPI, basket, updateDomBasket, renderControl, cardCreator, block) => {
   const sort = document.getElementById('sort');
+  const sortButton = document.getElementById('sortButton');
+
+  sortButton.addEventListener('click', () => {
+    basket.setBasketStatus(false);
+    const cards = renderControl();
+
+    dataAPI.getData()
+      .then((data) => cardCreator(data, basket.getChecklist()))
+      .then((data) => data.forEach((item) => {
+        cards.appendChild(item);
+        block.appendChild(cards);
+      }));
+  });
 
   sort.addEventListener('input', (e) => {
     const { value, checked } = e.target;
