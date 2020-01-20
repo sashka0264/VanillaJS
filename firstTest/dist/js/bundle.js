@@ -710,55 +710,64 @@ var cardCreator = function cardCreator(arr, basketList) {
     var card = document.createElement('div');
     card.classList.add('sort-cards__card');
     var checked = false;
+    var malt;
+    var hops;
+    var yeast;
     Object.keys(item).forEach(function (value) {
-      if (value === 'boil_volume') {
-        return;
-      }
-
-      if (value === 'method') {
-        return;
-      }
-
-      if (value === 'id') {
-        card.id = item[value];
-        basketList.forEach(function (el) {
-          if (el.id === card.id) {
-            checked = true;
-          }
-        });
-        return;
-      }
-
-      if (value === 'contributed_by') {
-        return;
-      }
-
       var el;
 
-      if (value === 'image_url') {
-        el = document.createElement('img');
-        el.src = item[value];
-      } else {
-        el = document.createElement('div');
+      switch (value) {
+        case 'boil_volume':
+          return;
 
-        if (value === 'volume') {
-          el.textContent = "\u041E\u0431\u044C\u0435\u043C: ".concat(item[value].value, " ").concat(item[value].unit);
-        } else if (value === 'ingredients') {
-          var malt = '(MALT): ';
-          var hops = '(HOPS): ';
-          var yeast = "(YEAST): ".concat(item[value].yeast);
-          item[value].malt.forEach(function (item) {
-            malt += "".concat(item.name, " ").concat(item.amount.value, " ").concat(item.amount.unit, "; ");
+        case 'method':
+          return;
+
+        case 'id':
+          card.id = item[value];
+          basketList.forEach(function (element) {
+            if (element.id === card.id) {
+              checked = true;
+            }
           });
-          item[value].hops.forEach(function (item) {
-            hops += "".concat(item.name, " ").concat(item.amount.value, " ").concat(item.amount.unit, "; ");
+          return;
+
+        case 'contributed_by':
+          return;
+
+        case 'image_url':
+          el = document.createElement('img');
+          el.src = item[value];
+          break;
+
+        case 'volume':
+          el = document.createElement('div');
+          el.textContent = "\u041E\u0431\u044C\u0435\u043C: ".concat(item[value].value, " ").concat(item[value].unit);
+          break;
+
+        case 'ingredients':
+          el = document.createElement('div');
+          malt = '(MALT): ';
+          hops = '(HOPS): ';
+          yeast = "(YEAST): ".concat(item[value].yeast);
+          item[value].malt.forEach(function (element) {
+            malt += "".concat(element.name, " ").concat(element.amount.value, " ").concat(element.amount.unit, "; ");
+          });
+          item[value].hops.forEach(function (element) {
+            hops += "".concat(element.name, " ").concat(element.amount.value, " ").concat(element.amount.unit, "; ");
           });
           el.textContent = "\u0421\u043E\u0441\u0442\u0430\u0432: ".concat(malt, " ").concat(hops, " ").concat(yeast);
-        } else if (value === 'brewers_tips') {
+          break;
+
+        case 'brewers_tips':
+          el = document.createElement('div');
           el.textContent = "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435: ".concat(item[value]);
-        } else {
+          break;
+
+        default:
+          el = document.createElement('div');
           el.textContent = "".concat(value, ": ").concat(item[value]);
-        }
+          break;
       }
 
       card.appendChild(el);

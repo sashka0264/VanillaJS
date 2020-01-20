@@ -4,53 +4,59 @@ const cardCreator = (arr, basketList) => arr.map((item) => {
 
   let checked = false;
 
+  let malt;
+  let hops;
+  let yeast;
+
   Object.keys(item).forEach((value) => {
-    if (value === 'boil_volume') {
-      return;
-    }
-    if (value === 'method') {
-      return;
-    }
-    if (value === 'id') {
-      card.id = item[value];
-
-      basketList.forEach((el) => {
-        if (el.id === card.id) {
-          checked = true;
-        }
-      });
-      return;
-    }
-
-    if (value === 'contributed_by') {
-      return;
-    }
     let el;
-    if (value === 'image_url') {
-      el = document.createElement('img');
-      el.src = item[value];
-    } else {
-      el = document.createElement('div');
 
-      if (value === 'volume') {
-        el.textContent = `Обьем: ${item[value].value} ${item[value].unit}`;
-      } else if (value === 'ingredients') {
-        let malt = '(MALT): ';
-        let hops = '(HOPS): ';
-        const yeast = `(YEAST): ${item[value].yeast}`;
-        item[value].malt.forEach((item) => {
-          malt += `${item.name} ${item.amount.value} ${item.amount.unit}; `;
+    switch (value) {
+      case 'boil_volume':
+        return;
+      case 'method':
+        return;
+      case 'id':
+        card.id = item[value];
+
+        basketList.forEach((element) => {
+          if (element.id === card.id) {
+            checked = true;
+          }
         });
-        item[value].hops.forEach((item) => {
-          hops += `${item.name} ${item.amount.value} ${item.amount.unit}; `;
+        return;
+      case 'contributed_by':
+        return;
+      case 'image_url':
+        el = document.createElement('img');
+        el.src = item[value];
+        break;
+      case 'volume':
+        el = document.createElement('div');
+        el.textContent = `Обьем: ${item[value].value} ${item[value].unit}`;
+        break;
+      case 'ingredients':
+        el = document.createElement('div');
+        malt = '(MALT): ';
+        hops = '(HOPS): ';
+        yeast = `(YEAST): ${item[value].yeast}`;
+        item[value].malt.forEach((element) => {
+          malt += `${element.name} ${element.amount.value} ${element.amount.unit}; `;
+        });
+        item[value].hops.forEach((element) => {
+          hops += `${element.name} ${element.amount.value} ${element.amount.unit}; `;
         });
 
         el.textContent = `Состав: ${malt} ${hops} ${yeast}`;
-      } else if (value === 'brewers_tips') {
+        break;
+      case 'brewers_tips':
+        el = document.createElement('div');
         el.textContent = `Описание: ${item[value]}`;
-      } else {
+        break;
+      default:
+        el = document.createElement('div');
         el.textContent = `${value}: ${item[value]}`;
-      }
+        break;
     }
     card.appendChild(el);
   });
