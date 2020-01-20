@@ -205,6 +205,23 @@ function () {
   }
 
   _createClass(DataAPI, [{
+    key: "restart",
+    value: function restart() {
+      this.name = '';
+      this.minABV = '';
+      this.maxABV = '';
+      this.minIBU = '';
+      this.maxIBU = '';
+      this.minEBC = '';
+      this.maxEBC = '';
+      this.yeast = '';
+      this.food = '';
+      this.malt = '';
+      this.hops = '';
+      this.periodTo = '';
+      this.periodFrom = '';
+    }
+  }, {
     key: "setUsePage",
     value: function setUsePage(nextPage) {
       this.usePage = nextPage;
@@ -341,7 +358,7 @@ function () {
     key: "getBasketData",
     value: function getBasketData() {
       var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-      return fetch("".concat(this.base, "&ids=").concat(str)).then(function (data) {
+      return fetch("".concat(this.base, "&ids=").concat(str).concat(this.name).concat(this.minABV).concat(this.maxABV).concat(this.minIBU).concat(this.maxIBU).concat(this.minEBC) + "".concat(this.maxEBC).concat(this.yeast).concat(this.food).concat(this.malt).concat(this.hops).concat(this.periodTo).concat(this.periodFrom)).then(function (data) {
         return data.json();
       }).then(function (data) {
         return data;
@@ -672,23 +689,51 @@ function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var basketShow = function basketShow(basket, dataAPI, cardCreator, block, renderControl) {
+var basketShow = function basketShow(basket, dataAPI, cardCreator, block, renderControl, searchCleaner) {
   var basketElement = document.getElementById('basket-show');
+  var pageList = document.querySelectorAll('#pages li');
   basketElement.addEventListener('click', function () {
-    basket.setBasketStatus(true);
+    var basketStatus = basket.getBasketStatus();
     var cards = renderControl();
-    var basketList = basket.getChecklist();
-    var basketTransformed = basketList.map(function (item) {
-      return item.id;
-    }).join('|');
-    dataAPI.getBasketData(basketTransformed).then(function (data) {
-      return cardCreator(data, basketList);
-    }).then(function (data) {
-      return data.forEach(function (item) {
-        cards.appendChild(item);
-        block.appendChild(cards);
-      });
+    dataAPI.setUsePage(1);
+    var usePage = dataAPI.getUsePage();
+    pageList.forEach(function (item, i) {
+      if (i + 1 === usePage) {
+        item.classList.add('sort-list_activePage');
+      } else {
+        item.classList.remove('sort-list_activePage');
+      }
     });
+    searchCleaner();
+    dataAPI.restart();
+
+    if (basketStatus) {
+      basketElement.src = './img/basket.png';
+      dataAPI.getData().then(function (data) {
+        return cardCreator(data, basket.getChecklist());
+      }).then(function (data) {
+        return data.forEach(function (item) {
+          cards.appendChild(item);
+          block.appendChild(cards);
+        });
+      });
+      basket.setBasketStatus(false);
+    } else {
+      basketElement.src = './img/close.png';
+      var basketList = basket.getChecklist();
+      var basketTransformed = basketList.map(function (item) {
+        return item.id;
+      }).join('|');
+      dataAPI.getBasketData(basketTransformed).then(function (data) {
+        return cardCreator(data, basketList);
+      }).then(function (data) {
+        return data.forEach(function (item) {
+          cards.appendChild(item);
+          block.appendChild(cards);
+        });
+      });
+      basket.setBasketStatus(true);
+    }
   });
 };
 
@@ -937,14 +982,31 @@ var pages = function pages(dataAPI, basket, cardCreator, renderControl, block) {
 
       dataAPI.setUsePage(e.target.textContent);
       var cards = renderControl();
-      dataAPI.getData().then(function (data) {
-        return cardCreator(data, basket.getChecklist());
-      }).then(function (data) {
-        return data.forEach(function (item) {
-          cards.appendChild(item);
-          block.appendChild(cards);
+      var basketStatus = basket.getBasketStatus();
+
+      if (basketStatus) {
+        var basketList = basket.getChecklist();
+        var basketTransformed = basketList.map(function (item) {
+          return item.id;
+        }).join('|');
+        dataAPI.getBasketData(basketTransformed).then(function (data) {
+          return cardCreator(data, basketList);
+        }).then(function (data) {
+          return data.forEach(function (item) {
+            cards.appendChild(item);
+            block.appendChild(cards);
+          });
         });
-      });
+      } else {
+        dataAPI.getData().then(function (data) {
+          return cardCreator(data, basket.getChecklist());
+        }).then(function (data) {
+          return data.forEach(function (item) {
+            cards.appendChild(item);
+            block.appendChild(cards);
+          });
+        });
+      }
     }
   });
 };
@@ -1003,6 +1065,26 @@ var renderControl = function renderControl() {
 
 /***/ }),
 
+/***/ "./src/js/parts/searchCleaner.js":
+/*!***************************************!*\
+  !*** ./src/js/parts/searchCleaner.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var searchCleaner = function searchCleaner() {
+  var sort = document.querySelectorAll('#sort input');
+  sort.forEach(function (item) {
+    item.value = '';
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (searchCleaner);
+
+/***/ }),
+
 /***/ "./src/js/parts/searchPanel.js":
 /*!*************************************!*\
   !*** ./src/js/parts/searchPanel.js ***!
@@ -1016,16 +1098,32 @@ var searchPanel = function searchPanel(dataAPI, basket, updateDomBasket, renderC
   var sort = document.getElementById('sort');
   var sortButton = document.getElementById('sortButton');
   sortButton.addEventListener('click', function () {
-    basket.setBasketStatus(false);
+    var basketStatus = basket.getBasketStatus();
     var cards = renderControl();
-    dataAPI.getData().then(function (data) {
-      return cardCreator(data, basket.getChecklist());
-    }).then(function (data) {
-      return data.forEach(function (item) {
-        cards.appendChild(item);
-        block.appendChild(cards);
+
+    if (basketStatus) {
+      var basketList = basket.getChecklist();
+      var basketTransformed = basketList.map(function (item) {
+        return item.id;
+      }).join('|');
+      dataAPI.getBasketData(basketTransformed).then(function (data) {
+        return cardCreator(data, basketList);
+      }).then(function (data) {
+        return data.forEach(function (item) {
+          cards.appendChild(item);
+          block.appendChild(cards);
+        });
       });
-    });
+    } else {
+      dataAPI.getData().then(function (data) {
+        return cardCreator(data, basket.getChecklist());
+      }).then(function (data) {
+        return data.forEach(function (item) {
+          cards.appendChild(item);
+          block.appendChild(cards);
+        });
+      });
+    }
   });
   sort.addEventListener('input', function (e) {
     var _e$target = e.target,
@@ -1143,6 +1241,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _parts_pages__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./parts/pages */ "./src/js/parts/pages.js");
 /* harmony import */ var _parts_popup__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./parts/popup */ "./src/js/parts/popup.js");
 /* harmony import */ var _parts_login__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./parts/login */ "./src/js/parts/login.js");
+/* harmony import */ var _parts_searchCleaner__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./parts/searchCleaner */ "./src/js/parts/searchCleaner.js");
+
 
 
 
@@ -1160,7 +1260,7 @@ document.addEventListener('DOMContentLoaded', function () {
   Object(_parts_searchPanel__WEBPACK_IMPORTED_MODULE_4__["default"])(dataAPI, basket, _parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"], _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block);
   Object(_parts_pages__WEBPACK_IMPORTED_MODULE_7__["default"])(dataAPI, basket, _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], block);
   Object(_parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"])(basket);
-  Object(_parts_basketShow__WEBPACK_IMPORTED_MODULE_3__["default"])(basket, dataAPI, _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block, _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"]);
+  Object(_parts_basketShow__WEBPACK_IMPORTED_MODULE_3__["default"])(basket, dataAPI, _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block, _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], _parts_searchCleaner__WEBPACK_IMPORTED_MODULE_10__["default"]);
   Object(_parts_popup__WEBPACK_IMPORTED_MODULE_8__["default"])();
   Object(_parts_login__WEBPACK_IMPORTED_MODULE_9__["default"])();
   var cards = Object(_parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"])();

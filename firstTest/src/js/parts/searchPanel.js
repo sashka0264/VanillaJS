@@ -3,15 +3,27 @@ const searchPanel = (dataAPI, basket, updateDomBasket, renderControl, cardCreato
   const sortButton = document.getElementById('sortButton');
 
   sortButton.addEventListener('click', () => {
-    basket.setBasketStatus(false);
+    const basketStatus = basket.getBasketStatus();
     const cards = renderControl();
 
-    dataAPI.getData()
-      .then((data) => cardCreator(data, basket.getChecklist()))
-      .then((data) => data.forEach((item) => {
-        cards.appendChild(item);
-        block.appendChild(cards);
-      }));
+    if (basketStatus) {
+      const basketList = basket.getChecklist();
+      const basketTransformed = basketList.map((item) => item.id).join('|');
+
+      dataAPI.getBasketData(basketTransformed)
+        .then((data) => cardCreator(data, basketList))
+        .then((data) => data.forEach((item) => {
+          cards.appendChild(item);
+          block.appendChild(cards);
+        }));
+    } else {
+      dataAPI.getData()
+        .then((data) => cardCreator(data, basket.getChecklist()))
+        .then((data) => data.forEach((item) => {
+          cards.appendChild(item);
+          block.appendChild(cards);
+        }));
+    }
   });
 
   sort.addEventListener('input', (e) => {

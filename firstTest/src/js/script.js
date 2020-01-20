@@ -8,6 +8,7 @@ import renderControl from './parts/renderControl';
 import pages from './parts/pages';
 import popup from './parts/popup';
 import login from './parts/login';
+import searchCleaner from './parts/searchCleaner';
 
 document.addEventListener('DOMContentLoaded', () => {
   const dataAPI = new DataAPI();
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   searchPanel(dataAPI, basket, updateDomBasket, renderControl, cardCreator, block);
   pages(dataAPI, basket, cardCreator, renderControl, block);
   updateDomBasket(basket);
-  basketShow(basket, dataAPI, cardCreator, block, renderControl);
+  basketShow(basket, dataAPI, cardCreator, block, renderControl, searchCleaner);
   popup();
   login();
 

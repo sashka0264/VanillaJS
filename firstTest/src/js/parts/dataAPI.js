@@ -19,6 +19,22 @@ export default class DataAPI {
     this.periodFrom = '';
   }
 
+  restart() {
+    this.name = '';
+    this.minABV = '';
+    this.maxABV = '';
+    this.minIBU = '';
+    this.maxIBU = '';
+    this.minEBC = '';
+    this.maxEBC = '';
+    this.yeast = '';
+    this.food = '';
+    this.malt = '';
+    this.hops = '';
+    this.periodTo = '';
+    this.periodFrom = '';
+  }
+
   setUsePage(nextPage) {
     this.usePage = nextPage;
     this.base = `https://api.punkapi.com/v2/beers?page=${this.usePage}&per_page=${this.pageLength}`;
@@ -137,7 +153,8 @@ export default class DataAPI {
   }
 
   getBasketData(str = '') {
-    return fetch(`${this.base}&ids=${str}`)
+    return fetch(`${this.base}&ids=${str}${this.name}${this.minABV}${this.maxABV}${this.minIBU}${this.maxIBU}${this.minEBC}`
+    + `${this.maxEBC}${this.yeast}${this.food}${this.malt}${this.hops}${this.periodTo}${this.periodFrom}`)
       .then((data) => data.json())
       .then((data) => data);
   }

@@ -23,13 +23,24 @@ const pages = (dataAPI, basket, cardCreator, renderControl, block) => {
       }
       dataAPI.setUsePage(e.target.textContent);
       const cards = renderControl();
-
-      dataAPI.getData()
-        .then((data) => cardCreator(data, basket.getChecklist()))
-        .then((data) => data.forEach((item) => {
-          cards.appendChild(item);
-          block.appendChild(cards);
-        }));
+      const basketStatus = basket.getBasketStatus();
+      if (basketStatus) {
+        const basketList = basket.getChecklist();
+        const basketTransformed = basketList.map((item) => item.id).join('|');
+        dataAPI.getBasketData(basketTransformed)
+          .then((data) => cardCreator(data, basketList))
+          .then((data) => data.forEach((item) => {
+            cards.appendChild(item);
+            block.appendChild(cards);
+          }));
+      } else {
+        dataAPI.getData()
+          .then((data) => cardCreator(data, basket.getChecklist()))
+          .then((data) => data.forEach((item) => {
+            cards.appendChild(item);
+            block.appendChild(cards);
+          }));
+      }
     }
   });
 };
