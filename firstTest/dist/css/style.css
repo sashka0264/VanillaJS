@@ -219,7 +219,7 @@ body input {
 
 .popup {
   color: #333333;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -277,13 +277,25 @@ body input {
   display: flex;
   position: absolute;
   text-align: center;
-  padding: 47px 100px 57px 100px;
+  padding: 47px 100px 47px 100px;
   left: 50%;
   top: 20%;
   background-color: #ededed;
   border-radius: 4px;
   -webkit-transform: translateX(-50%) !important;
           transform: translateX(-50%) !important;
+}
+
+.popup-content__message {
+  display: none;
+  margin-top: 20px;
+  color: #2d9ddf;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.popup-content__message_active {
+  display: block;
 }
 
 .popup-content__userError {

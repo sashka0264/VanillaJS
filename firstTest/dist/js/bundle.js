@@ -434,6 +434,76 @@ function () {
 
 /***/ }),
 
+/***/ "./src/js/parts/EmailValidator.js":
+/*!****************************************!*\
+  !*** ./src/js/parts/EmailValidator.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EmailValidator; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var EmailValidator =
+/*#__PURE__*/
+function () {
+  function EmailValidator(input, error, className) {
+    _classCallCheck(this, EmailValidator);
+
+    this.input = input;
+    this.error = error;
+    this.className = className;
+    this.model = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    this.status = false;
+  }
+
+  _createClass(EmailValidator, [{
+    key: "listener",
+    value: function listener() {
+      var _this = this;
+
+      this.input.addEventListener('input', function (e) {
+        if (_this.model.test(e.target.value)) {
+          _this.status = true;
+
+          _this.error.classList.remove(_this.className);
+        } else {
+          _this.status = false;
+
+          _this.error.classList.add(_this.className);
+        }
+      });
+    }
+  }, {
+    key: "verify",
+    value: function verify() {
+      if (!this.status) {
+        this.error.classList.add(this.className);
+        return 0;
+      }
+
+      return 1;
+    }
+  }, {
+    key: "restart",
+    value: function restart() {
+      this.status = false;
+    }
+  }]);
+
+  return EmailValidator;
+}();
+
+
+
+/***/ }),
+
 /***/ "./src/js/parts/PasswordValidator.js":
 /*!*******************************************!*\
   !*** ./src/js/parts/PasswordValidator.js ***!
@@ -721,11 +791,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UserValidator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserValidator */ "./src/js/parts/UserValidator.js");
 /* harmony import */ var _DateValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DateValidator */ "./src/js/parts/DateValidator.js");
 /* harmony import */ var _PasswordValidator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PasswordValidator */ "./src/js/parts/PasswordValidator.js");
+/* harmony import */ var _EmailValidator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmailValidator */ "./src/js/parts/EmailValidator.js");
+
 
 
 
 
 var login = function login() {
+  var message = {
+    loading: 'Загрузка...',
+    success: 'Спасибо. Мы с Вами свяжемся.',
+    failure: 'Произошла ошибка. Пожалуйста, повторите попытку позже.'
+  };
   var form = document.getElementById('popupForm');
   var username = form.querySelector('#popup-username');
   var usernameError = form.querySelector('#popup-userError');
@@ -739,12 +816,78 @@ var login = function login() {
   dateValidator.listener();
   var passwordValidator = new _PasswordValidator__WEBPACK_IMPORTED_MODULE_2__["default"](password, passwordError, 'popup-content__passwordError_active', 7);
   passwordValidator.listener();
+  var email = form.querySelector('#popup-email');
+  var emailError = form.querySelector('#popup-emailError');
+  var emailValidator = new _EmailValidator__WEBPACK_IMPORTED_MODULE_3__["default"](email, emailError, 'popup-content__emailError_active');
+  emailValidator.listener();
+  var formMessage = form.querySelector('#popup-message');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var userStatus = userValidator.verify();
     var dateStatus = dateValidator.verify();
     var passwordStatus = passwordValidator.verify();
-    console.log(userStatus, dateStatus, passwordStatus);
+    var emailStatus = emailValidator.verify();
+
+    if (userStatus && dateStatus && passwordStatus && emailStatus) {
+      var formData = new FormData(e.target);
+      var body = {};
+      formData.forEach(function (item, i) {
+        body[i] = item;
+      });
+
+      var del = function del() {
+        return setTimeout(function () {
+          formMessage.classList.remove('popup-content__message_active');
+        }, 4000);
+      };
+
+      fetch('server.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      }).then(function (res) {
+        if (res.status === 200) {
+          formMessage.classList.add('popup-content__message_active');
+          userValidator.restart();
+          dateValidator.restart();
+          passwordValidator.restart();
+          emailValidator.restart();
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = form[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var el = _step.value;
+              el.tagName === "INPUT" && (el.value = "");
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator.return != null) {
+                _iterator.return();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+
+          formMessage.textContent = message.success;
+          del();
+        } else {
+          throw new Error('status network not 200');
+        }
+      }).catch(function () {
+        formMessage.textContent = message.failure;
+        del();
+      });
+    }
   });
 };
 
@@ -816,10 +959,12 @@ var popup = function popup() {
   popupElement.addEventListener('click', function (e) {
     if (e.target.id === 'popup-close' || e.target === popupElement) {
       popupElement.classList.remove('popup_active');
+      document.body.style.overflow = '';
     }
   });
   loginButton.addEventListener('click', function () {
     popupElement.classList.add('popup_active');
+    document.body.style.overflow = 'hidden';
   });
 };
 
