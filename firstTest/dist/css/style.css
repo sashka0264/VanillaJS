@@ -286,6 +286,47 @@ body input {
           transform: translateX(-50%) !important;
 }
 
+.popup-content__userError {
+  display: none;
+  font-size: 13px;
+  color: #ff666a;
+}
+
+.popup-content__userError_active {
+  display: block;
+}
+
+.popup-content__dateError {
+  display: none;
+  font-size: 13px;
+  color: #ff666a;
+}
+
+.popup-content__dateError_active {
+  display: block;
+}
+
+.popup-content__passwordError {
+  display: none;
+  font-size: 13px;
+  max-width: 291px;
+  color: #ff666a;
+}
+
+.popup-content__passwordError_active {
+  display: block;
+}
+
+.popup-content__emailError {
+  display: none;
+  font-size: 13px;
+  color: #ff666a;
+}
+
+.popup-content__emailError_active {
+  display: block;
+}
+
 .popup-dialog h2 {
   margin-left: auto;
   margin-right: auto;

@@ -56,16 +56,35 @@
 
   <div class="popup" id="popup">
     <div class="popup-dialog">
-        <div class="popup-content">
-            <button class="popup-close" id="popup-close">&times;</button>
-            
-            <input placeholder="ФИО">
-            <input placeholder="Дата рождения">
-            <input placeholder="Пароль">
-            <input placeholder="Почта">
 
-            <button class="popup-submit">Log in</button>
-        </div>
+        <form class="popup-content" id="popupForm">
+          <div class="popup-close" id="popup-close">&times;</div>
+          
+          <div>
+            <input type="text" maxlength="35" name="username" placeholder="ФИО" id="popup-username">
+            <div class="popup-content__userError" id="popup-userError">Введите корректное имя</div>
+          </div>
+          <div>
+            <input type="date" name="date" placeholder="Дата рождения" id="popup-date">
+            <div class="popup-content__dateError" id="popup-dateError">Укажите дату</div>
+          </div>
+          <div>
+            <input maxlength="35" type="password" name="password" placeholder="Пароль" id="popup-password">
+            <div class="popup-content__passwordError" id="popup-passwordError">
+              Пароль должен содержать английский, без чисел в начале и быть больше 6 символов
+            </div>
+          </div>
+
+          <div>
+            <input placeholder="Почта">
+            <div class="popup-content__emailError" id="popup-emailError">
+              Введите корректный адрес
+            </div>
+          </div>
+
+          <button type="submit" class="popup-submit">Log in</button>
+        </form>
+        
     </div>
   </div>
 

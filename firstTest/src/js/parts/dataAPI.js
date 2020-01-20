@@ -1,4 +1,4 @@
-class DataAPI {
+export default class DataAPI {
   constructor() {
     this.dataLength = 325;
     this.pageLength = 25;
@@ -144,13 +144,9 @@ class DataAPI {
 
 
   getData() {
-    console.log(`${this.base}${this.name}${this.minABV}${this.maxABV}${this.minIBU}${this.maxIBU}${this.minEBC}`
-    + `${this.maxEBC}${this.yeast}${this.food}${this.malt}${this.hops}${this.periodTo}${this.periodFrom}`)
     return fetch(`${this.base}${this.name}${this.minABV}${this.maxABV}${this.minIBU}${this.maxIBU}${this.minEBC}`
     + `${this.maxEBC}${this.yeast}${this.food}${this.malt}${this.hops}${this.periodTo}${this.periodFrom}`)
       .then((data) => data.json())
       .then((data) => data);
   }
 }
-
-export default DataAPI;

@@ -1,4 +1,4 @@
-class Basket {
+export default class Basket {
   constructor() {
     if (localStorage['beers-basket']) {
       this.checklist = JSON.parse(localStorage['beers-basket']);
@@ -30,5 +30,3 @@ class Basket {
     localStorage.setItem('beers-basket', JSON.stringify(this.checklist));
   }
 }
-
-export default Basket;
