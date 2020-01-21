@@ -1,84 +1,93 @@
-const cardCreator = (arr, basketList) => arr.map((item) => {
-  const card = document.createElement('div');
-  card.classList.add('sort-cards__card');
+const cardCreator = (arr, basketList) => {
+  const createTemplate = (parent, tag, text, src, create) => {
+    const el = document.createElement(tag);
+    if (text) el.textContent = text;
+    if (src) el.src = src;
+    if (create) parent.appendChild(el);
+  };
 
-  let checked = false,
-    malt,
-    hops,
-    yeast;
+  return arr.map((itemCard) => {
+    let checked = false,
+      malt,
+      hops,
+      yeast;
+    const card = document.createElement('div'),
+      checkBlock = document.createElement('div'),
+      check = document.createElement('input'),
+      config = {
+        boil_volume: () => null,
+        method: () => null,
+        contributed_by: () => null,
 
-  Object.keys(item).forEach((value) => {
-    let el;
+        id: (item, value) => {
+          card.id = item[value];
+          basketList.forEach((element) => {
+            if (element.id === card.id) {
+              checked = true;
+            }
+          });
+        },
+        image_url: (item, value) => {
+          createTemplate(card, 'img', false, item[value], true);
+        },
+        volume: (item, value) => {
+          createTemplate(
+            card,
+            'div',
+            `${(value[0].toUpperCase() + value.slice(1)).replace(/_/g, '')}: ${item[value].value} ${item[value].unit}`,
+            false,
+            true,
+          );
+        },
+        name: (item, value) => {
+          createTemplate(card, 'div', `Name: ${item[value]}`, false, true);
+        },
+        tagline: (item, value) => {
+          createTemplate(card, 'div', `${item[value]}`, false, true);
+        },
+        first_brewed: (item, value) => {
+          createTemplate(card, 'div', `The first brewed was ${item[value]}`, false, true);
+        },
+        ingredients: (item, value) => {
+          malt = '(MALT): ';
+          hops = '(HOPS): ';
+          yeast = `(YEAST): ${item[value].yeast}`;
+          item[value].malt.forEach((element) => {
+            malt += `${element.name} ${element.amount.value} ${element.amount.unit}; `;
+          });
+          item[value].hops.forEach((element) => {
+            hops += `${element.name} ${element.amount.value} ${element.amount.unit}; `;
+          });
+          createTemplate(card, 'div', `Structure: ${malt} ${hops} ${yeast}`, false, true);
+        },
+      };
+    card.classList.add('sort-cards__card');
 
-    const config = {boil_volume: (item, value) => value };
-    const method = config[value];
-    if (method) {
-      // console.log(method(item, value));
-    } else {
-      // console.log('Нет ничего');
-    }
+    Object.keys(itemCard).forEach((value) => {
+      const method = config[value];
 
-    switch (value) {
-      case 'boil_volume':
-        return;
-      case 'method':
-        return;
-      case 'id':
-        card.id = item[value];
+      if (method) {
+        method(itemCard, value);
+      } else {
+        createTemplate(
+          card,
+          'div',
+          `${(value[0].toUpperCase() + value.slice(1)).replace(/_/g, ' ')}: ${itemCard[value]}`,
+          false,
+          true,
+        );
+      }
+    });
 
-        basketList.forEach((element) => {
-          if (element.id === card.id) {
-            checked = true;
-          }
-        });
-        return;
-      case 'contributed_by':
-        return;
-      case 'image_url':
-        el = document.createElement('img');
-        el.src = item[value];
-        break;
-      case 'volume':
-        el = document.createElement('div');
-        el.textContent = `Обьем: ${item[value].value} ${item[value].unit}`;
-        break;
-      case 'ingredients':
-        el = document.createElement('div');
-        malt = '(MALT): ';
-        hops = '(HOPS): ';
-        yeast = `(YEAST): ${item[value].yeast}`;
-        item[value].malt.forEach((element) => {
-          malt += `${element.name} ${element.amount.value} ${element.amount.unit}; `;
-        });
-        item[value].hops.forEach((element) => {
-          hops += `${element.name} ${element.amount.value} ${element.amount.unit}; `;
-        });
+    checkBlock.textContent = 'Добавить в корзину';
+    check.type = 'checkbox';
+    check.checked = checked;
+    checkBlock.classList.add('sort-cards__card-add');
 
-        el.textContent = `Состав: ${malt} ${hops} ${yeast}`;
-        break;
-      case 'brewers_tips':
-        el = document.createElement('div');
-        el.textContent = `Описание: ${item[value]}`;
-        break;
-      default:
-        el = document.createElement('div');
-        el.textContent = `${value}: ${item[value]}`;
-        break;
-    }
-    card.appendChild(el);
+    checkBlock.appendChild(check);
+    card.appendChild(checkBlock);
+    return card;
   });
-
-  const checkBlock = document.createElement('div'),
-    check = document.createElement('input');
-  checkBlock.textContent = 'Добавить в корзину';
-  check.type = 'checkbox';
-  check.checked = checked;
-  checkBlock.classList.add('sort-cards__card-add');
-  checkBlock.appendChild(check);
-  card.appendChild(checkBlock);
-
-  return card;
-});
-
+};
 
 export default cardCreator;

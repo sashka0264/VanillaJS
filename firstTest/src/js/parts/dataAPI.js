@@ -1,168 +1,167 @@
 export default class DataAPI {
   constructor() {
-    this.dataLength = 325;
-    this.pageLength = 25;
-    this.usePage = 1;
-    this.base = `https://api.punkapi.com/v2/beers?page=${this.usePage}&per_page=${this.pageLength}`;
-    this.name = '';
-    this.minABV = '';
-    this.maxABV = '';
-    this.minIBU = '';
-    this.maxIBU = '';
-    this.minEBC = '';
-    this.maxEBC = '';
-    this.yeast = '';
-    this.food = '';
-    this.malt = '';
-    this.hops = '';
-    this.periodTo = '';
-    this.periodFrom = '';
+    this._dataLength = 325;
+    this._pageLength = 25;
+    this._usePage = 1;
+    this._base = `https://api.punkapi.com/v2/beers?page=${this._usePage}&per_page=${this._pageLength}`;
+    this._name = '';
+    this._minABV = '';
+    this._maxABV = '';
+    this._minIBU = '';
+    this._maxIBU = '';
+    this._minEBC = '';
+    this._maxEBC = '';
+    this._yeast = '';
+    this._food = '';
+    this._malt = '';
+    this._hops = '';
+    this._periodTo = '';
+    this._periodFrom = '';
   }
 
   restart() {
-    this.name = '';
-    this.minABV = '';
-    this.maxABV = '';
-    this.minIBU = '';
-    this.maxIBU = '';
-    this.minEBC = '';
-    this.maxEBC = '';
-    this.yeast = '';
-    this.food = '';
-    this.malt = '';
-    this.hops = '';
-    this.periodTo = '';
-    this.periodFrom = '';
+    this._name = '';
+    this._minABV = '';
+    this._maxABV = '';
+    this._minIBU = '';
+    this._maxIBU = '';
+    this._minEBC = '';
+    this._maxEBC = '';
+    this._yeast = '';
+    this._food = '';
+    this._malt = '';
+    this._hops = '';
+    this._periodTo = '';
+    this._periodFrom = '';
   }
 
-  setUsePage(nextPage) {
-    this.usePage = nextPage;
-    this.base = `https://api.punkapi.com/v2/beers?page=${this.usePage}&per_page=${this.pageLength}`;
+  set usePage(nextPage) {
+    this._usePage = nextPage;
+    this._base = `https://api.punkapi.com/v2/beers?page=${this._usePage}&per_page=${this._pageLength}`;
   }
 
-  setPeriodFrom(period) {
+  set periodFrom(period) {
     if (period) {
-      this.periodFrom = `&brewed_after=${period}`;
+      this._periodFrom = `&brewed_after=${period}`;
     } else {
-      this.periodFrom = '';
+      this._periodFrom = '';
     }
   }
 
-  setPeriodTo(period) {
+  set periodTo(period) {
     if (period) {
-      this.periodTo = `&brewed_before=${period}`;
+      this._periodTo = `&brewed_before=${period}`;
     } else {
-      this.periodTo = '';
+      this._periodTo = '';
     }
   }
 
-  setHops(newHops) {
+  set hops(newHops) {
     if (newHops) {
-      this.hops = `&hops=${newHops}`;
+      this._hops = `&hops=${newHops}`;
     } else {
-      this.hops = '';
+      this._hops = '';
     }
   }
 
-  setMalt(newMalt) {
+  set malt(newMalt) {
     if (newMalt) {
-      this.malt = `&malt=${newMalt}`;
+      this._malt = `&malt=${newMalt}`;
     } else {
-      this.malt = '';
+      this._malt = '';
     }
   }
 
-  setFood(newFood) {
+  set food(newFood) {
     if (newFood) {
-      this.food = `&food=${newFood}`;
+      this._food = `&food=${newFood}`;
     } else {
-      this.food = '';
+      this._food = '';
     }
   }
 
-  setYeast(newYeast) {
+  set yeast(newYeast) {
     if (newYeast) {
-      this.yeast = `&yeast=${newYeast}`;
+      this._yeast = `&yeast=${newYeast}`;
     } else {
-      this.yeast = '';
+      this._yeast = '';
     }
   }
 
-  getUsePage() {
-    return this.usePage;
+  get usePage() {
+    return this._usePage;
   }
 
-  getPages() {
-    return this.dataLength / this.pageLength;
+  get pages() {
+    return this._dataLength / this._pageLength;
   }
 
-  setMinEBC(newEBC) {
+  set minEBC(newEBC) {
     if (newEBC) {
-      this.minEBC = `&ebc_gt=${newEBC}`;
+      this._minEBC = `&ebc_gt=${newEBC}`;
     } else {
-      this.minEBC = '';
+      this._minEBC = '';
     }
   }
 
-  setMaxEBC(newEBC) {
+  set maxEBC(newEBC) {
     if (newEBC) {
-      this.maxEBC = `&ebc_lt=${newEBC}`;
+      this._maxEBC = `&ebc_lt=${newEBC}`;
     } else {
-      this.maxEBC = '';
+      this._maxEBC = '';
     }
   }
 
-  setBeerName(newName) {
+  set beerName(newName) {
     if (newName) {
-      this.name = `&beer_name=${newName}`;
+      this._name = `&beer_name=${newName}`;
     } else {
-      this.name = '';
+      this._name = '';
     }
   }
 
-  setMinABV(newABV) {
+  set minABV(newABV) {
     if (newABV) {
-      this.minABV = `&abv_gt=${newABV}`;
+      this._minABV = `&abv_gt=${newABV}`;
     } else {
-      this.minABV = '';
+      this._minABV = '';
     }
   }
 
-  setMaxABV(newABV) {
+  set maxABV(newABV) {
     if (newABV) {
-      this.maxABV = `&abv_lt=${newABV}`;
+      this._maxABV = `&abv_lt=${newABV}`;
     } else {
-      this.maxABV = '';
+      this._maxABV = '';
     }
   }
 
-  setMinIBU(newIBU) {
+  set minIBU(newIBU) {
     if (newIBU) {
-      this.minIBU = `&ibu_gt=${newIBU}`;
+      this._minIBU = `&ibu_gt=${newIBU}`;
     } else {
-      this.minIBU = '';
+      this._minIBU = '';
     }
   }
 
-  setMaxIBU(newIBU) {
+  set maxIBU(newIBU) {
     if (newIBU) {
-      this.maxIBU = `&ibu_lt=${newIBU}`;
+      this._maxIBU = `&ibu_lt=${newIBU}`;
     } else {
-      this.maxIBU = '';
+      this._maxIBU = '';
     }
   }
 
   getBasketData(str = '') {
-    return fetch(`${this.base}&ids=${str}${this.name}${this.minABV}${this.maxABV}${this.minIBU}${this.maxIBU}${this.minEBC}`
-    + `${this.maxEBC}${this.yeast}${this.food}${this.malt}${this.hops}${this.periodTo}${this.periodFrom}`)
+    return fetch(`${this._base}&ids=${str}${this._name}${this._minABV}${this._maxABV}${this._minIBU}${this._maxIBU}${this._minEBC}`
+    + `${this._maxEBC}${this._yeast}${this._food}${this._malt}${this._hops}${this._periodTo}${this._periodFrom}`)
       .then((data) => data.json())
       .then((data) => data);
   }
 
-
   getData() {
-    return fetch(`${this.base}${this.name}${this.minABV}${this.maxABV}${this.minIBU}${this.maxIBU}${this.minEBC}`
-    + `${this.maxEBC}${this.yeast}${this.food}${this.malt}${this.hops}${this.periodTo}${this.periodFrom}`)
+    return fetch(`${this._base}${this._name}${this._minABV}${this._maxABV}${this._minIBU}${this._maxIBU}${this._minEBC}`
+    + `${this._maxEBC}${this._yeast}${this._food}${this._malt}${this._hops}${this._periodTo}${this._periodFrom}`)
       .then((data) => data.json())
       .then((data) => data);
   }

@@ -46,6 +46,14 @@ body input {
   margin-left: auto;
 }
 
+.sort-error {
+  display: none;
+}
+
+.sort-error_active {
+  display: block;
+}
+
 .sort-block {
   display: -webkit-box;
   display: -ms-flexbox;

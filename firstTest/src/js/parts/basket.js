@@ -1,10 +1,8 @@
+import { getStorage, setStorage } from './helpers/storage';
+
 export default class Basket {
   constructor() {
-    if (localStorage['beers-basket']) {
-      this._checklist = JSON.parse(localStorage['beers-basket']);
-    } else {
-      this._checklist = [];
-    }
+    this._checklist = getStorage();
     this._status = false;
   }
 
@@ -17,8 +15,8 @@ export default class Basket {
   }
 
   addProduct(newProduct) {
-    this.checklist = [...this._checklist, newProduct];
-    localStorage.setItem('beers-basket', JSON.stringify(this._checklist));
+    this._checklist = [...this._checklist, newProduct];
+    setStorage(this._checklist);
   }
 
   get checklist() {
@@ -27,6 +25,6 @@ export default class Basket {
 
   removeProduct(id) {
     this._checklist = this._checklist.filter((item) => item.id !== id);
-    localStorage.setItem('beers-basket', JSON.stringify(this._checklist));
+    setStorage(this._checklist);
   }
 }

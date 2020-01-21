@@ -10,7 +10,7 @@ const basketShow = (
 
   basketElement.addEventListener('click', () => {
     const cards = renderControl();
-    dataAPI.setUsePage(1);
+    dataAPI.usePage = 1;
     for (let i = 0; i < pageList.length; i += 1) {
       if (i === 0) {
         pageList[i].classList.add('sort-list_activePage');

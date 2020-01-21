@@ -25,43 +25,43 @@ const searchPanel = (
     const { value, checked } = e.target;
     switch (e.target.id) {
       case 'sortByName':
-        dataAPI.setBeerName(value);
+        dataAPI.beerName = value;
         break;
       case 'sortByMinABV':
-        dataAPI.setMinABV(value);
+        dataAPI.minABV = value;
         break;
       case 'sortByMaxABV':
-        dataAPI.setMaxABV(value);
+        dataAPI.maxABV = value;
         break;
       case 'sortByMinIBU':
-        dataAPI.setMinIBU(value);
+        dataAPI.minIBU = value;
         break;
       case 'sortByMaxIBU':
-        dataAPI.setMaxIBU(value);
+        dataAPI.maxIBU = value;
         break;
       case 'sortByMinEBC':
-        dataAPI.setMinEBC(value);
+        dataAPI.minEBC = value;
         break;
       case 'sortByMaxEBC':
-        dataAPI.setMaxEBC(value);
+        dataAPI.maxEBC = value;
         break;
       case 'sortByYeast':
-        dataAPI.setYeast(value);
+        dataAPI.yeast = value;
         break;
       case 'sortByFood':
-        dataAPI.setFood(value);
+        dataAPI.food = value;
         break;
       case 'sortByMalt':
-        dataAPI.setMalt(value);
+        dataAPI.malt = value;
         break;
       case 'sortByHops':
-        dataAPI.setHops(value);
+        dataAPI.hops = value;
         break;
       case 'periodTo':
-        dataAPI.setPeriodTo(value);
+        dataAPI.periodTo = value;
         break;
       case 'periodFrom':
-        dataAPI.setPeriodFrom(value);
+        dataAPI.periodFrom = value;
         break;
       default:
         if (checked) {

@@ -96,6 +96,7 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Basket; });
+/* harmony import */ var _helpers_storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers/storage */ "./src/js/parts/helpers/storage.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -110,26 +111,23 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+
+
 var Basket =
 /*#__PURE__*/
 function () {
   function Basket() {
     _classCallCheck(this, Basket);
 
-    if (localStorage['beers-basket']) {
-      this._checklist = JSON.parse(localStorage['beers-basket']);
-    } else {
-      this._checklist = [];
-    }
-
+    this._checklist = Object(_helpers_storage__WEBPACK_IMPORTED_MODULE_0__["getStorage"])();
     this._status = false;
   }
 
   _createClass(Basket, [{
     key: "addProduct",
     value: function addProduct(newProduct) {
-      this.checklist = [].concat(_toConsumableArray(this._checklist), [newProduct]);
-      localStorage.setItem('beers-basket', JSON.stringify(this._checklist));
+      this._checklist = [].concat(_toConsumableArray(this._checklist), [newProduct]);
+      Object(_helpers_storage__WEBPACK_IMPORTED_MODULE_0__["setStorage"])(this._checklist);
     }
   }, {
     key: "removeProduct",
@@ -137,7 +135,7 @@ function () {
       this._checklist = this._checklist.filter(function (item) {
         return item.id !== id;
       });
-      localStorage.setItem('beers-basket', JSON.stringify(this._checklist));
+      Object(_helpers_storage__WEBPACK_IMPORTED_MODULE_0__["setStorage"])(this._checklist);
     }
   }, {
     key: "status",
@@ -183,180 +181,47 @@ function () {
   function DataAPI() {
     _classCallCheck(this, DataAPI);
 
-    this.dataLength = 325;
-    this.pageLength = 25;
-    this.usePage = 1;
-    this.base = "https://api.punkapi.com/v2/beers?page=".concat(this.usePage, "&per_page=").concat(this.pageLength);
-    this.name = '';
-    this.minABV = '';
-    this.maxABV = '';
-    this.minIBU = '';
-    this.maxIBU = '';
-    this.minEBC = '';
-    this.maxEBC = '';
-    this.yeast = '';
-    this.food = '';
-    this.malt = '';
-    this.hops = '';
-    this.periodTo = '';
-    this.periodFrom = '';
+    this._dataLength = 325;
+    this._pageLength = 25;
+    this._usePage = 1;
+    this._base = "https://api.punkapi.com/v2/beers?page=".concat(this._usePage, "&per_page=").concat(this._pageLength);
+    this._name = '';
+    this._minABV = '';
+    this._maxABV = '';
+    this._minIBU = '';
+    this._maxIBU = '';
+    this._minEBC = '';
+    this._maxEBC = '';
+    this._yeast = '';
+    this._food = '';
+    this._malt = '';
+    this._hops = '';
+    this._periodTo = '';
+    this._periodFrom = '';
   }
 
   _createClass(DataAPI, [{
     key: "restart",
     value: function restart() {
-      this.name = '';
-      this.minABV = '';
-      this.maxABV = '';
-      this.minIBU = '';
-      this.maxIBU = '';
-      this.minEBC = '';
-      this.maxEBC = '';
-      this.yeast = '';
-      this.food = '';
-      this.malt = '';
-      this.hops = '';
-      this.periodTo = '';
-      this.periodFrom = '';
-    }
-  }, {
-    key: "setUsePage",
-    value: function setUsePage(nextPage) {
-      this.usePage = nextPage;
-      this.base = "https://api.punkapi.com/v2/beers?page=".concat(this.usePage, "&per_page=").concat(this.pageLength);
-    }
-  }, {
-    key: "setPeriodFrom",
-    value: function setPeriodFrom(period) {
-      if (period) {
-        this.periodFrom = "&brewed_after=".concat(period);
-      } else {
-        this.periodFrom = '';
-      }
-    }
-  }, {
-    key: "setPeriodTo",
-    value: function setPeriodTo(period) {
-      if (period) {
-        this.periodTo = "&brewed_before=".concat(period);
-      } else {
-        this.periodTo = '';
-      }
-    }
-  }, {
-    key: "setHops",
-    value: function setHops(newHops) {
-      if (newHops) {
-        this.hops = "&hops=".concat(newHops);
-      } else {
-        this.hops = '';
-      }
-    }
-  }, {
-    key: "setMalt",
-    value: function setMalt(newMalt) {
-      if (newMalt) {
-        this.malt = "&malt=".concat(newMalt);
-      } else {
-        this.malt = '';
-      }
-    }
-  }, {
-    key: "setFood",
-    value: function setFood(newFood) {
-      if (newFood) {
-        this.food = "&food=".concat(newFood);
-      } else {
-        this.food = '';
-      }
-    }
-  }, {
-    key: "setYeast",
-    value: function setYeast(newYeast) {
-      if (newYeast) {
-        this.yeast = "&yeast=".concat(newYeast);
-      } else {
-        this.yeast = '';
-      }
-    }
-  }, {
-    key: "getUsePage",
-    value: function getUsePage() {
-      return this.usePage;
-    }
-  }, {
-    key: "getPages",
-    value: function getPages() {
-      return this.dataLength / this.pageLength;
-    }
-  }, {
-    key: "setMinEBC",
-    value: function setMinEBC(newEBC) {
-      if (newEBC) {
-        this.minEBC = "&ebc_gt=".concat(newEBC);
-      } else {
-        this.minEBC = '';
-      }
-    }
-  }, {
-    key: "setMaxEBC",
-    value: function setMaxEBC(newEBC) {
-      if (newEBC) {
-        this.maxEBC = "&ebc_lt=".concat(newEBC);
-      } else {
-        this.maxEBC = '';
-      }
-    }
-  }, {
-    key: "setBeerName",
-    value: function setBeerName(newName) {
-      if (newName) {
-        this.name = "&beer_name=".concat(newName);
-      } else {
-        this.name = '';
-      }
-    }
-  }, {
-    key: "setMinABV",
-    value: function setMinABV(newABV) {
-      if (newABV) {
-        this.minABV = "&abv_gt=".concat(newABV);
-      } else {
-        this.minABV = '';
-      }
-    }
-  }, {
-    key: "setMaxABV",
-    value: function setMaxABV(newABV) {
-      if (newABV) {
-        this.maxABV = "&abv_lt=".concat(newABV);
-      } else {
-        this.maxABV = '';
-      }
-    }
-  }, {
-    key: "setMinIBU",
-    value: function setMinIBU(newIBU) {
-      if (newIBU) {
-        this.minIBU = "&ibu_gt=".concat(newIBU);
-      } else {
-        this.minIBU = '';
-      }
-    }
-  }, {
-    key: "setMaxIBU",
-    value: function setMaxIBU(newIBU) {
-      if (newIBU) {
-        this.maxIBU = "&ibu_lt=".concat(newIBU);
-      } else {
-        this.maxIBU = '';
-      }
+      this._name = '';
+      this._minABV = '';
+      this._maxABV = '';
+      this._minIBU = '';
+      this._maxIBU = '';
+      this._minEBC = '';
+      this._maxEBC = '';
+      this._yeast = '';
+      this._food = '';
+      this._malt = '';
+      this._hops = '';
+      this._periodTo = '';
+      this._periodFrom = '';
     }
   }, {
     key: "getBasketData",
     value: function getBasketData() {
       var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-      return fetch("".concat(this.base, "&ids=").concat(str).concat(this.name).concat(this.minABV).concat(this.maxABV).concat(this.minIBU).concat(this.maxIBU).concat(this.minEBC) + "".concat(this.maxEBC).concat(this.yeast).concat(this.food).concat(this.malt).concat(this.hops).concat(this.periodTo).concat(this.periodFrom)).then(function (data) {
+      return fetch("".concat(this._base, "&ids=").concat(str).concat(this._name).concat(this._minABV).concat(this._maxABV).concat(this._minIBU).concat(this._maxIBU).concat(this._minEBC) + "".concat(this._maxEBC).concat(this._yeast).concat(this._food).concat(this._malt).concat(this._hops).concat(this._periodTo).concat(this._periodFrom)).then(function (data) {
         return data.json();
       }).then(function (data) {
         return data;
@@ -365,11 +230,142 @@ function () {
   }, {
     key: "getData",
     value: function getData() {
-      return fetch("".concat(this.base).concat(this.name).concat(this.minABV).concat(this.maxABV).concat(this.minIBU).concat(this.maxIBU).concat(this.minEBC) + "".concat(this.maxEBC).concat(this.yeast).concat(this.food).concat(this.malt).concat(this.hops).concat(this.periodTo).concat(this.periodFrom)).then(function (data) {
+      return fetch("".concat(this._base).concat(this._name).concat(this._minABV).concat(this._maxABV).concat(this._minIBU).concat(this._maxIBU).concat(this._minEBC) + "".concat(this._maxEBC).concat(this._yeast).concat(this._food).concat(this._malt).concat(this._hops).concat(this._periodTo).concat(this._periodFrom)).then(function (data) {
         return data.json();
       }).then(function (data) {
         return data;
       });
+    }
+  }, {
+    key: "usePage",
+    set: function set(nextPage) {
+      this._usePage = nextPage;
+      this._base = "https://api.punkapi.com/v2/beers?page=".concat(this._usePage, "&per_page=").concat(this._pageLength);
+    },
+    get: function get() {
+      return this._usePage;
+    }
+  }, {
+    key: "periodFrom",
+    set: function set(period) {
+      if (period) {
+        this._periodFrom = "&brewed_after=".concat(period);
+      } else {
+        this._periodFrom = '';
+      }
+    }
+  }, {
+    key: "periodTo",
+    set: function set(period) {
+      if (period) {
+        this._periodTo = "&brewed_before=".concat(period);
+      } else {
+        this._periodTo = '';
+      }
+    }
+  }, {
+    key: "hops",
+    set: function set(newHops) {
+      if (newHops) {
+        this._hops = "&hops=".concat(newHops);
+      } else {
+        this._hops = '';
+      }
+    }
+  }, {
+    key: "malt",
+    set: function set(newMalt) {
+      if (newMalt) {
+        this._malt = "&malt=".concat(newMalt);
+      } else {
+        this._malt = '';
+      }
+    }
+  }, {
+    key: "food",
+    set: function set(newFood) {
+      if (newFood) {
+        this._food = "&food=".concat(newFood);
+      } else {
+        this._food = '';
+      }
+    }
+  }, {
+    key: "yeast",
+    set: function set(newYeast) {
+      if (newYeast) {
+        this._yeast = "&yeast=".concat(newYeast);
+      } else {
+        this._yeast = '';
+      }
+    }
+  }, {
+    key: "pages",
+    get: function get() {
+      return this._dataLength / this._pageLength;
+    }
+  }, {
+    key: "minEBC",
+    set: function set(newEBC) {
+      if (newEBC) {
+        this._minEBC = "&ebc_gt=".concat(newEBC);
+      } else {
+        this._minEBC = '';
+      }
+    }
+  }, {
+    key: "maxEBC",
+    set: function set(newEBC) {
+      if (newEBC) {
+        this._maxEBC = "&ebc_lt=".concat(newEBC);
+      } else {
+        this._maxEBC = '';
+      }
+    }
+  }, {
+    key: "beerName",
+    set: function set(newName) {
+      if (newName) {
+        this._name = "&beer_name=".concat(newName);
+      } else {
+        this._name = '';
+      }
+    }
+  }, {
+    key: "minABV",
+    set: function set(newABV) {
+      if (newABV) {
+        this._minABV = "&abv_gt=".concat(newABV);
+      } else {
+        this._minABV = '';
+      }
+    }
+  }, {
+    key: "maxABV",
+    set: function set(newABV) {
+      if (newABV) {
+        this._maxABV = "&abv_lt=".concat(newABV);
+      } else {
+        this._maxABV = '';
+      }
+    }
+  }, {
+    key: "minIBU",
+    set: function set(newIBU) {
+      if (newIBU) {
+        this._minIBU = "&ibu_gt=".concat(newIBU);
+      } else {
+        this._minIBU = '';
+      }
+    }
+  }, {
+    key: "maxIBU",
+    set: function set(newIBU) {
+      if (newIBU) {
+        this._maxIBU = "&ibu_lt=".concat(newIBU);
+      } else {
+        this._maxIBU = '';
+      }
     }
   }]);
 
@@ -394,7 +390,7 @@ var basketShow = function basketShow(basket, dataAPI, cardCreator, block, render
       pageList = document.querySelectorAll('#pages li');
   basketElement.addEventListener('click', function () {
     var cards = renderControl();
-    dataAPI.setUsePage(1);
+    dataAPI.usePage = 1;
 
     for (var i = 0; i < pageList.length; i += 1) {
       if (i === 0) {
@@ -433,84 +429,77 @@ var basketShow = function basketShow(basket, dataAPI, cardCreator, block, render
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var cardCreator = function cardCreator(arr, basketList) {
-  return arr.map(function (item) {
-    var card = document.createElement('div');
-    card.classList.add('sort-cards__card');
+  var createTemplate = function createTemplate(parent, tag, text, src, create) {
+    var el = document.createElement(tag);
+    if (text) el.textContent = text;
+    if (src) el.src = src;
+    if (create) parent.appendChild(el);
+  };
+
+  return arr.map(function (itemCard) {
     var checked = false,
         malt,
         hops,
         yeast;
-    Object.keys(item).forEach(function (value) {
-      var el;
-      var config = {
-        boil_volume: function boil_volume(item, value) {
-          return value;
-        }
-      };
+    var card = document.createElement('div'),
+        checkBlock = document.createElement('div'),
+        check = document.createElement('input'),
+        config = {
+      boil_volume: function boil_volume() {
+        return null;
+      },
+      method: function method() {
+        return null;
+      },
+      contributed_by: function contributed_by() {
+        return null;
+      },
+      id: function id(item, value) {
+        card.id = item[value];
+        basketList.forEach(function (element) {
+          if (element.id === card.id) {
+            checked = true;
+          }
+        });
+      },
+      image_url: function image_url(item, value) {
+        createTemplate(card, 'img', false, item[value], true);
+      },
+      volume: function volume(item, value) {
+        createTemplate(card, 'div', "".concat((value[0].toUpperCase() + value.slice(1)).replace(/_/g, ''), ": ").concat(item[value].value, " ").concat(item[value].unit), false, true);
+      },
+      name: function name(item, value) {
+        createTemplate(card, 'div', "Name: ".concat(item[value]), false, true);
+      },
+      tagline: function tagline(item, value) {
+        createTemplate(card, 'div', "".concat(item[value]), false, true);
+      },
+      first_brewed: function first_brewed(item, value) {
+        createTemplate(card, 'div', "The first brewed was ".concat(item[value]), false, true);
+      },
+      ingredients: function ingredients(item, value) {
+        malt = '(MALT): ';
+        hops = '(HOPS): ';
+        yeast = "(YEAST): ".concat(item[value].yeast);
+        item[value].malt.forEach(function (element) {
+          malt += "".concat(element.name, " ").concat(element.amount.value, " ").concat(element.amount.unit, "; ");
+        });
+        item[value].hops.forEach(function (element) {
+          hops += "".concat(element.name, " ").concat(element.amount.value, " ").concat(element.amount.unit, "; ");
+        });
+        createTemplate(card, 'div', "Structure: ".concat(malt, " ").concat(hops, " ").concat(yeast), false, true);
+      }
+    };
+    card.classList.add('sort-cards__card');
+    Object.keys(itemCard).forEach(function (value) {
       var method = config[value];
 
-      if (method) {// console.log(method(item, value));
-      } else {// console.log('Нет ничего');
-        }
-
-      switch (value) {
-        case 'boil_volume':
-          return;
-
-        case 'method':
-          return;
-
-        case 'id':
-          card.id = item[value];
-          basketList.forEach(function (element) {
-            if (element.id === card.id) {
-              checked = true;
-            }
-          });
-          return;
-
-        case 'contributed_by':
-          return;
-
-        case 'image_url':
-          el = document.createElement('img');
-          el.src = item[value];
-          break;
-
-        case 'volume':
-          el = document.createElement('div');
-          el.textContent = "\u041E\u0431\u044C\u0435\u043C: ".concat(item[value].value, " ").concat(item[value].unit);
-          break;
-
-        case 'ingredients':
-          el = document.createElement('div');
-          malt = '(MALT): ';
-          hops = '(HOPS): ';
-          yeast = "(YEAST): ".concat(item[value].yeast);
-          item[value].malt.forEach(function (element) {
-            malt += "".concat(element.name, " ").concat(element.amount.value, " ").concat(element.amount.unit, "; ");
-          });
-          item[value].hops.forEach(function (element) {
-            hops += "".concat(element.name, " ").concat(element.amount.value, " ").concat(element.amount.unit, "; ");
-          });
-          el.textContent = "\u0421\u043E\u0441\u0442\u0430\u0432: ".concat(malt, " ").concat(hops, " ").concat(yeast);
-          break;
-
-        case 'brewers_tips':
-          el = document.createElement('div');
-          el.textContent = "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435: ".concat(item[value]);
-          break;
-
-        default:
-          el = document.createElement('div');
-          el.textContent = "".concat(value, ": ").concat(item[value]);
-          break;
+      if (method) {
+        method(itemCard, value);
+      } else {
+        createTemplate(card, 'div', "".concat((value[0].toUpperCase() + value.slice(1)).replace(/_/g, ' '), ": ").concat(itemCard[value]), false, true);
       }
-
-      card.appendChild(el);
     });
-    var checkBlock = document.createElement('div'),
-        check = document.createElement('input');
     checkBlock.textContent = 'Добавить в корзину';
     check.type = 'checkbox';
     check.checked = checked;
@@ -557,9 +546,15 @@ var renderControl = function renderControl() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var requestBasket = function requestBasket(dataAPI, cardCreator, basket, cards, block) {
-  var basketTransformed = basket.checklist.map(function (item) {
+  var error = document.getElementById('requestError'),
+      basketTransformed = basket.checklist.map(function (item) {
     return item.id;
   }).join('|');
+
+  if (error.classList.contains('sort-error_active')) {
+    error.classList.remove('sort-error_active');
+  }
+
   dataAPI.getBasketData(basketTransformed).then(function (data) {
     return cardCreator(data, basket.checklist);
   }).then(function (data) {
@@ -567,6 +562,8 @@ var requestBasket = function requestBasket(dataAPI, cardCreator, basket, cards, 
       cards.appendChild(item);
       block.appendChild(cards);
     });
+  }).catch(function (err) {
+    error.classList.add('sort-error_active');
   });
 };
 
@@ -584,6 +581,12 @@ var requestBasket = function requestBasket(dataAPI, cardCreator, basket, cards, 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var requestDirect = function requestDirect(dataAPI, cardCreator, basket, cards, block) {
+  var error = document.getElementById('requestError');
+
+  if (error.classList.contains('sort-error_active')) {
+    error.classList.remove('sort-error_active');
+  }
+
   dataAPI.getData().then(function (data) {
     return cardCreator(data, basket.checklist);
   }).then(function (data) {
@@ -591,6 +594,8 @@ var requestDirect = function requestDirect(dataAPI, cardCreator, basket, cards, 
       cards.appendChild(item);
       block.appendChild(cards);
     });
+  }).catch(function (err) {
+    error.classList.add('sort-error_active');
   });
 };
 
@@ -616,6 +621,32 @@ var searchCleaner = function searchCleaner() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (searchCleaner);
+
+/***/ }),
+
+/***/ "./src/js/parts/helpers/storage.js":
+/*!*****************************************!*\
+  !*** ./src/js/parts/helpers/storage.js ***!
+  \*****************************************/
+/*! exports provided: getStorage, setStorage */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStorage", function() { return getStorage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setStorage", function() { return setStorage; });
+var getStorage = function getStorage() {
+  if (localStorage['beers-basket']) {
+    return JSON.parse(localStorage['beers-basket']);
+  }
+
+  return [];
+},
+    setStorage = function setStorage(checklist) {
+  localStorage.setItem('beers-basket', JSON.stringify(checklist));
+};
+
+
 
 /***/ }),
 
@@ -744,20 +775,18 @@ var login = function login() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var pages = function pages(dataAPI, basket, cardCreator, renderControl, block, requestDirect, requestBasket) {
-  var parent = document.getElementById('pages'),
-      pagesLength = dataAPI.getPages(),
-      usePage = dataAPI.getUsePage();
+  var parent = document.getElementById('pages');
 
-  for (var i = 1; i <= pagesLength; i += 1) {
+  for (var i = 1; i <= dataAPI.pages; i += 1) {
     var li = document.createElement('li');
     li.textContent = i;
-    if (i === usePage) li.classList.add('sort-list_activePage');
+    if (i === dataAPI.usePage) li.classList.add('sort-list_activePage');
     parent.appendChild(li);
   }
 
   parent.addEventListener('click', function (e) {
     if (e.target.tagName === 'LI') {
-      for (var _i = 0; _i < pagesLength; _i += 1) {
+      for (var _i = 0; _i < dataAPI.pages; _i += 1) {
         if (parent.children[_i].textContent !== e.target.textContent) {
           parent.children[_i].classList.remove('sort-list_activePage');
         } else {
@@ -765,7 +794,7 @@ var pages = function pages(dataAPI, basket, cardCreator, renderControl, block, r
         }
       }
 
-      dataAPI.setUsePage(e.target.textContent);
+      dataAPI.usePage = e.target.textContent;
       var cards = renderControl(),
           basketStatus = basket.status;
 
@@ -838,55 +867,55 @@ var searchPanel = function searchPanel(dataAPI, basket, updateDomBasket, renderC
 
     switch (e.target.id) {
       case 'sortByName':
-        dataAPI.setBeerName(value);
+        dataAPI.beerName = value;
         break;
 
       case 'sortByMinABV':
-        dataAPI.setMinABV(value);
+        dataAPI.minABV = value;
         break;
 
       case 'sortByMaxABV':
-        dataAPI.setMaxABV(value);
+        dataAPI.maxABV = value;
         break;
 
       case 'sortByMinIBU':
-        dataAPI.setMinIBU(value);
+        dataAPI.minIBU = value;
         break;
 
       case 'sortByMaxIBU':
-        dataAPI.setMaxIBU(value);
+        dataAPI.maxIBU = value;
         break;
 
       case 'sortByMinEBC':
-        dataAPI.setMinEBC(value);
+        dataAPI.minEBC = value;
         break;
 
       case 'sortByMaxEBC':
-        dataAPI.setMaxEBC(value);
+        dataAPI.maxEBC = value;
         break;
 
       case 'sortByYeast':
-        dataAPI.setYeast(value);
+        dataAPI.yeast = value;
         break;
 
       case 'sortByFood':
-        dataAPI.setFood(value);
+        dataAPI.food = value;
         break;
 
       case 'sortByMalt':
-        dataAPI.setMalt(value);
+        dataAPI.malt = value;
         break;
 
       case 'sortByHops':
-        dataAPI.setHops(value);
+        dataAPI.hops = value;
         break;
 
       case 'periodTo':
-        dataAPI.setPeriodTo(value);
+        dataAPI.periodTo = value;
         break;
 
       case 'periodFrom':
-        dataAPI.setPeriodFrom(value);
+        dataAPI.periodFrom = value;
         break;
 
       default:
