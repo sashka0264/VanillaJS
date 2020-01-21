@@ -11,6 +11,14 @@ const cardCreator = (arr, basketList) => arr.map((item) => {
   Object.keys(item).forEach((value) => {
     let el;
 
+    const config = {boil_volume: (item, value) => value };
+    const method = config[value];
+    if (method) {
+      // console.log(method(item, value));
+    } else {
+      // console.log('Нет ничего');
+    }
+
     switch (value) {
       case 'boil_volume':
         return;

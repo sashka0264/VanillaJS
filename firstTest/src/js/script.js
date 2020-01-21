@@ -3,12 +3,12 @@ import Basket from './parts/Basket';
 import updateDomBasket from './parts/updateDomBasket';
 import basketShow from './parts/basketShow';
 import searchPanel from './parts/searchPanel';
-import cardCreator from './parts/cardCreator';
-import renderControl from './parts/renderControl';
+import cardCreator from './parts/helpers/cardCreator';
+import renderControl from './parts/helpers/renderControl';
 import pages from './parts/pages';
 import popup from './parts/popup';
 import login from './parts/login';
-import searchCleaner from './parts/searchCleaner';
+import searchCleaner from './parts/helpers/searchCleaner';
 
 document.addEventListener('DOMContentLoaded', () => {
   const dataAPI = new DataAPI();
@@ -33,3 +33,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+const person = 'Sasha';
+const some = person === 'Sasha' ? 10 : 5;

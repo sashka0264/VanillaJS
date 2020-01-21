@@ -1,7 +1,7 @@
-import UserValidator from './UserValidator';
-import DateValidator from './DateValidator';
-import PasswordValidator from './PasswordValidator';
-import EmailValidator from './EmailValidator';
+import UserValidator from './validators/UserValidator';
+import DateValidator from './validators/DateValidator';
+import PasswordValidator from './validators/PasswordValidator';
+import EmailValidator from './validators/EmailValidator';
 
 const login = () => {
   const message = {
@@ -20,7 +20,7 @@ const login = () => {
   const password = form.querySelector('#popup-password');
   const passwordError = form.querySelector('#popup-passwordError');
 
-  const userValidator = new UserValidator(username, 3, 35, usernameError, 'popup-content__userError_active');
+  const userValidator = new UserValidator(username, usernameError, 'popup-content__userError_active', 3, 31);
 
   const dateValidator = new DateValidator(date, dateError, 'popup-content__dateError_active');
   userValidator.listener();
@@ -64,10 +64,10 @@ const login = () => {
         .then((res) => {
           if (res.status === 200) {
             formMessage.classList.add('popup-content__message_active');
-            userValidator.restart();
-            dateValidator.restart();
-            passwordValidator.restart();
-            emailValidator.restart();
+            userValidator.status = false;
+            dateValidator.status = false;
+            passwordValidator.status = false;
+            emailValidator.status = false;
 
             for (const el of form) el.tagName === "INPUT" && (el.value = "");
             formMessage.textContent = message.success;

@@ -382,304 +382,6 @@ function () {
 
 /***/ }),
 
-/***/ "./src/js/parts/DateValidator.js":
-/*!***************************************!*\
-  !*** ./src/js/parts/DateValidator.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DateValidator; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var DateValidator =
-/*#__PURE__*/
-function () {
-  function DateValidator(input, error, className) {
-    _classCallCheck(this, DateValidator);
-
-    this.input = input;
-    this.error = error;
-    this.className = className;
-    this.status = false;
-  }
-
-  _createClass(DateValidator, [{
-    key: "listener",
-    value: function listener() {
-      var _this = this;
-
-      this.input.addEventListener('change', function (e) {
-        if (e.target.value !== '') {
-          _this.status = true;
-
-          _this.error.classList.remove(_this.className);
-        } else {
-          _this.status = false;
-
-          _this.error.classList.add(_this.className);
-        }
-      });
-    }
-  }, {
-    key: "verify",
-    value: function verify() {
-      if (!this.status) {
-        this.error.classList.add(this.className);
-        return 0;
-      }
-
-      return 1;
-    }
-  }, {
-    key: "restart",
-    value: function restart() {
-      this.status = false;
-    }
-  }]);
-
-  return DateValidator;
-}();
-
-
-
-/***/ }),
-
-/***/ "./src/js/parts/EmailValidator.js":
-/*!****************************************!*\
-  !*** ./src/js/parts/EmailValidator.js ***!
-  \****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EmailValidator; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var EmailValidator =
-/*#__PURE__*/
-function () {
-  function EmailValidator(input, error, className) {
-    _classCallCheck(this, EmailValidator);
-
-    this.input = input;
-    this.error = error;
-    this.className = className;
-    this.model = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-    this.status = false;
-  }
-
-  _createClass(EmailValidator, [{
-    key: "listener",
-    value: function listener() {
-      var _this = this;
-
-      this.input.addEventListener('input', function (e) {
-        if (_this.model.test(e.target.value)) {
-          _this.status = true;
-
-          _this.error.classList.remove(_this.className);
-        } else {
-          _this.status = false;
-
-          _this.error.classList.add(_this.className);
-        }
-      });
-    }
-  }, {
-    key: "verify",
-    value: function verify() {
-      if (!this.status) {
-        this.error.classList.add(this.className);
-        return 0;
-      }
-
-      return 1;
-    }
-  }, {
-    key: "restart",
-    value: function restart() {
-      this.status = false;
-    }
-  }]);
-
-  return EmailValidator;
-}();
-
-
-
-/***/ }),
-
-/***/ "./src/js/parts/PasswordValidator.js":
-/*!*******************************************!*\
-  !*** ./src/js/parts/PasswordValidator.js ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PasswordValidator; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var PasswordValidator =
-/*#__PURE__*/
-function () {
-  function PasswordValidator(input, error, className, minLength) {
-    _classCallCheck(this, PasswordValidator);
-
-    this.error = error;
-    this.input = input;
-    this.containsLetters = /^.*[a-zA-Z]+.*$/;
-    this.beginWithoutDigit = /^\D.*$/;
-    this.className = className;
-    this.status = false;
-    this.minLength = minLength;
-  }
-
-  _createClass(PasswordValidator, [{
-    key: "listener",
-    value: function listener() {
-      var _this = this;
-
-      this.input.addEventListener('input', function (e) {
-        if (_this.containsLetters.test(e.target.value) && _this.beginWithoutDigit.test(e.target.value) && e.target.value.length >= _this.minLength) {
-          _this.status = true;
-
-          _this.error.classList.remove(_this.className);
-        } else {
-          _this.status = false;
-
-          _this.error.classList.add(_this.className);
-        }
-      });
-    }
-  }, {
-    key: "verify",
-    value: function verify() {
-      if (!this.status) {
-        this.error.classList.add(this.className);
-        return 0;
-      }
-
-      return 1;
-    }
-  }, {
-    key: "restart",
-    value: function restart() {
-      this.status = false;
-    }
-  }]);
-
-  return PasswordValidator;
-}();
-
-
-
-/***/ }),
-
-/***/ "./src/js/parts/UserValidator.js":
-/*!***************************************!*\
-  !*** ./src/js/parts/UserValidator.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserValidator; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var UserValidator =
-/*#__PURE__*/
-function () {
-  function UserValidator(input, min, max, error, className) {
-    _classCallCheck(this, UserValidator);
-
-    this.input = input;
-    this.minlength = min;
-    this.maxlength = max;
-    this.status = false;
-    this.error = error;
-    this.className = className;
-  }
-
-  _createClass(UserValidator, [{
-    key: "listener",
-    value: function listener() {
-      var _this = this;
-
-      this.input.addEventListener('input', function (e) {
-        if (e.target.value[0] === ' ') e.target.value = e.target.value.replace(/ /g, '');
-        e.target.value = e.target.value.replace(/[^А-я- ]/g, ' ');
-
-        if (_this.input.value.length < _this.minlength && _this.input.value !== ' ') {
-          _this.status = false;
-
-          _this.error.classList.add(_this.className);
-        } else if (_this.input.value.length > _this.maxlength) {
-          _this.status = false;
-
-          _this.error.classList.add(_this.className);
-        } else if (_this.input.value.length >= _this.minlength) {
-          _this.status = true;
-
-          _this.error.classList.remove(_this.className);
-        }
-      });
-      this.input.addEventListener('blur', function () {
-        if (_this.input.value.length >= _this.minlength) {
-          if (_this.input.value.length <= _this.maxlength) {
-            _this.status = true;
-          } else {
-            _this.status = false;
-          }
-        }
-      });
-    }
-  }, {
-    key: "verify",
-    value: function verify() {
-      if (!this.status) {
-        this.error.classList.add(this.className);
-        return 0;
-      }
-
-      return 1;
-    }
-  }, {
-    key: "restart",
-    value: function restart() {
-      this.status = false;
-    }
-  }]);
-
-  return UserValidator;
-}();
-
-
-
-/***/ }),
-
 /***/ "./src/js/parts/basketShow.js":
 /*!************************************!*\
   !*** ./src/js/parts/basketShow.js ***!
@@ -741,10 +443,10 @@ var basketShow = function basketShow(basket, dataAPI, cardCreator, block, render
 
 /***/ }),
 
-/***/ "./src/js/parts/cardCreator.js":
-/*!*************************************!*\
-  !*** ./src/js/parts/cardCreator.js ***!
-  \*************************************/
+/***/ "./src/js/parts/helpers/cardCreator.js":
+/*!*********************************************!*\
+  !*** ./src/js/parts/helpers/cardCreator.js ***!
+  \*********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -760,6 +462,16 @@ var cardCreator = function cardCreator(arr, basketList) {
     var yeast;
     Object.keys(item).forEach(function (value) {
       var el;
+      var config = {
+        boil_volume: function boil_volume(item, value) {
+          return value;
+        }
+      };
+      var method = config[value];
+
+      if (method) {// console.log(method(item, value));
+      } else {// console.log('Нет ничего');
+        }
 
       switch (value) {
         case 'boil_volume':
@@ -833,6 +545,48 @@ var cardCreator = function cardCreator(arr, basketList) {
 
 /***/ }),
 
+/***/ "./src/js/parts/helpers/renderControl.js":
+/*!***********************************************!*\
+  !*** ./src/js/parts/helpers/renderControl.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var renderControl = function renderControl() {
+  var oldCards = document.getElementById('cards');
+  if (oldCards) oldCards.remove();
+  var cards = document.createElement('div');
+  cards.classList.add('sort-cards');
+  cards.id = 'cards';
+  return cards;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (renderControl);
+
+/***/ }),
+
+/***/ "./src/js/parts/helpers/searchCleaner.js":
+/*!***********************************************!*\
+  !*** ./src/js/parts/helpers/searchCleaner.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var searchCleaner = function searchCleaner() {
+  var sort = document.querySelectorAll('#sort input');
+  sort.forEach(function (item) {
+    item.value = '';
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (searchCleaner);
+
+/***/ }),
+
 /***/ "./src/js/parts/login.js":
 /*!*******************************!*\
   !*** ./src/js/parts/login.js ***!
@@ -842,10 +596,10 @@ var cardCreator = function cardCreator(arr, basketList) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _UserValidator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserValidator */ "./src/js/parts/UserValidator.js");
-/* harmony import */ var _DateValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DateValidator */ "./src/js/parts/DateValidator.js");
-/* harmony import */ var _PasswordValidator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PasswordValidator */ "./src/js/parts/PasswordValidator.js");
-/* harmony import */ var _EmailValidator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmailValidator */ "./src/js/parts/EmailValidator.js");
+/* harmony import */ var _validators_UserValidator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validators/UserValidator */ "./src/js/parts/validators/UserValidator.js");
+/* harmony import */ var _validators_DateValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./validators/DateValidator */ "./src/js/parts/validators/DateValidator.js");
+/* harmony import */ var _validators_PasswordValidator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./validators/PasswordValidator */ "./src/js/parts/validators/PasswordValidator.js");
+/* harmony import */ var _validators_EmailValidator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./validators/EmailValidator */ "./src/js/parts/validators/EmailValidator.js");
 
 
 
@@ -864,15 +618,15 @@ var login = function login() {
   var dateError = form.querySelector('#popup-dateError');
   var password = form.querySelector('#popup-password');
   var passwordError = form.querySelector('#popup-passwordError');
-  var userValidator = new _UserValidator__WEBPACK_IMPORTED_MODULE_0__["default"](username, 3, 35, usernameError, 'popup-content__userError_active');
-  var dateValidator = new _DateValidator__WEBPACK_IMPORTED_MODULE_1__["default"](date, dateError, 'popup-content__dateError_active');
+  var userValidator = new _validators_UserValidator__WEBPACK_IMPORTED_MODULE_0__["default"](username, usernameError, 'popup-content__userError_active', 3, 31);
+  var dateValidator = new _validators_DateValidator__WEBPACK_IMPORTED_MODULE_1__["default"](date, dateError, 'popup-content__dateError_active');
   userValidator.listener();
   dateValidator.listener();
-  var passwordValidator = new _PasswordValidator__WEBPACK_IMPORTED_MODULE_2__["default"](password, passwordError, 'popup-content__passwordError_active', 7);
+  var passwordValidator = new _validators_PasswordValidator__WEBPACK_IMPORTED_MODULE_2__["default"](password, passwordError, 'popup-content__passwordError_active', 7);
   passwordValidator.listener();
   var email = form.querySelector('#popup-email');
   var emailError = form.querySelector('#popup-emailError');
-  var emailValidator = new _EmailValidator__WEBPACK_IMPORTED_MODULE_3__["default"](email, emailError, 'popup-content__emailError_active');
+  var emailValidator = new _validators_EmailValidator__WEBPACK_IMPORTED_MODULE_3__["default"](email, emailError, 'popup-content__emailError_active');
   emailValidator.listener();
   var formMessage = form.querySelector('#popup-message');
   form.addEventListener('submit', function (e) {
@@ -904,10 +658,10 @@ var login = function login() {
       }).then(function (res) {
         if (res.status === 200) {
           formMessage.classList.add('popup-content__message_active');
-          userValidator.restart();
-          dateValidator.restart();
-          passwordValidator.restart();
-          emailValidator.restart();
+          userValidator.status = false;
+          dateValidator.status = false;
+          passwordValidator.status = false;
+          emailValidator.status = false;
           var _iteratorNormalCompletion = true;
           var _didIteratorError = false;
           var _iteratorError = undefined;
@@ -1040,48 +794,6 @@ var popup = function popup() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (popup);
-
-/***/ }),
-
-/***/ "./src/js/parts/renderControl.js":
-/*!***************************************!*\
-  !*** ./src/js/parts/renderControl.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var renderControl = function renderControl() {
-  var oldCards = document.getElementById('cards');
-  if (oldCards) oldCards.remove();
-  var cards = document.createElement('div');
-  cards.classList.add('sort-cards');
-  cards.id = 'cards';
-  return cards;
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (renderControl);
-
-/***/ }),
-
-/***/ "./src/js/parts/searchCleaner.js":
-/*!***************************************!*\
-  !*** ./src/js/parts/searchCleaner.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var searchCleaner = function searchCleaner() {
-  var sort = document.querySelectorAll('#sort input');
-  sort.forEach(function (item) {
-    item.value = '';
-  });
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (searchCleaner);
 
 /***/ }),
 
@@ -1222,6 +934,336 @@ var updateDomBasket = function updateDomBasket(basket) {
 
 /***/ }),
 
+/***/ "./src/js/parts/validators/DateValidator.js":
+/*!**************************************************!*\
+  !*** ./src/js/parts/validators/DateValidator.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DateValidator; });
+/* harmony import */ var _Validator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Validator */ "./src/js/parts/validators/Validator.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var DateValidator =
+/*#__PURE__*/
+function (_Validator) {
+  _inherits(DateValidator, _Validator);
+
+  function DateValidator() {
+    _classCallCheck(this, DateValidator);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(DateValidator).apply(this, arguments));
+  }
+
+  _createClass(DateValidator, [{
+    key: "listener",
+    value: function listener() {
+      var _this = this;
+
+      this._input.addEventListener('change', function (_ref) {
+        var value = _ref.target.value;
+        _this.status = !!value;
+
+        _this.verify();
+      });
+    }
+  }]);
+
+  return DateValidator;
+}(_Validator__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./src/js/parts/validators/EmailValidator.js":
+/*!***************************************************!*\
+  !*** ./src/js/parts/validators/EmailValidator.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EmailValidator; });
+/* harmony import */ var _Validator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Validator */ "./src/js/parts/validators/Validator.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var EmailValidator =
+/*#__PURE__*/
+function (_Validator) {
+  _inherits(EmailValidator, _Validator);
+
+  function EmailValidator(input, error, className) {
+    var _this;
+
+    _classCallCheck(this, EmailValidator);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(EmailValidator).call(this, input, error, className));
+    _this._model = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    return _this;
+  }
+
+  _createClass(EmailValidator, [{
+    key: "listener",
+    value: function listener() {
+      var _this2 = this;
+
+      this._input.addEventListener('input', function (_ref) {
+        var value = _ref.target.value;
+        _this2.status = !!_this2._model.test(value);
+
+        _this2.verify();
+      });
+    }
+  }]);
+
+  return EmailValidator;
+}(_Validator__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./src/js/parts/validators/PasswordValidator.js":
+/*!******************************************************!*\
+  !*** ./src/js/parts/validators/PasswordValidator.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PasswordValidator; });
+/* harmony import */ var _Validator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Validator */ "./src/js/parts/validators/Validator.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var PasswordValidator =
+/*#__PURE__*/
+function (_Validator) {
+  _inherits(PasswordValidator, _Validator);
+
+  function PasswordValidator(input, error, className, minLength) {
+    var _this;
+
+    _classCallCheck(this, PasswordValidator);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PasswordValidator).call(this, input, error, className));
+    _this._minLength = minLength;
+    _this._containsLetters = /^.*[a-zA-Z]+.*$/;
+    _this._beginWithoutDigit = /^\D.*$/;
+    return _this;
+  }
+
+  _createClass(PasswordValidator, [{
+    key: "listener",
+    value: function listener() {
+      var _this2 = this;
+
+      this._input.addEventListener('input', function (_ref) {
+        var value = _ref.target.value;
+        _this2.status = !!(_this2._containsLetters.test(value) && _this2._beginWithoutDigit.test(value) && value.length >= _this2._minLength);
+
+        _this2.verify();
+      });
+    }
+  }]);
+
+  return PasswordValidator;
+}(_Validator__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./src/js/parts/validators/UserValidator.js":
+/*!**************************************************!*\
+  !*** ./src/js/parts/validators/UserValidator.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserValidator; });
+/* harmony import */ var _Validator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Validator */ "./src/js/parts/validators/Validator.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var UserValidator =
+/*#__PURE__*/
+function (_Validator) {
+  _inherits(UserValidator, _Validator);
+
+  function UserValidator(input, error, className, min, max) {
+    var _this;
+
+    _classCallCheck(this, UserValidator);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UserValidator).call(this, input, error, className));
+    _this._minlength = min;
+    _this._maxlength = max;
+    return _this;
+  }
+
+  _createClass(UserValidator, [{
+    key: "listener",
+    value: function listener() {
+      var _this2 = this;
+
+      this._input.addEventListener('input', function (e) {
+        if (e.target.value[0] === ' ') {
+          e.target.value = e.target.value.replace(/ /g, '');
+        }
+
+        e.target.value = e.target.value.replace(/[^А-я- ]/g, '');
+        _this2.status = !!(e.target.value.length >= _this2._minlength && e.target.value.length <= _this2._maxlength);
+
+        _this2.verify();
+      });
+    }
+  }]);
+
+  return UserValidator;
+}(_Validator__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./src/js/parts/validators/Validator.js":
+/*!**********************************************!*\
+  !*** ./src/js/parts/validators/Validator.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Validator; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+// eslint-disable-next-line max-classes-per-file
+var Validator =
+/*#__PURE__*/
+function () {
+  function Validator(input, error, className) {
+    _classCallCheck(this, Validator);
+
+    this._input = input;
+    this._error = error;
+    this._className = className;
+    this._status = false;
+  }
+
+  _createClass(Validator, [{
+    key: "verify",
+    value: function verify() {
+      if (this.status) {
+        this._error.classList.remove(this._className);
+      } else {
+        this._error.classList.add(this._className);
+
+        return this.status;
+      }
+
+      return this.status;
+    }
+  }, {
+    key: "status",
+    set: function set(status) {
+      this._status = status;
+    },
+    get: function get() {
+      return this._status;
+    }
+  }]);
+
+  return Validator;
+}();
+
+
+
+/***/ }),
+
 /***/ "./src/js/script.js":
 /*!**************************!*\
   !*** ./src/js/script.js ***!
@@ -1236,12 +1278,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./parts/updateDomBasket */ "./src/js/parts/updateDomBasket.js");
 /* harmony import */ var _parts_basketShow__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./parts/basketShow */ "./src/js/parts/basketShow.js");
 /* harmony import */ var _parts_searchPanel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./parts/searchPanel */ "./src/js/parts/searchPanel.js");
-/* harmony import */ var _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./parts/cardCreator */ "./src/js/parts/cardCreator.js");
-/* harmony import */ var _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./parts/renderControl */ "./src/js/parts/renderControl.js");
+/* harmony import */ var _parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./parts/helpers/cardCreator */ "./src/js/parts/helpers/cardCreator.js");
+/* harmony import */ var _parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./parts/helpers/renderControl */ "./src/js/parts/helpers/renderControl.js");
 /* harmony import */ var _parts_pages__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./parts/pages */ "./src/js/parts/pages.js");
 /* harmony import */ var _parts_popup__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./parts/popup */ "./src/js/parts/popup.js");
 /* harmony import */ var _parts_login__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./parts/login */ "./src/js/parts/login.js");
-/* harmony import */ var _parts_searchCleaner__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./parts/searchCleaner */ "./src/js/parts/searchCleaner.js");
+/* harmony import */ var _parts_helpers_searchCleaner__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./parts/helpers/searchCleaner */ "./src/js/parts/helpers/searchCleaner.js");
 
 
 
@@ -1257,15 +1299,15 @@ document.addEventListener('DOMContentLoaded', function () {
   var dataAPI = new _parts_DataAPI__WEBPACK_IMPORTED_MODULE_0__["default"]();
   var basket = new _parts_Basket__WEBPACK_IMPORTED_MODULE_1__["default"]();
   var block = document.getElementById('sort');
-  Object(_parts_searchPanel__WEBPACK_IMPORTED_MODULE_4__["default"])(dataAPI, basket, _parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"], _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block);
-  Object(_parts_pages__WEBPACK_IMPORTED_MODULE_7__["default"])(dataAPI, basket, _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], block);
+  Object(_parts_searchPanel__WEBPACK_IMPORTED_MODULE_4__["default"])(dataAPI, basket, _parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"], _parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], _parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block);
+  Object(_parts_pages__WEBPACK_IMPORTED_MODULE_7__["default"])(dataAPI, basket, _parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], _parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], block);
   Object(_parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"])(basket);
-  Object(_parts_basketShow__WEBPACK_IMPORTED_MODULE_3__["default"])(basket, dataAPI, _parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block, _parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], _parts_searchCleaner__WEBPACK_IMPORTED_MODULE_10__["default"]);
+  Object(_parts_basketShow__WEBPACK_IMPORTED_MODULE_3__["default"])(basket, dataAPI, _parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block, _parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], _parts_helpers_searchCleaner__WEBPACK_IMPORTED_MODULE_10__["default"]);
   Object(_parts_popup__WEBPACK_IMPORTED_MODULE_8__["default"])();
   Object(_parts_login__WEBPACK_IMPORTED_MODULE_9__["default"])();
-  var cards = Object(_parts_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"])();
+  var cards = Object(_parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"])();
   dataAPI.getData().then(function (data) {
-    return Object(_parts_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"])(data, basket.getChecklist());
+    return Object(_parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"])(data, basket.getChecklist());
   }).then(function (data) {
     return data.forEach(function (item) {
       cards.appendChild(item);
@@ -1273,6 +1315,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+var person = 'Sasha';
+var some = person === 'Sasha' ? 10 : 5;
 
 /***/ })
 
