@@ -117,42 +117,40 @@ function () {
     _classCallCheck(this, Basket);
 
     if (localStorage['beers-basket']) {
-      this.checklist = JSON.parse(localStorage['beers-basket']);
+      this._checklist = JSON.parse(localStorage['beers-basket']);
     } else {
-      this.checklist = [];
+      this._checklist = [];
     }
 
-    this.active = false;
+    this._status = false;
   }
 
   _createClass(Basket, [{
-    key: "getBasketStatus",
-    value: function getBasketStatus() {
-      return this.active;
-    }
-  }, {
-    key: "setBasketStatus",
-    value: function setBasketStatus(status) {
-      this.active = status;
-    }
-  }, {
     key: "addProduct",
     value: function addProduct(newProduct) {
-      this.checklist = [].concat(_toConsumableArray(this.checklist), [newProduct]);
-      localStorage.setItem('beers-basket', JSON.stringify(this.checklist));
-    }
-  }, {
-    key: "getChecklist",
-    value: function getChecklist() {
-      return this.checklist;
+      this.checklist = [].concat(_toConsumableArray(this._checklist), [newProduct]);
+      localStorage.setItem('beers-basket', JSON.stringify(this._checklist));
     }
   }, {
     key: "removeProduct",
     value: function removeProduct(id) {
-      this.checklist = this.checklist.filter(function (item) {
+      this._checklist = this._checklist.filter(function (item) {
         return item.id !== id;
       });
-      localStorage.setItem('beers-basket', JSON.stringify(this.checklist));
+      localStorage.setItem('beers-basket', JSON.stringify(this._checklist));
+    }
+  }, {
+    key: "status",
+    get: function get() {
+      return this._status;
+    },
+    set: function set(status) {
+      this._status = status;
+    }
+  }, {
+    key: "checklist",
+    get: function get() {
+      return this._checklist;
     }
   }]);
 
@@ -391,50 +389,32 @@ function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var basketShow = function basketShow(basket, dataAPI, cardCreator, block, renderControl, searchCleaner) {
-  var basketElement = document.getElementById('basket-show');
-  var pageList = document.querySelectorAll('#pages li');
+var basketShow = function basketShow(basket, dataAPI, cardCreator, block, renderControl, searchCleaner, requestDirect, requestBasket) {
+  var basketElement = document.getElementById('basket-show'),
+      pageList = document.querySelectorAll('#pages li');
   basketElement.addEventListener('click', function () {
-    var basketStatus = basket.getBasketStatus();
     var cards = renderControl();
     dataAPI.setUsePage(1);
-    var usePage = dataAPI.getUsePage();
-    pageList.forEach(function (item, i) {
-      if (i + 1 === usePage) {
-        item.classList.add('sort-list_activePage');
+
+    for (var i = 0; i < pageList.length; i += 1) {
+      if (i === 0) {
+        pageList[i].classList.add('sort-list_activePage');
       } else {
-        item.classList.remove('sort-list_activePage');
+        pageList[i].classList.remove('sort-list_activePage');
       }
-    });
+    }
+
     searchCleaner();
     dataAPI.restart();
 
-    if (basketStatus) {
+    if (basket.status) {
       basketElement.src = './img/basket.png';
-      dataAPI.getData().then(function (data) {
-        return cardCreator(data, basket.getChecklist());
-      }).then(function (data) {
-        return data.forEach(function (item) {
-          cards.appendChild(item);
-          block.appendChild(cards);
-        });
-      });
-      basket.setBasketStatus(false);
+      requestDirect(dataAPI, cardCreator, basket, cards, block);
+      basket.status = false;
     } else {
       basketElement.src = './img/close.png';
-      var basketList = basket.getChecklist();
-      var basketTransformed = basketList.map(function (item) {
-        return item.id;
-      }).join('|');
-      dataAPI.getBasketData(basketTransformed).then(function (data) {
-        return cardCreator(data, basketList);
-      }).then(function (data) {
-        return data.forEach(function (item) {
-          cards.appendChild(item);
-          block.appendChild(cards);
-        });
-      });
-      basket.setBasketStatus(true);
+      requestBasket(dataAPI, cardCreator, basket, cards, block);
+      basket.status = true;
     }
   });
 };
@@ -456,10 +436,10 @@ var cardCreator = function cardCreator(arr, basketList) {
   return arr.map(function (item) {
     var card = document.createElement('div');
     card.classList.add('sort-cards__card');
-    var checked = false;
-    var malt;
-    var hops;
-    var yeast;
+    var checked = false,
+        malt,
+        hops,
+        yeast;
     Object.keys(item).forEach(function (value) {
       var el;
       var config = {
@@ -529,9 +509,9 @@ var cardCreator = function cardCreator(arr, basketList) {
 
       card.appendChild(el);
     });
-    var checkBlock = document.createElement('div');
+    var checkBlock = document.createElement('div'),
+        check = document.createElement('input');
     checkBlock.textContent = 'Добавить в корзину';
-    var check = document.createElement('input');
     check.type = 'checkbox';
     check.checked = checked;
     checkBlock.classList.add('sort-cards__card-add');
@@ -555,15 +535,66 @@ var cardCreator = function cardCreator(arr, basketList) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var renderControl = function renderControl() {
-  var oldCards = document.getElementById('cards');
+  var oldCards = document.getElementById('cards'),
+      cards = document.createElement('div');
   if (oldCards) oldCards.remove();
-  var cards = document.createElement('div');
   cards.classList.add('sort-cards');
   cards.id = 'cards';
   return cards;
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (renderControl);
+
+/***/ }),
+
+/***/ "./src/js/parts/helpers/requestBasket.js":
+/*!***********************************************!*\
+  !*** ./src/js/parts/helpers/requestBasket.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var requestBasket = function requestBasket(dataAPI, cardCreator, basket, cards, block) {
+  var basketTransformed = basket.checklist.map(function (item) {
+    return item.id;
+  }).join('|');
+  dataAPI.getBasketData(basketTransformed).then(function (data) {
+    return cardCreator(data, basket.checklist);
+  }).then(function (data) {
+    return data.forEach(function (item) {
+      cards.appendChild(item);
+      block.appendChild(cards);
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (requestBasket);
+
+/***/ }),
+
+/***/ "./src/js/parts/helpers/requestDirect.js":
+/*!***********************************************!*\
+  !*** ./src/js/parts/helpers/requestDirect.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var requestDirect = function requestDirect(dataAPI, cardCreator, basket, cards, block) {
+  dataAPI.getData().then(function (data) {
+    return cardCreator(data, basket.checklist);
+  }).then(function (data) {
+    return data.forEach(function (item) {
+      cards.appendChild(item);
+      block.appendChild(cards);
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (requestDirect);
 
 /***/ }),
 
@@ -578,9 +609,10 @@ var renderControl = function renderControl() {
 __webpack_require__.r(__webpack_exports__);
 var searchCleaner = function searchCleaner() {
   var sort = document.querySelectorAll('#sort input');
-  sort.forEach(function (item) {
-    item.value = '';
-  });
+
+  for (var i = 0; i < sort.length - 1; i += 1) {
+    sort[i].value = '';
+  }
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (searchCleaner);
@@ -610,45 +642,44 @@ var login = function login() {
     loading: 'Загрузка...',
     success: 'Спасибо. Мы с Вами свяжемся.',
     failure: 'Произошла ошибка. Пожалуйста, повторите попытку позже.'
-  };
-  var form = document.getElementById('popupForm');
-  var username = form.querySelector('#popup-username');
-  var usernameError = form.querySelector('#popup-userError');
-  var date = form.querySelector('#popup-date');
-  var dateError = form.querySelector('#popup-dateError');
-  var password = form.querySelector('#popup-password');
-  var passwordError = form.querySelector('#popup-passwordError');
-  var userValidator = new _validators_UserValidator__WEBPACK_IMPORTED_MODULE_0__["default"](username, usernameError, 'popup-content__userError_active', 3, 31);
-  var dateValidator = new _validators_DateValidator__WEBPACK_IMPORTED_MODULE_1__["default"](date, dateError, 'popup-content__dateError_active');
+  },
+      form = document.getElementById('popupForm'),
+      username = form.querySelector('#popup-username'),
+      usernameError = form.querySelector('#popup-userError'),
+      date = form.querySelector('#popup-date'),
+      dateError = form.querySelector('#popup-dateError'),
+      password = form.querySelector('#popup-password'),
+      passwordError = form.querySelector('#popup-passwordError'),
+      email = form.querySelector('#popup-email'),
+      emailError = form.querySelector('#popup-emailError'),
+      formMessage = form.querySelector('#popup-message'),
+      emailValidator = new _validators_EmailValidator__WEBPACK_IMPORTED_MODULE_3__["default"](email, emailError, 'popup-content__emailError_active'),
+      userValidator = new _validators_UserValidator__WEBPACK_IMPORTED_MODULE_0__["default"](username, usernameError, 'popup-content__userError_active', 3, 31),
+      dateValidator = new _validators_DateValidator__WEBPACK_IMPORTED_MODULE_1__["default"](date, dateError, 'popup-content__dateError_active'),
+      passwordValidator = new _validators_PasswordValidator__WEBPACK_IMPORTED_MODULE_2__["default"](password, passwordError, 'popup-content__passwordError_active', 7);
   userValidator.listener();
   dateValidator.listener();
-  var passwordValidator = new _validators_PasswordValidator__WEBPACK_IMPORTED_MODULE_2__["default"](password, passwordError, 'popup-content__passwordError_active', 7);
   passwordValidator.listener();
-  var email = form.querySelector('#popup-email');
-  var emailError = form.querySelector('#popup-emailError');
-  var emailValidator = new _validators_EmailValidator__WEBPACK_IMPORTED_MODULE_3__["default"](email, emailError, 'popup-content__emailError_active');
   emailValidator.listener();
-  var formMessage = form.querySelector('#popup-message');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var userStatus = userValidator.verify();
-    var dateStatus = dateValidator.verify();
-    var passwordStatus = passwordValidator.verify();
-    var emailStatus = emailValidator.verify();
+    var userStatus = userValidator.verify(),
+        dateStatus = dateValidator.verify(),
+        passwordStatus = passwordValidator.verify(),
+        emailStatus = emailValidator.verify();
 
     if (userStatus && dateStatus && passwordStatus && emailStatus) {
-      var formData = new FormData(e.target);
-      var body = {};
-      formData.forEach(function (item, i) {
-        body[i] = item;
-      });
-
-      var del = function del() {
+      var formData = new FormData(e.target),
+          body = {},
+          del = function del() {
         return setTimeout(function () {
           formMessage.classList.remove('popup-content__message_active');
         }, 4000);
       };
 
+      formData.forEach(function (item, i) {
+        body[i] = item;
+      });
       fetch('server.php', {
         method: 'POST',
         headers: {
@@ -712,10 +743,10 @@ var login = function login() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var pages = function pages(dataAPI, basket, cardCreator, renderControl, block) {
-  var parent = document.getElementById('pages');
-  var pagesLength = dataAPI.getPages();
-  var usePage = dataAPI.getUsePage();
+var pages = function pages(dataAPI, basket, cardCreator, renderControl, block, requestDirect, requestBasket) {
+  var parent = document.getElementById('pages'),
+      pagesLength = dataAPI.getPages(),
+      usePage = dataAPI.getUsePage();
 
   for (var i = 1; i <= pagesLength; i += 1) {
     var li = document.createElement('li');
@@ -735,31 +766,13 @@ var pages = function pages(dataAPI, basket, cardCreator, renderControl, block) {
       }
 
       dataAPI.setUsePage(e.target.textContent);
-      var cards = renderControl();
-      var basketStatus = basket.getBasketStatus();
+      var cards = renderControl(),
+          basketStatus = basket.status;
 
       if (basketStatus) {
-        var basketList = basket.getChecklist();
-        var basketTransformed = basketList.map(function (item) {
-          return item.id;
-        }).join('|');
-        dataAPI.getBasketData(basketTransformed).then(function (data) {
-          return cardCreator(data, basketList);
-        }).then(function (data) {
-          return data.forEach(function (item) {
-            cards.appendChild(item);
-            block.appendChild(cards);
-          });
-        });
+        requestBasket(dataAPI, cardCreator, basket, cards, block);
       } else {
-        dataAPI.getData().then(function (data) {
-          return cardCreator(data, basket.getChecklist());
-        }).then(function (data) {
-          return data.forEach(function (item) {
-            cards.appendChild(item);
-            block.appendChild(cards);
-          });
-        });
+        requestDirect(dataAPI, cardCreator, basket, cards, block);
       }
     }
   });
@@ -779,8 +792,8 @@ var pages = function pages(dataAPI, basket, cardCreator, renderControl, block) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var popup = function popup() {
-  var popupElement = document.getElementById('popup');
-  var loginButton = document.getElementById('login');
+  var popupElement = document.getElementById('popup'),
+      loginButton = document.getElementById('login');
   popupElement.addEventListener('click', function (e) {
     if (e.target.id === 'popup-close' || e.target === popupElement) {
       popupElement.classList.remove('popup_active');
@@ -806,35 +819,16 @@ var popup = function popup() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var searchPanel = function searchPanel(dataAPI, basket, updateDomBasket, renderControl, cardCreator, block) {
-  var sort = document.getElementById('sort');
-  var sortButton = document.getElementById('sortButton');
+var searchPanel = function searchPanel(dataAPI, basket, updateDomBasket, renderControl, cardCreator, block, requestDirect, requestBasket) {
+  var sort = document.getElementById('sort'),
+      sortButton = document.getElementById('sortButton');
   sortButton.addEventListener('click', function () {
-    var basketStatus = basket.getBasketStatus();
     var cards = renderControl();
 
-    if (basketStatus) {
-      var basketList = basket.getChecklist();
-      var basketTransformed = basketList.map(function (item) {
-        return item.id;
-      }).join('|');
-      dataAPI.getBasketData(basketTransformed).then(function (data) {
-        return cardCreator(data, basketList);
-      }).then(function (data) {
-        return data.forEach(function (item) {
-          cards.appendChild(item);
-          block.appendChild(cards);
-        });
-      });
+    if (basket.status) {
+      requestBasket(dataAPI, cardCreator, basket, cards, block);
     } else {
-      dataAPI.getData().then(function (data) {
-        return cardCreator(data, basket.getChecklist());
-      }).then(function (data) {
-        return data.forEach(function (item) {
-          cards.appendChild(item);
-          block.appendChild(cards);
-        });
-      });
+      requestDirect(dataAPI, cardCreator, basket, cards, block);
     }
   });
   sort.addEventListener('input', function (e) {
@@ -905,7 +899,7 @@ var searchPanel = function searchPanel(dataAPI, basket, updateDomBasket, renderC
         }
 
         updateDomBasket(basket);
-        if (basket.getBasketStatus()) e.target.parentElement.parentElement.remove();
+        if (basket.status) e.target.parentElement.parentElement.remove();
         break;
     }
   });
@@ -926,8 +920,7 @@ var searchPanel = function searchPanel(dataAPI, basket, updateDomBasket, renderC
 __webpack_require__.r(__webpack_exports__);
 var updateDomBasket = function updateDomBasket(basket) {
   var count = document.getElementById('basket-count');
-  var basketList = basket.getChecklist();
-  count.textContent = basketList.length;
+  count.textContent = basket.checklist.length;
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (updateDomBasket);
@@ -1284,6 +1277,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _parts_popup__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./parts/popup */ "./src/js/parts/popup.js");
 /* harmony import */ var _parts_login__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./parts/login */ "./src/js/parts/login.js");
 /* harmony import */ var _parts_helpers_searchCleaner__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./parts/helpers/searchCleaner */ "./src/js/parts/helpers/searchCleaner.js");
+/* harmony import */ var _parts_helpers_requestDirect__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./parts/helpers/requestDirect */ "./src/js/parts/helpers/requestDirect.js");
+/* harmony import */ var _parts_helpers_requestBasket__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./parts/helpers/requestBasket */ "./src/js/parts/helpers/requestBasket.js");
+
+
 
 
 
@@ -1296,27 +1293,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 document.addEventListener('DOMContentLoaded', function () {
-  var dataAPI = new _parts_DataAPI__WEBPACK_IMPORTED_MODULE_0__["default"]();
-  var basket = new _parts_Basket__WEBPACK_IMPORTED_MODULE_1__["default"]();
-  var block = document.getElementById('sort');
-  Object(_parts_searchPanel__WEBPACK_IMPORTED_MODULE_4__["default"])(dataAPI, basket, _parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"], _parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], _parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block);
-  Object(_parts_pages__WEBPACK_IMPORTED_MODULE_7__["default"])(dataAPI, basket, _parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], _parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], block);
+  var dataAPI = new _parts_DataAPI__WEBPACK_IMPORTED_MODULE_0__["default"](),
+      basket = new _parts_Basket__WEBPACK_IMPORTED_MODULE_1__["default"](),
+      block = document.getElementById('sort'),
+      cards = Object(_parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"])();
+  Object(_parts_helpers_requestDirect__WEBPACK_IMPORTED_MODULE_11__["default"])(dataAPI, _parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], basket, cards, block);
+  Object(_parts_searchPanel__WEBPACK_IMPORTED_MODULE_4__["default"])(dataAPI, basket, _parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"], _parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], _parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block, _parts_helpers_requestDirect__WEBPACK_IMPORTED_MODULE_11__["default"], _parts_helpers_requestBasket__WEBPACK_IMPORTED_MODULE_12__["default"]);
+  Object(_parts_pages__WEBPACK_IMPORTED_MODULE_7__["default"])(dataAPI, basket, _parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], _parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], block, _parts_helpers_requestDirect__WEBPACK_IMPORTED_MODULE_11__["default"], _parts_helpers_requestBasket__WEBPACK_IMPORTED_MODULE_12__["default"]);
   Object(_parts_updateDomBasket__WEBPACK_IMPORTED_MODULE_2__["default"])(basket);
-  Object(_parts_basketShow__WEBPACK_IMPORTED_MODULE_3__["default"])(basket, dataAPI, _parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block, _parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], _parts_helpers_searchCleaner__WEBPACK_IMPORTED_MODULE_10__["default"]);
+  Object(_parts_basketShow__WEBPACK_IMPORTED_MODULE_3__["default"])(basket, dataAPI, _parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"], block, _parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"], _parts_helpers_searchCleaner__WEBPACK_IMPORTED_MODULE_10__["default"], _parts_helpers_requestDirect__WEBPACK_IMPORTED_MODULE_11__["default"], _parts_helpers_requestBasket__WEBPACK_IMPORTED_MODULE_12__["default"]);
   Object(_parts_popup__WEBPACK_IMPORTED_MODULE_8__["default"])();
   Object(_parts_login__WEBPACK_IMPORTED_MODULE_9__["default"])();
-  var cards = Object(_parts_helpers_renderControl__WEBPACK_IMPORTED_MODULE_6__["default"])();
-  dataAPI.getData().then(function (data) {
-    return Object(_parts_helpers_cardCreator__WEBPACK_IMPORTED_MODULE_5__["default"])(data, basket.getChecklist());
-  }).then(function (data) {
-    return data.forEach(function (item) {
-      cards.appendChild(item);
-      block.appendChild(cards);
-    });
-  });
 });
-var person = 'Sasha';
-var some = person === 'Sasha' ? 10 : 5;
 
 /***/ })
 

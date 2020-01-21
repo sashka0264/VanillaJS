@@ -1,32 +1,32 @@
 export default class Basket {
   constructor() {
     if (localStorage['beers-basket']) {
-      this.checklist = JSON.parse(localStorage['beers-basket']);
+      this._checklist = JSON.parse(localStorage['beers-basket']);
     } else {
-      this.checklist = [];
+      this._checklist = [];
     }
-    this.active = false;
+    this._status = false;
   }
 
-  getBasketStatus() {
-    return this.active;
+  get status() {
+    return this._status;
   }
 
-  setBasketStatus(status) {
-    this.active = status;
+  set status(status) {
+    this._status = status;
   }
 
   addProduct(newProduct) {
-    this.checklist = [...this.checklist, newProduct];
-    localStorage.setItem('beers-basket', JSON.stringify(this.checklist));
+    this.checklist = [...this._checklist, newProduct];
+    localStorage.setItem('beers-basket', JSON.stringify(this._checklist));
   }
 
-  getChecklist() {
-    return this.checklist;
+  get checklist() {
+    return this._checklist;
   }
 
   removeProduct(id) {
-    this.checklist = this.checklist.filter((item) => item.id !== id);
-    localStorage.setItem('beers-basket', JSON.stringify(this.checklist));
+    this._checklist = this._checklist.filter((item) => item.id !== id);
+    localStorage.setItem('beers-basket', JSON.stringify(this._checklist));
   }
 }

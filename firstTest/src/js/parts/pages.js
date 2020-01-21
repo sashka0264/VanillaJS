@@ -1,8 +1,7 @@
-const pages = (dataAPI, basket, cardCreator, renderControl, block) => {
-  const parent = document.getElementById('pages');
-
-  const pagesLength = dataAPI.getPages();
-  const usePage = dataAPI.getUsePage();
+const pages = (dataAPI, basket, cardCreator, renderControl, block, requestDirect, requestBasket) => {
+  const parent = document.getElementById('pages'),
+    pagesLength = dataAPI.getPages(),
+    usePage = dataAPI.getUsePage();
 
   for (let i = 1; i <= pagesLength; i += 1) {
     const li = document.createElement('li');
@@ -22,24 +21,12 @@ const pages = (dataAPI, basket, cardCreator, renderControl, block) => {
         }
       }
       dataAPI.setUsePage(e.target.textContent);
-      const cards = renderControl();
-      const basketStatus = basket.getBasketStatus();
+      const cards = renderControl(),
+        basketStatus = basket.status;
       if (basketStatus) {
-        const basketList = basket.getChecklist();
-        const basketTransformed = basketList.map((item) => item.id).join('|');
-        dataAPI.getBasketData(basketTransformed)
-          .then((data) => cardCreator(data, basketList))
-          .then((data) => data.forEach((item) => {
-            cards.appendChild(item);
-            block.appendChild(cards);
-          }));
+        requestBasket(dataAPI, cardCreator, basket, cards, block);
       } else {
-        dataAPI.getData()
-          .then((data) => cardCreator(data, basket.getChecklist()))
-          .then((data) => data.forEach((item) => {
-            cards.appendChild(item);
-            block.appendChild(cards);
-          }));
+        requestDirect(dataAPI, cardCreator, basket, cards, block);
       }
     }
   });

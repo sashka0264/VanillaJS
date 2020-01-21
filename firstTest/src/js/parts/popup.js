@@ -1,6 +1,6 @@
 const popup = () => {
-  const popupElement = document.getElementById('popup');
-  const loginButton = document.getElementById('login');
+  const popupElement = document.getElementById('popup'),
+    loginButton = document.getElementById('login');
 
   popupElement.addEventListener('click', (e) => {
     if (e.target.id === 'popup-close' || e.target === popupElement) {

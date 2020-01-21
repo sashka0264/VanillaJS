@@ -101,6 +101,7 @@ body input {
 
 .sort-list_activePage {
   font-weight: bold;
+  color: #ff666a;
 }
 
 .sort-list li {

@@ -1,28 +1,23 @@
-const searchPanel = (dataAPI, basket, updateDomBasket, renderControl, cardCreator, block) => {
-  const sort = document.getElementById('sort');
-  const sortButton = document.getElementById('sortButton');
+const searchPanel = (
+  dataAPI,
+  basket,
+  updateDomBasket,
+  renderControl,
+  cardCreator,
+  block,
+  requestDirect,
+  requestBasket,
+) => {
+  const sort = document.getElementById('sort'),
+    sortButton = document.getElementById('sortButton');
 
   sortButton.addEventListener('click', () => {
-    const basketStatus = basket.getBasketStatus();
     const cards = renderControl();
 
-    if (basketStatus) {
-      const basketList = basket.getChecklist();
-      const basketTransformed = basketList.map((item) => item.id).join('|');
-
-      dataAPI.getBasketData(basketTransformed)
-        .then((data) => cardCreator(data, basketList))
-        .then((data) => data.forEach((item) => {
-          cards.appendChild(item);
-          block.appendChild(cards);
-        }));
+    if (basket.status) {
+      requestBasket(dataAPI, cardCreator, basket, cards, block);
     } else {
-      dataAPI.getData()
-        .then((data) => cardCreator(data, basket.getChecklist()))
-        .then((data) => data.forEach((item) => {
-          cards.appendChild(item);
-          block.appendChild(cards);
-        }));
+      requestDirect(dataAPI, cardCreator, basket, cards, block);
     }
   });
 
@@ -75,7 +70,7 @@ const searchPanel = (dataAPI, basket, updateDomBasket, renderControl, cardCreato
           basket.removeProduct(e.target.parentElement.parentElement.id);
         }
         updateDomBasket(basket);
-        if (basket.getBasketStatus()) e.target.parentElement.parentElement.remove();
+        if (basket.status) e.target.parentElement.parentElement.remove();
         break;
     }
   });

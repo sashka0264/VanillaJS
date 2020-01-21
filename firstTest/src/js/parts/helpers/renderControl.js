@@ -1,8 +1,7 @@
 const renderControl = () => {
-  const oldCards = document.getElementById('cards');
+  const oldCards = document.getElementById('cards'),
+    cards = document.createElement('div');
   if (oldCards) oldCards.remove();
-
-  const cards = document.createElement('div');
   cards.classList.add('sort-cards');
   cards.id = 'cards';
   return cards;

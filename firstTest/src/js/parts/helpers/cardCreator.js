@@ -2,11 +2,10 @@ const cardCreator = (arr, basketList) => arr.map((item) => {
   const card = document.createElement('div');
   card.classList.add('sort-cards__card');
 
-  let checked = false;
-
-  let malt;
-  let hops;
-  let yeast;
+  let checked = false,
+    malt,
+    hops,
+    yeast;
 
   Object.keys(item).forEach((value) => {
     let el;
@@ -69,9 +68,9 @@ const cardCreator = (arr, basketList) => arr.map((item) => {
     card.appendChild(el);
   });
 
-  const checkBlock = document.createElement('div');
+  const checkBlock = document.createElement('div'),
+    check = document.createElement('input');
   checkBlock.textContent = 'Добавить в корзину';
-  const check = document.createElement('input');
   check.type = 'checkbox';
   check.checked = checked;
   checkBlock.classList.add('sort-cards__card-add');

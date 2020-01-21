@@ -16,6 +16,7 @@
         "sourceType": "module"
     },
     "rules": {
-        "no-underscore-dangle": ["error", { "allowAfterThis": true }]
+        "no-underscore-dangle": ["error", { "allowAfterThis": true }],
+        "one-var": ["error", "always"]
     }
 }
