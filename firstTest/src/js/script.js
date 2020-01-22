@@ -58,3 +58,5 @@ document.addEventListener('DOMContentLoaded', () => {
   popup();
   login();
 });
+
+console.log(Array)

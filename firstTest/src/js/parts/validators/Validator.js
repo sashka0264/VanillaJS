@@ -1,4 +1,3 @@
-// eslint-disable-next-line max-classes-per-file
 export default class Validator {
   constructor(input, error, className) {
     this._input = input;

@@ -1,4 +1,12 @@
-const pages = (dataAPI, basket, cardCreator, renderControl, block, requestDirect, requestBasket) => {
+const pages = (
+  dataAPI,
+  basket,
+  cardCreator,
+  renderControl,
+  block,
+  requestDirect,
+  requestBasket,
+) => {
   const parent = document.getElementById('pages');
 
   for (let i = 1; i <= dataAPI.pages; i += 1) {

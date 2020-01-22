@@ -1243,7 +1243,6 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-// eslint-disable-next-line max-classes-per-file
 var Validator =
 /*#__PURE__*/
 function () {
@@ -1334,6 +1333,7 @@ document.addEventListener('DOMContentLoaded', function () {
   Object(_parts_popup__WEBPACK_IMPORTED_MODULE_8__["default"])();
   Object(_parts_login__WEBPACK_IMPORTED_MODULE_9__["default"])();
 });
+console.log(Array);
 
 /***/ })
 
