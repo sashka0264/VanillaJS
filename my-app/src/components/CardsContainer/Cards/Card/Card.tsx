@@ -1,6 +1,17 @@
 /* eslint-disable camelcase */
+
 import React from 'react';
 import style from './Card.module.css';
+
+interface IArray {
+  name: string,
+  amount: {
+    value: number,
+    unit: string,
+  },
+  add?: string,
+  attribute?: string,
+}
 
 interface IProps {
   name: string,
@@ -24,7 +35,20 @@ interface IProps {
     value: number,
     unit: string,
   },
+  ingredients: {
+    malt: Array <IArray>,
+    hops: Array <IArray>,
+    yeast: string,
+    map: any,
+  }
+  // {
+  //   malt: Array <IArray>,
+  //   hops: Array <IArray>,
+  //   yeast: string,
+  //   map: any,
+  // }
 }
+
 
 const Card = (
   {
@@ -43,84 +67,117 @@ const Card = (
     attenuation_level,
     boil_volume,
     volume,
+    ingredients,
   }: IProps,
-) => {
-  console.log(typeof abv)
-  return (
-    <div className={style.card}>
-      <div className={style.cardTitle}>
-        {`${name} `}
-        <span className={style.cardBrewed}>
+) => (
+  <div className={style.card}>
+    <div className={style.cardTitle}>
+      {`${name} `}
+      <span className={style.cardBrewed}>
           (
-          {first_brewed.replace(/\//g, '.')}
+        {first_brewed.replace(/\//g, '.')}
           )
-        </span>
-      </div>
-
-      <div className={style.cardSubtitle}>
-        {tagline}
-      </div>
-
-      <img className={style.cardImage} alt="beer" src={image_url} />
-
-      <div className={style.cardDescription}>
-        {description}
-      </div>
-
-      <div className={style.cardProperties}>
-        <span>
-          VOLUME -
-          <span>{` ${volume.value} ${volume.unit}`}</span>
-        </span>
-
-        <span>
-          ABV -
-          <span>{` ${abv}`}</span>
-        </span>
-
-        <span>
-          IBU -
-          <span>{` ${ibu}`}</span>
-        </span>
-
-        <span>
-          TARGET FG -
-          <span>{` ${target_fg}`}</span>
-        </span>
-
-        <span>
-          TARGET OG -
-          <span>{` ${target_og}`}</span>
-        </span>
-
-        <span>
-          EBC -
-          <span>{` ${ebc}`}</span>
-        </span>
-
-        <span>
-          SRM -
-          <span>{` ${srm}`}</span>
-        </span>
-
-        <span>
-          PH -
-          <span>{` ${ph}`}</span>
-        </span>
-
-        <span>
-          BOIL VOLUME -
-          <span>{` ${boil_volume.value} ${boil_volume.unit}`}</span>
-        </span>
-
-        <span>
-          ATTENUATION LEVEL -
-          <span>{` ${attenuation_level}`}</span>
-        </span>
-      </div>
-
+      </span>
     </div>
-  );
-};
+
+    <div className={style.cardSubtitle}>
+      {tagline}
+    </div>
+
+    <img className={style.cardImage} alt="beer" src={image_url} />
+
+    <div className={style.cardDescription}>
+      {description}
+    </div>
+
+    <div className={style.cardProperties}>
+      <span>
+          VOLUME -
+        <span>{` ${volume.value} ${volume.unit}`}</span>
+      </span>
+
+      <span>
+          ABV -
+        <span>{` ${abv}`}</span>
+      </span>
+
+      <span>
+          IBU -
+        <span>{` ${ibu}`}</span>
+      </span>
+
+      <span>
+          TARGET FG -
+        <span>{` ${target_fg}`}</span>
+      </span>
+
+      <span>
+          TARGET OG -
+        <span>{` ${target_og}`}</span>
+      </span>
+
+      <span>
+          EBC -
+        <span>{` ${ebc}`}</span>
+      </span>
+
+      <span>
+          SRM -
+        <span>{` ${srm}`}</span>
+      </span>
+
+      <span>
+          PH -
+        <span>{` ${ph}`}</span>
+      </span>
+
+      <span>
+          BOIL VOLUME -
+        <span>{` ${boil_volume.value} ${boil_volume.unit}`}</span>
+      </span>
+
+      <span>
+          ATTENUATION LEVEL -
+        <span>{` ${attenuation_level}`}</span>
+      </span>
+    </div>
+
+    <div className={style.cardIngredients}>
+      MALT:
+      <span>
+        {
+          ingredients.malt.map((item, i) => (
+            <span key={i}>
+              <span>{item.name}</span>
+              <span>
+                {` ${item.amount.value} `}
+                {` ${item.amount.unit} `}
+              </span>
+            </span>
+          ))
+        }
+      </span>
+
+      HOPS:
+      <span>
+        {
+          ingredients.hops.map((item, i) => (
+            <span key={i}>
+              <span>{item.name}</span>
+              <span>
+                {` ${item.amount.value} `}
+                {` ${item.amount.unit} `}
+              </span>
+            </span>
+          ))
+        }
+      </span>
+
+      YEAST:
+      <span>{ingredients.yeast}</span>
+    </div>
+
+  </div>
+);
 
 export default Card;

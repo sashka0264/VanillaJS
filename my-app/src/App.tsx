@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import nextId from "react-id-generator";
 import CardsContainer from './components/CardsContainer/CardsContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
 import store from './redux/store';
@@ -17,6 +18,9 @@ const AppContainer = () => (
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
+  create() {
+    nextId()
+  }
   render() {
     return (
       <div>
