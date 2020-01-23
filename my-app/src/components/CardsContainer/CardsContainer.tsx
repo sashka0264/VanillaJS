@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import Cards from './Cards/Cards';
 
 export interface IProps {
-  spinner: boolean
+  spinner: boolean,
+  listOfCards: null | Array<any>
 }
 
 class CardsContainer extends Component {
@@ -14,13 +15,14 @@ class CardsContainer extends Component {
   }
 
   render() {
-    const { spinner }: IProps = this.props as IProps;
-    return <Cards spinner={spinner} />;
+    const { spinner, listOfCards }: IProps = this.props as IProps;
+    return <Cards spinner={spinner} listOfCards={listOfCards} />;
   }
 }
 
-const mapStateToProps = ({ main: { cards: { spinner } } } : any) => ({
+const mapStateToProps = ({ main: { cards: { spinner, listOfCards } } } : any) => ({
   spinner,
+  listOfCards,
 });
 
 

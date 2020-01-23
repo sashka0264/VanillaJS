@@ -1,0 +1,48 @@
+.card {
+  display: flex;
+  border: 1px solid black;
+  margin: 20px auto 0 auto;
+  padding: 10px;
+  box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+  background-color: white;
+  flex-basis: 30%;
+  flex-direction: column;
+}
+
+.cardTitle {
+  font-weight: bold;
+}
+
+.cardSubtitle {
+  font-size: 14px;
+}
+
+.cardBrewed {
+  font-weight: normal;
+  font-size: 13px;
+  margin-bottom: 20px;
+  color: #939393;
+}
+
+.cardImage {
+  width: 75px;
+  height: 185px;
+  margin: 5px auto 10px auto;
+}
+
+.cardDescription {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+
+.cardProperties {
+  color: #b3b3b3;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+}
+.cardProperties span span {
+  color: black;
+  border-bottom: 1px solid #e6e6e6;
+}
