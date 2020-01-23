@@ -1,40 +1,38 @@
+/* eslint-disable react/prefer-stateless-function */
+/* eslint-disable one-var */
 import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
-import nextId from "react-id-generator";
+import {compose} from "redux";
+import { BrowserRouter as Router, withRouter} from 'react-router-dom';
 import CardsContainer from './components/CardsContainer/CardsContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
+import PagesContainer from './components/PagesContainer/PagesContainer';
 import store from './redux/store';
 import './App.css';
 
 const AppContainer = () => (
   <Provider store={store}>
     <Router>
-      <AppState />
+      <AppWithRouter />
     </Router>
   </Provider>
 );
 
-
-// eslint-disable-next-line react/prefer-stateless-function
-class App extends Component {
-  create() {
-    nextId()
-  }
+class App extends Component <any> {
   render() {
+    console.log(this.props)
     return (
       <div>
         <NavbarContainer />
+        <PagesContainer />
         <CardsContainer />
       </div>
     );
   }
 }
 
-const mapStateToProps = () => ({});
-
-const mapDispatchToProps = {};
-
-const AppState = connect(mapStateToProps, mapDispatchToProps)(App);
+const AppWithRouter = compose(
+  withRouter
+)(App);
 
 export default AppContainer;

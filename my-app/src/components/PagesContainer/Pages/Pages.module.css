@@ -1,0 +1,25 @@
+.pages {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+
+.page {
+  list-style-type: none;
+  margin: 0 5px;
+}
+
+.usePage {
+  list-style-type: none;
+  margin: 0 5px;
+  font-weight: bold;
+}
+
+.page:hover {
+  cursor: pointer;
+}
+
+.usePage:hover {
+  cursor: pointer;
+}

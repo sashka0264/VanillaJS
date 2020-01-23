@@ -10,7 +10,6 @@ const Cards = ({ spinner, listOfCards } : IGetProps) => {
   let data: null | Array<any> = null;
 
   if (listOfCards) data = listOfCards.map((item) => <Card key={item.id} {...item} />);
-  console.log(data)
 
   return (
     <div className={style.cards}>

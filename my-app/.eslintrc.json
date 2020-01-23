@@ -28,6 +28,6 @@
         "import/no-unresolved": [2, { "commonjs": true }],
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
         "no-underscore-dangle": ["error", { "allowAfterThis": true }],
-        "one-var": ["error", "always"]
+        "one-var": ["error", "always"],
     }
 }
