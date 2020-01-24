@@ -3,6 +3,7 @@
 import React from 'react';
 import nextId from 'react-id-generator';
 import style from './Card.module.css';
+import noPhoto from './img/noPhoto.png'
 
 interface IArray {
   name: string,
@@ -84,7 +85,7 @@ const Card = (
         {tagline}
       </div>
 
-      <img className={style.cardImage} alt="beer" src={image_url} />
+      <img className={image_url ? style.cardImage : style.NoCardImage} alt="beer" src={image_url ? image_url : noPhoto} />
 
       <div className={style.cardDescription}>
         {description}

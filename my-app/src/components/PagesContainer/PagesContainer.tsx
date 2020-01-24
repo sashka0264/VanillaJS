@@ -36,4 +36,4 @@ const mapStateToProps = ({ main: { pages: { usePage, pagesList } } }) => ({
   pagesList,
 });
 
-export default connect(mapStateToProps, {initializePagesTC, setUsePageTC})(PagesContainer);
+export default connect(mapStateToProps, {initializePagesTC, setUsePageTC})(PagesContainer)

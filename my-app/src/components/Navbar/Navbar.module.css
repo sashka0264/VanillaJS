@@ -1,0 +1,25 @@
+.navbar {
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+  z-index: 5;
+  display: flex;
+  padding: 10px 0;
+  justify-content: space-between;
+}
+
+.navbarImage {
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbarImage img {
+  width: 50px;
+  margin-left: 10px;
+}
+
+.navbarLogin {
+  margin-left: 40px;
+}

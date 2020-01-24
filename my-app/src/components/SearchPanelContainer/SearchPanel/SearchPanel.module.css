@@ -1,0 +1,12 @@
+.panel {
+  background-color: #002855;
+  color: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.panel input {
+  margin: 5px;
+}

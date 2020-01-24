@@ -9,23 +9,15 @@ interface iProps {
 }
 
 const Pages = ({pages, usePage, setUsePageTC}: iProps) => {
-  if (pages === null || usePage === null) return null;
-
-  const pageClicked = (e) => {
-    if (+e.target.textContent !== usePage) {
-      setUsePageTC(+e.target.textContent);
-    }
-  }
+  if (!pages || !usePage) return null;
   
   return (
     <ul className={style.pages}>
       {
         pages.map((item) => {
           return (
-            <NavLink key={item} to={`/${item}`}>
-              <li onClick={pageClicked} className={item === usePage ? style.usePage : style.page}>
-                {item}
-              </li>
+            <NavLink className={style.page} key={item} to={`/${item}`}>
+              {item}
             </NavLink>
           )
         })

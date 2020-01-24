@@ -80,3 +80,9 @@
 .cardIngredients span span span {
   display: inline;
 }
+
+.NoCardImage {
+  height: 75px;
+  margin: 5px auto 10px auto;
+  padding: 55px;
+}
