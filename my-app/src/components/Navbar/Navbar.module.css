@@ -23,3 +23,7 @@
 .navbarLogin {
   margin-left: 40px;
 }
+
+.navbarImage img:hover {
+  cursor: pointer;
+}

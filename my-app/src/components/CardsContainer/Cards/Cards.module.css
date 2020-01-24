@@ -2,4 +2,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  position: relative;
+  width: 100%;
 }

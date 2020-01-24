@@ -86,3 +86,15 @@
   margin: 5px auto 10px auto;
   padding: 55px;
 }
+
+.cardAdd {
+  background: #939393;
+  color: #464445;
+  border-radius: 2px;
+  border: none;
+  padding: 0 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px 15px;
+  color: white;
+}

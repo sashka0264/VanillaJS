@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './SearchPanel.module.css';
+import searchImage from './img/search.png'
 
 const SearchPanel = ({inputs, set, startSearch}) => {
   let list: Array<any> = [];
@@ -9,7 +10,7 @@ const SearchPanel = ({inputs, set, startSearch}) => {
     <div className={style.panel}>
       {list}
 
-      <button onClick={startSearch}>SEARCH</button>
+      <button className={style.panelSearch} onClick={startSearch}>SEARCH <img src={searchImage}/></button>
     </div>
   )
 }

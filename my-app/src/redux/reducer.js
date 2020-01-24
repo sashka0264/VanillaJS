@@ -15,6 +15,7 @@ const initialState = {
     usePage: null,
     pagesList: null,
   },
+  basketStatus: true,
 };
 
 const reducer = (state = initialState, action) => {

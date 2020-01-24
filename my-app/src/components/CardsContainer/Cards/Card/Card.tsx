@@ -45,6 +45,8 @@ interface IProps {
   },
   food_pairing: Array<string>,
   brewers_tips: string,
+  onCardClicked?: any,
+  id: any,
 }
 
 const Card = (
@@ -67,11 +69,13 @@ const Card = (
     ingredients,
     food_pairing,
     brewers_tips,
+    onCardClicked,
+    id,
   }: IProps,
 ) => {
   const createId = () => nextId();
   return (
-    <div className={style.card}>
+    <div className={style.card} id={id}>
       <div className={style.cardTitle}>
         {`${name} `}
         <span className={style.cardBrewed}>
@@ -189,6 +193,8 @@ const Card = (
           {brewers_tips}
         </span>
       </div>
+
+      <button onClick={onCardClicked} className={style.cardAdd}>Добавить</button>
 
     </div>
   );

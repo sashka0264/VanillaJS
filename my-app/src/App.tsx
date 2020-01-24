@@ -8,7 +8,7 @@ import NavbarContainer from './components/Navbar/NavbarContainer';
 import PagesContainer from './components/PagesContainer/PagesContainer';
 import SearchPanelContainer from './components/SearchPanelContainer/SearchPanelContainer';
 import store from './redux/store';
-import './App.css';
+import style from './App.module.css';
 
 export interface IProps {
   location: any
@@ -28,9 +28,11 @@ class App extends Component <any> {
     return (
       <div className="container">
         <NavbarContainer />
-        <SearchPanelContainer />
         <PagesContainer />
-        <CardsContainer location={location}/>
+        <div className={style.navigation}>
+          <SearchPanelContainer />
+          <CardsContainer location={location}/>
+        </div>      
       </div>
     );
   }

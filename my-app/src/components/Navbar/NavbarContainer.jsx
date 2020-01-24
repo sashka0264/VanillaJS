@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import basketImage from './img/basket.png';
 import style from './Navbar.module.css';
 import basket from "../../services/Basket";
+import {NavLink} from "react-router-dom";
 
 class NavbarContainer extends Component {
-  componentDidMount() {
-    console.log(basket.checklist.length)
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -15,7 +14,7 @@ class NavbarContainer extends Component {
 
         <div className={style.navbarImage}>
           {basket.checklist.length} 
-          <img src={basketImage}/> 
+          <img src={basketImage} alt="basketIcon"/>
         </div>
       </div>
     );

@@ -153,6 +153,9 @@ class DataAPI {
   }
 
   getBasketData(str = '') {
+    console.log(`${this._base}&ids=${str}${this._name}${this._minABV}${this._maxABV}${this._minIBU}${this._maxIBU}${this._minEBC}`
+    + `${this._maxEBC}${this._yeast}${this._food}${this._malt}${this._hops}${this._periodTo}${this._periodFrom}`)
+    console.log("https://api.punkapi.com/v2/beers?page=1&per_page=25&ids=2|1")
     return fetch(`${this._base}&ids=${str}${this._name}${this._minABV}${this._maxABV}${this._minIBU}${this._maxIBU}${this._minEBC}`
     + `${this._maxEBC}${this._yeast}${this._food}${this._malt}${this._hops}${this._periodTo}${this._periodFrom}`)
       .then((data) => data.json())

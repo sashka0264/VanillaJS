@@ -1,5 +1,6 @@
 
 import dataAPI from '../services/DataAPI';
+import basket from '../services/Basket';
 
 export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
   SET_LIST_OF_CARDS = 'SET-LIST-OF-CARDS',
@@ -20,9 +21,16 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
     dataAPI.usePage = usePage;
     dispatch(setUsePageAC(usePage));
   },
-  getCardsTC = () => async (dispatch) => {
+  getCardsTC = (basketStatus) => async (dispatch) => {
     dispatch(setCardsStatusAC(true));
-    const data = await dataAPI.getData();
+    let data;
+    if (basketStatus) {
+      const transform = basket.checklist.map((item) => item.id).join('|');
+      data = await dataAPI.getBasketData(transform);
+    } else {
+      data = await dataAPI.getData();
+    }
+    console.log("DATA", data)
     setTimeout(() => {
       dispatch(setCardsStatusAC(false));
     }, 1000);

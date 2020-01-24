@@ -221,6 +221,7 @@ function () {
     key: "getBasketData",
     value: function getBasketData() {
       var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      console.log("".concat(this._base, "&ids=").concat(str).concat(this._name).concat(this._minABV).concat(this._maxABV).concat(this._minIBU).concat(this._maxIBU).concat(this._minEBC) + "".concat(this._maxEBC).concat(this._yeast).concat(this._food).concat(this._malt).concat(this._hops).concat(this._periodTo).concat(this._periodFrom));
       return fetch("".concat(this._base, "&ids=").concat(str).concat(this._name).concat(this._minABV).concat(this._maxABV).concat(this._minIBU).concat(this._maxIBU).concat(this._minEBC) + "".concat(this._maxEBC).concat(this._yeast).concat(this._food).concat(this._malt).concat(this._hops).concat(this._periodTo).concat(this._periodFrom)).then(function (data) {
         return data.json();
       }).then(function (data) {

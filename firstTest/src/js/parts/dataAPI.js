@@ -153,6 +153,8 @@ export default class DataAPI {
   }
 
   getBasketData(str = '') {
+    console.log(`${this._base}&ids=${str}${this._name}${this._minABV}${this._maxABV}${this._minIBU}${this._maxIBU}${this._minEBC}`
+    + `${this._maxEBC}${this._yeast}${this._food}${this._malt}${this._hops}${this._periodTo}${this._periodFrom}`)
     return fetch(`${this._base}&ids=${str}${this._name}${this._minABV}${this._maxABV}${this._minIBU}${this._maxIBU}${this._minEBC}`
     + `${this._maxEBC}${this._yeast}${this._food}${this._malt}${this._hops}${this._periodTo}${this._periodFrom}`)
       .then((data) => data.json())
