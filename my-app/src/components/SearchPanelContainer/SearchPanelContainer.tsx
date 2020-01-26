@@ -1,90 +1,119 @@
-import React, {useState} from 'react';
+import React, {Component} from 'react';
 import SearchPanel from './SearchPanel/SearchPanel';
 import {getCardsTC} from '../../redux/actions';
 import { connect } from 'react-redux';
 import dataAPI from '../../services/DataAPI';
 
-const SearchPanelContainer = (props) => {
-  const [inputs, setInputs] = useState({
-    name: '',
-    yeast: '',
-    food: '', 
-    malt: '',
-    hops: '',
-    minABV: '',
-    maxABV: '',
-    minIBU: '',
-    maxIBU: '',
-    minEBC: '',
-    maxEBC: '',
-    from: '',
-    to: '',
-  });
-
-  const set = {
-    name: (e) => {
-      setInputs({...inputs, name: e.target.value});
-      dataAPI.beerName = e.target.value;
-    },
-    yeast: (e) => {
-      setInputs({...inputs, yeast: e.target.value});
-      dataAPI.yeast = e.target.value;
-    },
-    food: (e) => {
-      setInputs({...inputs, food: e.target.value});
-      dataAPI.food = e.target.value;
-    },
-    malt: (e) => {
-      setInputs({...inputs, malt: e.target.value});
-      dataAPI.malt = e.target.value;
-    },
-    hops: (e) => {
-      setInputs({...inputs, hops: e.target.value});
-      dataAPI.hops = e.target.value;
-    },
-    minABV: (e) => {
-      setInputs({...inputs, minABV: e.target.value});
-      dataAPI.minABV = e.target.value;
-    },
-    maxABV: (e) => {
-      setInputs({...inputs, maxABV: e.target.value});
-      dataAPI.maxABV = e.target.value;
-    },
-    minIBU: (e) => {
-      setInputs({...inputs, minIBU: e.target.value});
-      dataAPI.minIBU = e.target.value;
-    },
-    maxIBU: (e) => {
-      setInputs({...inputs, maxIBU: e.target.value});
-      dataAPI.maxIBU = e.target.value;
-    },
-    minEBC: (e) => {
-      setInputs({...inputs, minEBC: e.target.value});
-      dataAPI.minEBC = e.target.value;
-    },
-    maxEBC: (e) => {
-      setInputs({...inputs, maxEBC: e.target.value});
-      dataAPI.maxEBC = e.target.value;
-    },
-    from: (e) => {
-      setInputs({...inputs, from: e.target.value});
-      dataAPI.periodFrom = e.target.value;
-    },
-    to: (e) => {
-      setInputs({...inputs, to: e.target.value});
-      dataAPI.periodTo = e.target.value;
+class SearchPanelContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      yeast: '',
+      food: '', 
+      malt: '',
+      hops: '',
+      minABV: '',
+      maxABV: '',
+      minIBU: '',
+      maxIBU: '',
+      minEBC: '',
+      maxEBC: '',
+      from: '',
+      to: '',
     }
   }
 
-  const startSearch = () => {
-    props.getCardsTC()
+  set = {
+    name: (name) => {
+      this.setState({name});
+      dataAPI.beerName = name;
+    },
+    yeast: (yeast) => {
+      this.setState({yeast});
+      dataAPI.yeast = yeast;
+    },
+    food: (food) => {
+      this.setState({food});
+      dataAPI.food = food;
+    },
+    malt: (malt) => {
+      this.setState({malt});
+      dataAPI.malt = malt;
+    },
+    hops: (hops) => {
+      this.setState({hops});
+      dataAPI.hops = hops;
+    },
+    minABV: (minABV) => {
+      this.setState({minABV});
+      dataAPI.minABV = minABV;
+    },
+    maxABV: (maxABV) => {
+      this.setState({maxABV});
+      dataAPI.maxABV = maxABV;
+    },
+    minIBU: (minIBU) => {
+      this.setState({minIBU});
+      dataAPI.minIBU = minIBU;
+    },
+    maxIBU: (maxIBU) => {
+      this.setState({maxIBU});
+      dataAPI.maxIBU = maxIBU;
+    },
+    minEBC: (minEBC) => {
+      this.setState({minEBC});
+      dataAPI.minEBC = minEBC;
+    },
+    maxEBC: (maxEBC) => {
+      this.setState({maxEBC});
+      dataAPI.maxEBC = maxEBC;
+    },
+    from: (from) => {
+      this.setState({from});
+      dataAPI.periodFrom = from;
+    },
+    to: (to) => {
+      this.setState({to});
+      dataAPI.periodTo = to;
+    }
   }
 
-  return (
-    <SearchPanel inputs={inputs} set={set} startSearch={startSearch} />
-  )
+  componentDidUpdate(prevProps) {
+    const {basketStatus} = this.props as any;
+    if (basketStatus !== prevProps.basketStatus) {
+      const {name, yeast, food, malt, hops, minABV, maxABV, minIBU, maxIBU, minEBC, maxEBC, from, to} = this.set
+      name('');
+      yeast('');
+      food('');
+      malt('');
+      hops('');
+      minABV('');
+      maxABV('');
+      minIBU('');
+      maxIBU('');
+      minEBC('');
+      maxEBC('');
+      from('');
+      to('');
+    }
+  }
+
+  startSearch = () => {
+    const {basketStatus, basketList, getCardsTC} = this.props as any;
+    getCardsTC(basketStatus, basketList);
+  }
+
+  render() {
+    return (
+      <SearchPanel inputs={this.state} set={this.set} startSearch={this.startSearch} />
+    )
+  }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ main : {basket : { basketStatus, basketList } } }) => ({
+  basketStatus,
+  basketList,
+});
 
 export default connect(mapStateToProps, {getCardsTC})(SearchPanelContainer)

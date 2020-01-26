@@ -1,16 +1,21 @@
 
 import dataAPI from '../services/DataAPI';
-import basket from '../services/Basket';
 
 export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
   SET_LIST_OF_CARDS = 'SET-LIST-OF-CARDS',
   SET_USE_PAGE = 'SET-USE-PAGE',
   SET_PAGES = 'SET-PAGES',
+  SET_BASKET_STATUS = 'SET-BASKET-STATUS',
+  ADD_BASKET_PRODUCT = 'ADD-BASKET-PRODUCT',
+  REMOVE_BASKET_PRODUCT = 'REMOVE-BASKET-PRODUCT',
 
   setUsePageAC = (usePage) => ({type: SET_USE_PAGE, usePage}),
   setPagesAC = (pagesList) => ({type: SET_PAGES, pagesList}),
   setCardsStatusAC = (status) => ({ type: SET_CARDS_STATUS, status }),
   setListOfCardsAC = (list) => ({ type: SET_LIST_OF_CARDS, list }),
+  setBasketStatusAC = (status) => ({ type: SET_BASKET_STATUS, status }),
+  addBasketProductAC = (product) => ({ type: ADD_BASKET_PRODUCT, product }),
+  removeBasketProductAC = (id) => ({ type: REMOVE_BASKET_PRODUCT, id }),
 
   initializePagesTC = (pages) => async (dispatch) => {
     const usePage = dataAPI.usePage;
@@ -21,16 +26,15 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
     dataAPI.usePage = usePage;
     dispatch(setUsePageAC(usePage));
   },
-  getCardsTC = (basketStatus) => async (dispatch) => {
+  getCardsTC = (basketStatus, basketList) => async (dispatch) => {
     dispatch(setCardsStatusAC(true));
     let data;
     if (basketStatus) {
-      const transform = basket.checklist.map((item) => item.id).join('|');
+      const transform = basketList.map((item) => item.id).join('|');
       data = await dataAPI.getBasketData(transform);
     } else {
       data = await dataAPI.getData();
     }
-    console.log("DATA", data)
     setTimeout(() => {
       dispatch(setCardsStatusAC(false));
     }, 1000);

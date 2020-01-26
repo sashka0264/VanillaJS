@@ -98,3 +98,23 @@
   padding: 5px 15px;
   color: white;
 }
+
+.cardAdd:hover {
+  cursor: pointer;
+}
+
+.cardInBasket:hover {
+  cursor: pointer;
+}
+
+.cardInBasket {
+  background-color: #6cb43d;
+  color: #464445;
+  border-radius: 2px;
+  border: none;
+  padding: 0 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px 15px;
+  color: white;
+}

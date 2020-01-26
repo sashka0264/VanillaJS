@@ -47,6 +47,8 @@ interface IProps {
   brewers_tips: string,
   onCardClicked?: any,
   id: any,
+  basketClicked: boolean,
+  onCardDeleted?: any,
 }
 
 const Card = (
@@ -71,6 +73,8 @@ const Card = (
     brewers_tips,
     onCardClicked,
     id,
+    basketClicked,
+    onCardDeleted,
   }: IProps,
 ) => {
   const createId = () => nextId();
@@ -194,7 +198,12 @@ const Card = (
         </span>
       </div>
 
-      <button onClick={onCardClicked} className={style.cardAdd}>Добавить</button>
+      <button 
+        onClick={basketClicked ? onCardDeleted : onCardClicked} 
+        className={basketClicked ? style.cardInBasket : style.cardAdd}
+      >
+        {basketClicked ? 'Добавлено в корзину' : 'Добавить'}
+      </button>
 
     </div>
   );

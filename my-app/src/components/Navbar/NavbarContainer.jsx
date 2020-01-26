@@ -1,24 +1,32 @@
 import React, { Component } from 'react';
-import basketImage from './img/basket.png';
-import style from './Navbar.module.css';
-import basket from "../../services/Basket";
-import {NavLink} from "react-router-dom";
+import { connect } from 'react-redux';
+import {setBasketStatusAC} from '../../redux/actions';
+import Navbar from './Navbar/Navbar';
 
 class NavbarContainer extends Component {
-  componentDidMount() {}
+  onBasketClicked = () => {
+    const {setBasketStatusAC, basketStatus} = this.props;
+    setBasketStatusAC(!basketStatus);
+    localStorage.setItem('basket-status', JSON.stringify(!basketStatus));
+  }
 
   render() {
+    const {basketStatus, basketList, onLoginClicked} = this.props;
+    const length = basketList.length;
     return (
-      <div className={style.navbar}>
-        <button className={style.navbarLogin}>Log In</button>
-
-        <div className={style.navbarImage}>
-          {basket.checklist.length} 
-          <img src={basketImage} alt="basketIcon"/>
-        </div>
-      </div>
+      <Navbar 
+        onLoginClicked={onLoginClicked}
+        length={length}
+        onBasketClicked={this.onBasketClicked} 
+        basketStatus={basketStatus}
+      />
     );
   }
 }
 
-export default NavbarContainer;
+const mapStateToProps = ( { main : { basket: { basketStatus, basketList } } } ) => ({
+  basketStatus,
+  basketList,
+});
+
+export default connect(mapStateToProps, {setBasketStatusAC})(NavbarContainer);

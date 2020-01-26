@@ -4,9 +4,16 @@ import {
   SET_LIST_OF_CARDS,
   SET_USE_PAGE,
   SET_PAGES,
+  SET_BASKET_STATUS,
+  ADD_BASKET_PRODUCT,
+  REMOVE_BASKET_PRODUCT,
 } from './actions';
 
 const initialState = {
+  login: {
+    status: false,
+    name: null,
+  },
   cards: {
     spinner: false,
     listOfCards: null,
@@ -15,12 +22,42 @@ const initialState = {
     usePage: null,
     pagesList: null,
   },
-  basketStatus: true,
+  basket: {
+    basketStatus: localStorage["basket-status"] ? JSON.parse(localStorage["basket-status"]) : false,
+    basketList: localStorage["beers-basket"] ? JSON.parse(localStorage["beers-basket"]) : [],
+  }
 };
 
 const reducer = (state = initialState, action) => {
   // console.log(action)
   switch (action.type) {
+    case REMOVE_BASKET_PRODUCT: 
+      return {
+        ...state,
+        basket: {
+          ...state.basket,
+          basketList: state.basket.basketList.filter((item) => item.id !== action.id),
+        }
+      }
+    case ADD_BASKET_PRODUCT:
+      return {
+        ...state, 
+        basket: {
+          ...state.basket,
+          basketList: [
+            ...state.basket.basketList,
+            action.product,
+          ]
+        }
+      }
+    case SET_BASKET_STATUS: 
+      return {
+        ...state, 
+        basket: {
+          ...state.basket,
+          basketStatus: action.status,
+        },
+      }
     case SET_PAGES:
       return {
         ...state,
