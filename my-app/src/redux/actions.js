@@ -29,8 +29,14 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
     dispatch(setBasketStatusAC(newBasketStatus));
     localStorage.setItem('basket-status', JSON.stringify(newBasketStatus));
   },
-  initializePagesTC = (pages) => async (dispatch) => {
-    const { usePage } = dataAPI;
+  initializePagesTC = () => async (dispatch) => {
+    const pages = [],
+      { usePage } = dataAPI;
+
+    for (let i = 1; i <= dataAPI.pages; i += 1) {
+      pages.push(i);
+    }
+
     dispatch(setUsePageAC(usePage));
     dispatch(setPagesAC(pages));
   },

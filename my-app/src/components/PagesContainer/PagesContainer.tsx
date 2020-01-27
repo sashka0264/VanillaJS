@@ -1,21 +1,27 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
+/* eslint-disable no-shadow */
 /* eslint-disable one-var */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Pages from './Pages/Pages';
-import dataAPI from '../../services/DataAPI';
 import { initializePagesTC, setUsePageTC } from '../../redux/actions';
 
 
 interface IProps {
   usePage: number,
   pagesList: Array<number>,
-  initializePagesTC: any,
-  setUsePageTC: any,
+  initializePagesTC: () => void,
+  setUsePageTC: (x: number) => void,
   basketStatus: boolean,
 }
 
-class PagesContainer extends Component {
+interface IState {
+  redirect: boolean,
+}
+
+class PagesContainer extends Component <IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,20 +30,13 @@ class PagesContainer extends Component {
   }
 
   componentDidMount() {
-    const { usePage, pagesList, initializePagesTC }: IProps = this.props as IProps;
-    if (usePage === null || pagesList === null) {
-      const pages: number[] = [];
-
-      for (let i: number = 1; i <= dataAPI.pages; i += 1) {
-        pages.push(i);
-      }
-      initializePagesTC(pages);
-    }
+    const { usePage, pagesList, initializePagesTC } = this.props;
+    if (!usePage || !pagesList) initializePagesTC();
   }
 
   componentDidUpdate(prevProps) {
-    const { basketStatus, setUsePageTC } = this.props as IProps;
-    const { redirect } = this.state as any;
+    const { basketStatus, setUsePageTC } = this.props;
+    const { redirect } = this.state;
     if (basketStatus !== prevProps.basketStatus) {
       setUsePageTC(1);
       this.setState({ redirect: true });
@@ -47,15 +46,17 @@ class PagesContainer extends Component {
   }
 
   render() {
-    const { usePage, pagesList, setUsePageTC }: IProps = this.props as IProps;
-    const { redirect } = this.state as any;
+    const { usePage, pagesList, setUsePageTC } = this.props;
+    const { redirect } = this.state;
     if (redirect) {
       return <Redirect to="/1" />;
     }
     return (
-      <>
-        <Pages usePage={usePage} pages={pagesList} setUsePageTC={setUsePageTC} />
-      </>
+      <Pages
+        usePage={usePage}
+        pages={pagesList}
+        setUsePageTC={setUsePageTC}
+      />
     );
   }
 }
