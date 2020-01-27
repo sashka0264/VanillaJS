@@ -19,6 +19,7 @@ interface IProps {
 
 interface IState {
   redirect: boolean,
+  paginatorView: number,
 }
 
 class PagesContainer extends Component <IProps, IState> {
@@ -26,6 +27,7 @@ class PagesContainer extends Component <IProps, IState> {
     super(props);
     this.state = {
       redirect: false,
+      paginatorView: 1,
     };
   }
 
@@ -39,20 +41,33 @@ class PagesContainer extends Component <IProps, IState> {
     const { redirect } = this.state;
     if (basketStatus !== prevProps.basketStatus) {
       setUsePageTC(1);
-      this.setState({ redirect: true });
+      this.setState({ redirect: true, paginatorView: 1 });
     } else if (basketStatus === prevProps.basketStatus && redirect) {
       this.setState({ redirect: false });
     }
   }
 
+  onLeft = () => {
+    const { paginatorView } = this.state;
+    this.setState({ paginatorView: paginatorView - 1 });
+  }
+
+  onRight = () => {
+    const { paginatorView } = this.state;
+    this.setState({ paginatorView: paginatorView + 1 });
+  }
+
   render() {
     const { usePage, pagesList, setUsePageTC } = this.props;
-    const { redirect } = this.state;
+    const { redirect, paginatorView } = this.state;
     if (redirect) {
       return <Redirect to="/1" />;
     }
     return (
       <Pages
+        onLeft={this.onLeft}
+        onRight={this.onRight}
+        paginatorView={paginatorView}
         usePage={usePage}
         pages={pagesList}
         setUsePageTC={setUsePageTC}
