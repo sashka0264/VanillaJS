@@ -1,13 +1,23 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setBasketStatusAC } from '../../redux/actions';
+import { setBasketStatusTC } from '../../redux/actions';
 import Navbar from './Navbar/Navbar';
 
-class NavbarContainer extends Component {
+interface IProps {
+  setBasketStatusTC: (x: boolean) => void,
+  basketStatus: boolean,
+  basketList: Array<{id: number}>,
+  loginStatus: boolean,
+  loginName: null | string,
+}
+
+class NavbarContainer extends Component <IProps> {
   onBasketClicked = () => {
-    const { setBasketStatusAC, basketStatus } = this.props;
-    setBasketStatusAC(!basketStatus);
-    localStorage.setItem('basket-status', JSON.stringify(!basketStatus));
+    const { basketStatus, setBasketStatusTC } = this.props;
+    setBasketStatusTC(!basketStatus);
   }
 
   render() {
@@ -36,4 +46,4 @@ const mapStateToProps = (
   loginName: name,
 });
 
-export default connect(mapStateToProps, { setBasketStatusAC })(NavbarContainer);
+export default connect(mapStateToProps, { setBasketStatusTC })(NavbarContainer);

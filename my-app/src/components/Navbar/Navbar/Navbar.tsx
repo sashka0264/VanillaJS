@@ -29,7 +29,7 @@ const Navbar = ({
             { length }
             <img
               src={basketStatus ? closeImage : basketImage}
-              alt="basketIcon"
+              alt="basket-icon"
             />
           </button>
         </>

@@ -19,6 +19,10 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
   removeBasketProductAC = (id) => ({ type: REMOVE_BASKET_PRODUCT, id }),
   loginAC = (name) => ({ type: LOGIN, name }),
 
+  setBasketStatusTC = (newBasketStatus) => async (dispatch) => {
+    dispatch(setBasketStatusAC(newBasketStatus));
+    localStorage.setItem('basket-status', JSON.stringify(newBasketStatus));
+  },
   initializePagesTC = (pages) => async (dispatch) => {
     const { usePage } = dataAPI;
     dispatch(setUsePageAC(usePage));

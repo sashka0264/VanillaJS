@@ -20,9 +20,6 @@
   border-radius: 33px;
   color: #6cb43d;
   font-weight: bold;
-  outline: none;
-  opacity: 1;
-  transition: opacity 0.3s ease-in-out;
 }
 
 .navbarBasket img {
