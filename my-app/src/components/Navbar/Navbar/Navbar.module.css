@@ -6,17 +6,27 @@
   display: flex;
   min-height: 70px;
   justify-content: space-between;
+  align-items: center;
 }
 
-.navbarImage {
+.navbarBasket {
   margin-right: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-width: 75px;
+  padding: 7px 7px 7px 20px;
+  border: none;
+  border-radius: 33px;
+  color: #6cb43d;
+  font-weight: bold;
+  outline: none;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
 }
 
-.navbarImage img {
-  width: 50px;
+.navbarBasket img {
+  width: 25px;
   margin-left: 10px;
 }
 
@@ -24,11 +34,13 @@
   margin-left: 40px;
 }
 
-.navbarImage img:hover {
+.navbarBasket:hover {
   cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .navbarName {
   font-weight: bold;
-  margin: 15px 5px 5px 35px;
+  margin: 0 5px 0 35px;
 }

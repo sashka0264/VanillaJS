@@ -1,32 +1,41 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import style from './Navbar.module.css';
 import closeImage from './img/close.png';
 import basketImage from './img/basket.png';
 
-const Navbar = ({
-  length, onBasketClicked, basketStatus, loginStatus, loginName,
-}) => (
-  <>
-    <div className={style.navbar}>
-      {
-          loginStatus
-            && (
-              <>
-                <span className={style.navbarName}>{loginName}</span>
+interface IProps {
+  length: number,
+  onBasketClicked: () => void,
+  basketStatus: boolean,
+  loginStatus: boolean,
+  loginName: null | string,
+}
 
-                <div className={style.navbarImage}>
-                  { length }
-                  <img 
-                    onClick={onBasketClicked} 
-                    src={basketStatus ? closeImage : basketImage} 
-                    alt="basketIcon" 
-                  />
-                </div>
-              </>
-            )
-        }
-    </div>
-  </>
+const Navbar = ({
+  length,
+  onBasketClicked,
+  basketStatus,
+  loginStatus,
+  loginName,
+}:IProps) => (
+  <div className={style.navbar}>
+    {
+      loginStatus ? (
+        <>
+          <span className={style.navbarName}>{ loginName }</span>
+
+          <button type="button" className={style.navbarBasket} onClick={onBasketClicked}>
+            { length }
+            <img
+              src={basketStatus ? closeImage : basketImage}
+              alt="basketIcon"
+            />
+          </button>
+        </>
+      ) : null
+    }
+  </div>
 );
 
 export default Navbar;

@@ -13,8 +13,8 @@ import {
 
 const initialState = {
   login: {
-    status: false,
-    name: null,
+    status: localStorage['beers-login'] ? JSON.parse(localStorage['beers-login']).status : false,
+    name: localStorage['beers-login'] ? JSON.parse(localStorage['beers-login']).name : null,
   },
   cards: {
     spinner: false,
