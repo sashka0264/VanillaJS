@@ -52,6 +52,7 @@ class PagesContainer extends Component {
 
       return <Redirect to='/1'/>
     }
+    console.log(pagesList)
     return (
       <>
         <Pages usePage={usePage} pages={pagesList} setUsePageTC={setUsePageTC}/>
