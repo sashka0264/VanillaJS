@@ -198,8 +198,9 @@ const Card = (
         </span>
       </div>
 
-      <button 
-        onClick={basketClicked ? onCardDeleted : onCardClicked} 
+      <button
+        type="button"
+        onClick={basketClicked ? onCardDeleted : onCardClicked}
         className={basketClicked ? style.cardInBasket : style.cardAdd}
       >
         {basketClicked ? 'Добавлено в корзину' : 'Добавить'}

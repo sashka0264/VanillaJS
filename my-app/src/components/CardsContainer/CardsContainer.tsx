@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { getCardsTC, addBasketProductAC, removeBasketProductAC } from '../../redux/actions';
 import { connect } from 'react-redux';
+import { getCardsTC, addBasketProductAC, removeBasketProductAC } from '../../redux/actions';
 import Cards from './Cards/Cards';
-import dataAPI from '../../services/DataAPI'
+import dataAPI from '../../services/DataAPI';
 
 export interface IProps {
   spinner: boolean,
@@ -17,21 +17,23 @@ export interface IProps {
 
 class CardsContainer extends Component <IProps> {
   componentDidMount() {
-    const { getCardsTC, location, basketStatus, basketList }: any = this.props as any;
-    const param = +location.pathname.replace(/\//g, "");
+    const {
+        getCardsTC, location, basketStatus, basketList,
+      }: any = this.props as any,
+      param = +location.pathname.replace(/\//g, '');
 
     if (!isNaN(param) && param <= dataAPI.pages && param > 0) {
       dataAPI.usePage = param;
       getCardsTC(basketStatus, basketList);
-    } else {
-      console.warn('Обработай эту ошибку, выведи, что такой страницы нет', param)
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { getCardsTC, basketList, basketStatus, location }: any = this.props as any;
-    const param = +location.pathname.replace(/\//g, "")
-    
+    const {
+        getCardsTC, basketList, basketStatus, location,
+      }: any = this.props as any,
+      param = +location.pathname.replace(/\//g, '');
+
     if (dataAPI.usePage !== param || basketStatus !== prevProps.basketStatus) {
       dataAPI.usePage = param;
       getCardsTC(basketStatus, basketList);
@@ -41,30 +43,32 @@ class CardsContainer extends Component <IProps> {
   }
 
   onCardClicked = (e) => {
-    const {addBasketProductAC} = this.props;
-    addBasketProductAC({id: +e.target.parentElement.id})
+    const { addBasketProductAC } = this.props;
+    addBasketProductAC({ id: +e.target.parentElement.id });
   }
 
   onCardDeleted = (e) => {
-    const {removeBasketProductAC} = this.props;
+    const { removeBasketProductAC } = this.props;
     removeBasketProductAC(+e.target.parentElement.id);
   }
 
   render() {
     const { spinner, listOfCards, basketList } = this.props;
     return (
-      <Cards 
-        basketList={basketList} 
-        spinner={spinner} 
-        listOfCards={listOfCards} 
-        onCardDeleted={this.onCardDeleted} 
+      <Cards
+        basketList={basketList}
+        spinner={spinner}
+        listOfCards={listOfCards}
+        onCardDeleted={this.onCardDeleted}
         onCardClicked={this.onCardClicked}
       />
     );
   }
 }
 
-const mapStateToProps = ({ main: { cards: { spinner, listOfCards }, basket: { basketStatus, basketList } } } : any) => ({
+const mapStateToProps = (
+  { main: { cards: { spinner, listOfCards }, basket: { basketStatus, basketList } } } : any,
+) => ({
   spinner,
   listOfCards,
   basketStatus,
@@ -72,4 +76,6 @@ const mapStateToProps = ({ main: { cards: { spinner, listOfCards }, basket: { ba
 });
 
 
-export default connect(mapStateToProps, { getCardsTC, addBasketProductAC, removeBasketProductAC })(CardsContainer);
+export default connect(
+  mapStateToProps, { getCardsTC, addBasketProductAC, removeBasketProductAC },
+)(CardsContainer);

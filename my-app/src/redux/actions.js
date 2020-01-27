@@ -10,8 +10,8 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
   REMOVE_BASKET_PRODUCT = 'REMOVE-BASKET-PRODUCT',
   LOGIN = 'LOGIN',
 
-  setUsePageAC = (usePage) => ({type: SET_USE_PAGE, usePage}),
-  setPagesAC = (pagesList) => ({type: SET_PAGES, pagesList}),
+  setUsePageAC = (usePage) => ({ type: SET_USE_PAGE, usePage }),
+  setPagesAC = (pagesList) => ({ type: SET_PAGES, pagesList }),
   setCardsStatusAC = (status) => ({ type: SET_CARDS_STATUS, status }),
   setListOfCardsAC = (list) => ({ type: SET_LIST_OF_CARDS, list }),
   setBasketStatusAC = (status) => ({ type: SET_BASKET_STATUS, status }),
@@ -20,7 +20,7 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
   loginAC = (name) => ({ type: LOGIN, name }),
 
   initializePagesTC = (pages) => async (dispatch) => {
-    const usePage = dataAPI.usePage;
+    const { usePage } = dataAPI;
     dispatch(setUsePageAC(usePage));
     dispatch(setPagesAC(pages));
   },
