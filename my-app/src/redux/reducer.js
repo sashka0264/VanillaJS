@@ -7,12 +7,14 @@ import {
   SET_BASKET_STATUS,
   ADD_BASKET_PRODUCT,
   REMOVE_BASKET_PRODUCT,
+  LOGIN,
 } from './actions';
+
 
 const initialState = {
   login: {
-    status: false,
-    name: null,
+    status: localStorage["beers-login"] ? JSON.parse(localStorage["beers-login"]).status : false,
+    name: localStorage["beers-login"] ? JSON.parse(localStorage["beers-login"]).name : null,
   },
   cards: {
     spinner: false,
@@ -29,8 +31,16 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  // console.log(action)
   switch (action.type) {
+    case LOGIN: 
+      return {
+        ...state,
+        login: {
+          ...state.login,
+          status: true,
+          name: action.name,
+        }
+      }
     case REMOVE_BASKET_PRODUCT: 
       return {
         ...state,

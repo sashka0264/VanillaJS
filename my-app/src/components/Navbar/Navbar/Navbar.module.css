@@ -4,7 +4,7 @@
   box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
   z-index: 5;
   display: flex;
-  padding: 10px 0;
+  min-height: 70px;
   justify-content: space-between;
 }
 
@@ -26,4 +26,9 @@
 
 .navbarImage img:hover {
   cursor: pointer;
+}
+
+.navbarName {
+  font-weight: bold;
+  margin: 15px 5px 5px 35px;
 }

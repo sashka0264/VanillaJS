@@ -24,7 +24,7 @@ class CardsContainer extends Component <IProps> {
       dataAPI.usePage = param;
       getCardsTC(basketStatus, basketList);
     } else {
-      // console.warn('Обработай эту ошибку, выведи, что такой страницы нет', param)
+      console.warn('Обработай эту ошибку, выведи, что такой страницы нет', param)
     }
   }
 
@@ -41,13 +41,13 @@ class CardsContainer extends Component <IProps> {
   }
 
   onCardClicked = (e) => {
-    const {basketList, addBasketProductAC} = this.props;
-    addBasketProductAC({id: e.target.parentElement.id})
+    const {addBasketProductAC} = this.props;
+    addBasketProductAC({id: +e.target.parentElement.id})
   }
 
   onCardDeleted = (e) => {
-    const {basketList, removeBasketProductAC} = this.props;
-    removeBasketProductAC(e.target.parentElement.id);
+    const {removeBasketProductAC} = this.props;
+    removeBasketProductAC(+e.target.parentElement.id);
   }
 
   render() {

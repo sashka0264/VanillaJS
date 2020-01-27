@@ -11,22 +11,25 @@ class NavbarContainer extends Component {
   }
 
   render() {
-    const {basketStatus, basketList, onLoginClicked} = this.props;
+    const {basketStatus, basketList, loginName, loginStatus} = this.props;
     const length = basketList.length;
     return (
       <Navbar 
-        onLoginClicked={onLoginClicked}
+        loginStatus={loginStatus}
         length={length}
         onBasketClicked={this.onBasketClicked} 
         basketStatus={basketStatus}
+        loginName={loginName}
       />
     );
   }
 }
 
-const mapStateToProps = ( { main : { basket: { basketStatus, basketList } } } ) => ({
+const mapStateToProps = ( { main : { basket: { basketStatus, basketList }, login: { status, name } } } ) => ({
   basketStatus,
   basketList,
+  loginStatus: status,
+  loginName: name,
 });
 
 export default connect(mapStateToProps, {setBasketStatusAC})(NavbarContainer);

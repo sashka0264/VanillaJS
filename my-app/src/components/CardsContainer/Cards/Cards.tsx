@@ -12,7 +12,7 @@ const Cards = ({ spinner, listOfCards, onCardClicked, basketList, onCardDeleted}
   if (listOfCards) data = listOfCards.map((item) => {
     let basketClicked = false;
     basketList.forEach((basketElement) => {
-      if (item.id == basketElement.id) {
+      if (item.id === basketElement.id) {
         basketClicked = true;
       }
     })

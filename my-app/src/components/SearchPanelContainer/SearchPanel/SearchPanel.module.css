@@ -36,5 +36,8 @@
   width: 17px;
   margin-left: 4px;
   margin-top: -2px;
+}
 
+.panelSearch {
+  cursor: pointer;
 }

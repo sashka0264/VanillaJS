@@ -49,7 +49,7 @@ class PagesContainer extends Component {
     const {usePage, pagesList, setUsePageTC}: IProps = this.props as IProps;
     const {redirect} = this.state as any;
     if (redirect) {
-      console.log("REDIRECT")
+
       return <Redirect to='/1'/>
     }
     return (

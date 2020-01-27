@@ -2,6 +2,7 @@
 /* eslint-disable one-var */
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import {connect} from "react-redux";
 import { BrowserRouter as Router, withRouter} from 'react-router-dom';
 import CardsContainer from './components/CardsContainer/CardsContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
@@ -10,9 +11,12 @@ import SearchPanelContainer from './components/SearchPanelContainer/SearchPanelC
 import store from './redux/store';
 import style from './App.module.css';
 import LoginContainer from './components/LoginContainer/LoginContainer';
+import {Redirect} from "react-router-dom";
+import dataAPI from './services/DataAPI';
 
 export interface IProps {
-  location: any
+  location: any,
+  loginStatus: boolean,
 }
 
 const AppContainer = () => (
@@ -23,26 +27,18 @@ const AppContainer = () => (
   </Provider>
 );
 
+export default AppContainer;
+
 class App extends Component <any> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loginMenu: true,
-    }
-  }
-
-  onLoginClicked = () => {
-    this.setState({ loginMenu: true })
-  }
-
   render() {
-    const {location}: IProps = this.props as IProps;
-    const {loginMenu} = this.state as any;
-
+    const {location, loginStatus}: IProps = this.props as IProps;
+    const param = +location.pathname.replace(/\//g, "");
+    if (param < 1 || param > dataAPI.pages || isNaN(param)) return <Redirect to='/1'/>
+  
     return (
       <div className="container">
-        <NavbarContainer onLoginClicked={this.onLoginClicked}/>
-        {loginMenu ? 
+        <NavbarContainer />
+        {!loginStatus ? 
           <LoginContainer /> :
           <>
             <PagesContainer />
@@ -57,6 +53,9 @@ class App extends Component <any> {
   }
 }
 
-const AppWithRouter = withRouter(App);
+const mapStateToProps = ({main: {login: {status}}}) => ({
+  loginStatus: status,
+});
 
-export default AppContainer;
+const AppWithState = connect(mapStateToProps, {})(App);
+const AppWithRouter = withRouter(AppWithState);
