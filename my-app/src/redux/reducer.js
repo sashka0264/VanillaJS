@@ -8,6 +8,7 @@ import {
   ADD_BASKET_PRODUCT,
   REMOVE_BASKET_PRODUCT,
   LOGIN,
+  LOGOUT,
 } from './actions';
 
 
@@ -31,7 +32,17 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  // console.log(action);
   switch (action.type) {
+    case LOGOUT:
+      return {
+        ...state,
+        login: {
+          ...state.login,
+          status: false,
+          name: null,
+        },
+      };
     case LOGIN:
       return {
         ...state,

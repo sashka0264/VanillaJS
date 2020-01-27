@@ -3,7 +3,7 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setBasketStatusTC } from '../../redux/actions';
+import { setBasketStatusTC, logOutTC } from '../../redux/actions';
 import Navbar from './Navbar/Navbar';
 
 interface IProps {
@@ -12,12 +12,18 @@ interface IProps {
   basketList: Array<{id: number}>,
   loginStatus: boolean,
   loginName: null | string,
+  logOutTC: () => void,
 }
 
 class NavbarContainer extends Component <IProps> {
   onBasketClicked = () => {
     const { basketStatus, setBasketStatusTC } = this.props;
     setBasketStatusTC(!basketStatus);
+  }
+
+  onLogOut = () => {
+    const { logOutTC } = this.props;
+    logOutTC();
   }
 
   render() {
@@ -27,6 +33,7 @@ class NavbarContainer extends Component <IProps> {
       { length } = basketList;
     return (
       <Navbar
+        onLogOut={this.onLogOut}
         loginStatus={loginStatus}
         length={length}
         onBasketClicked={this.onBasketClicked}
@@ -46,4 +53,4 @@ const mapStateToProps = (
   loginName: name,
 });
 
-export default connect(mapStateToProps, { setBasketStatusTC })(NavbarContainer);
+export default connect(mapStateToProps, { setBasketStatusTC, logOutTC })(NavbarContainer);

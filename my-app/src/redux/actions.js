@@ -9,6 +9,7 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
   ADD_BASKET_PRODUCT = 'ADD-BASKET-PRODUCT',
   REMOVE_BASKET_PRODUCT = 'REMOVE-BASKET-PRODUCT',
   LOGIN = 'LOGIN',
+  LOGOUT = 'LOGOUT',
 
   setUsePageAC = (usePage) => ({ type: SET_USE_PAGE, usePage }),
   setPagesAC = (pagesList) => ({ type: SET_PAGES, pagesList }),
@@ -18,7 +19,12 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
   addBasketProductAC = (product) => ({ type: ADD_BASKET_PRODUCT, product }),
   removeBasketProductAC = (id) => ({ type: REMOVE_BASKET_PRODUCT, id }),
   loginAC = (name) => ({ type: LOGIN, name }),
+  logOutAC = () => ({ type: LOGOUT }),
 
+  logOutTC = () => async (dispatch) => {
+    localStorage.removeItem('beers-login');
+    dispatch(logOutAC());
+  },
   setBasketStatusTC = (newBasketStatus) => async (dispatch) => {
     dispatch(setBasketStatusAC(newBasketStatus));
     localStorage.setItem('basket-status', JSON.stringify(newBasketStatus));

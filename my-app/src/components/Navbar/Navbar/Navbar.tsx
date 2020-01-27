@@ -10,6 +10,7 @@ interface IProps {
   basketStatus: boolean,
   loginStatus: boolean,
   loginName: null | string,
+  onLogOut: () => void,
 }
 
 const Navbar = ({
@@ -18,12 +19,21 @@ const Navbar = ({
   basketStatus,
   loginStatus,
   loginName,
+  onLogOut,
 }:IProps) => (
   <div className={style.navbar}>
     {
       loginStatus ? (
         <>
-          <span className={style.navbarName}>{ loginName }</span>
+          <div className={style.navbarLogin}>
+            <button className={style.navbarLogout} type="button" onClick={onLogOut}>Log out</button>
+            <div>
+              Logged in as
+              <span className={style.navbarName}>
+                {` ${loginName}`}
+              </span>
+            </div>
+          </div>
 
           <button type="button" className={style.navbarBasket} onClick={onBasketClicked}>
             { length }
