@@ -1,3 +1,4 @@
+/* eslint-disable react/no-did-update-set-state */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 /* eslint-disable no-shadow */
@@ -10,8 +11,8 @@ import { initializePagesTC, setUsePageTC } from '../../redux/actions';
 
 
 interface IProps {
-  usePage: number,
-  pagesList: Array<number>,
+  usePage: number | null,
+  pagesList: Array<number> | null,
   initializePagesTC: () => void,
   setUsePageTC: (x: number) => void,
   basketStatus: boolean,
@@ -42,9 +43,7 @@ class PagesContainer extends Component <IProps, IState> {
     if (basketStatus !== prevProps.basketStatus) {
       setUsePageTC(1);
       this.setState({ redirect: true, paginatorView: 1 });
-    } else if (basketStatus === prevProps.basketStatus && redirect) {
-      this.setState({ redirect: false });
-    }
+    } else if (redirect) this.setState({ redirect: false });
   }
 
   onLeft = () => {
@@ -58,7 +57,7 @@ class PagesContainer extends Component <IProps, IState> {
   }
 
   render() {
-    const { usePage, pagesList, setUsePageTC } = this.props;
+    const { usePage, pagesList } = this.props;
     const { redirect, paginatorView } = this.state;
     if (redirect) {
       return <Redirect to="/1" />;
@@ -70,7 +69,6 @@ class PagesContainer extends Component <IProps, IState> {
         paginatorView={paginatorView}
         usePage={usePage}
         pages={pagesList}
-        setUsePageTC={setUsePageTC}
       />
     );
   }
