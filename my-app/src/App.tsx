@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
 
-import { BrowserRouter as Router, withRouter, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, withRouter, Redirect, Route } from 'react-router-dom';
 
 import CardsContainer from './components/CardsContainer/CardsContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
@@ -29,11 +29,11 @@ const AppContainer = () => (
 
 export default AppContainer;
 
-class App extends Component <any> {
+class App extends Component <IProps> {
   render() {
-    const { location, loginStatus }: IProps = this.props as IProps;
-    const param = +location.pathname.replace(/\//g, '');
-    if (param < 1 || param > dataAPI.pages || isNaN(param)) return <Redirect to="/1" />;
+    const { location, loginStatus } = this.props;
+    const x = +location.pathname.slice(1);
+    if (x < 1 || x > dataAPI.pages || isNaN(x)) return <Redirect to="/1" />;
 
     return (
       <div className="container">
@@ -43,9 +43,10 @@ class App extends Component <any> {
           : (
             <>
               <PagesContainer />
+
               <div className={style.navigation}>
                 <SearchPanelContainer />
-                <CardsContainer location={location} />
+                <Route path="/:page?" component={CardsContainer} />
               </div>
             </>
           )}

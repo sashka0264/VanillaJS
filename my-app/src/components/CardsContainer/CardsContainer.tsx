@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCardsTC, addBasketProductAC, removeBasketProductAC } from '../../redux/actions';
@@ -7,35 +8,33 @@ import dataAPI from '../../services/DataAPI';
 export interface IProps {
   spinner: boolean,
   listOfCards: null | Array<any>,
-  location?: any,
-  onCardClicked?: any,
-  basketList?: any,
-  onCardDeleted?: any,
-  addBasketProductAC?: any,
-  removeBasketProductAC?: any,
+  basketList: Array<{id: number}>,
+  addBasketProductAC: ({ id: number }) => void,
+  removeBasketProductAC: (x: number) => void,
+  match: any,
+  getCardsTC: (x: boolean, y: any) => void,
+  basketStatus: boolean,
 }
 
 class CardsContainer extends Component <IProps> {
   componentDidMount() {
     const {
-        getCardsTC, location, basketStatus, basketList,
-      }: any = this.props as any,
-      param = +location.pathname.replace(/\//g, '');
+      getCardsTC, basketStatus, basketList, match: { params: { page } },
+    } = this.props;
 
-    if (!isNaN(param) && param <= dataAPI.pages && param > 0) {
-      dataAPI.usePage = param;
+    if (page <= dataAPI.pages && page > 0) {
+      dataAPI.usePage = +page;
       getCardsTC(basketStatus, basketList);
     }
   }
 
   componentDidUpdate(prevProps) {
     const {
-        getCardsTC, basketList, basketStatus, location,
-      }: any = this.props as any,
-      param = +location.pathname.replace(/\//g, '');
+      getCardsTC, basketList, basketStatus, match: { params: { page } },
+    } = this.props;
 
-    if (dataAPI.usePage !== param || basketStatus !== prevProps.basketStatus) {
-      dataAPI.usePage = param;
+    if (dataAPI.usePage !== +page || basketStatus !== prevProps.basketStatus) {
+      dataAPI.usePage = +page;
       getCardsTC(basketStatus, basketList);
     }
 

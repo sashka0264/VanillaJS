@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-shadow */
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { setBasketStatusTC, logOutTC } from '../../redux/actions';
 import Navbar from './Navbar/Navbar';

@@ -8,4 +8,3 @@ const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 export default store;
 
-window.store = store;

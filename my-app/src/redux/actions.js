@@ -21,15 +21,15 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
   loginAC = (name) => ({ type: LOGIN, name }),
   logOutAC = () => ({ type: LOGOUT }),
 
-  logOutTC = () => async (dispatch) => {
+  logOutTC = () => (dispatch) => {
     localStorage.removeItem('beers-login');
     dispatch(logOutAC());
   },
-  setBasketStatusTC = (newBasketStatus) => async (dispatch) => {
+  setBasketStatusTC = (newBasketStatus) => (dispatch) => {
     dispatch(setBasketStatusAC(newBasketStatus));
     localStorage.setItem('basket-status', JSON.stringify(newBasketStatus));
   },
-  initializePagesTC = () => async (dispatch) => {
+  initializePagesTC = () => (dispatch) => {
     const pages = [],
       { usePage } = dataAPI;
 
@@ -40,7 +40,7 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
     dispatch(setUsePageAC(usePage));
     dispatch(setPagesAC(pages));
   },
-  setUsePageTC = (usePage) => async (dispatch) => {
+  setUsePageTC = (usePage) => (dispatch) => {
     dataAPI.usePage = usePage;
     dispatch(setUsePageAC(usePage));
   },

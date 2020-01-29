@@ -1,13 +1,20 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { IProps as IGetProps } from '../CardsContainer';
 import Card from './Card/Card';
 import Spinner from '../../../common/Spinner/Spinner';
 import style from './Cards.module.css';
 
+interface IProps {
+  spinner: boolean,
+  listOfCards: null | Array<any>,
+  onCardClicked: (e: Event) => void,
+  basketList: Array<{id: number}>,
+  onCardDeleted: (e: Event) => void,
+}
+
 const Cards = ({
   spinner, listOfCards, onCardClicked, basketList, onCardDeleted,
-} : IGetProps) => {
+} : IProps) => {
   if (spinner) return <div className={style.cards}><Spinner /></div>;
 
   let data: null | Array<any> = null;
