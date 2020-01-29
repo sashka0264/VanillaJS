@@ -34,7 +34,6 @@ class App extends Component <IProps> {
     const { location, loginStatus } = this.props;
     const x = +location.pathname.slice(1);
     if (x < 1 || x > dataAPI.pages || isNaN(x)) return <Redirect to="/1" />;
-
     return (
       <div className="container">
         <NavbarContainer />
@@ -55,7 +54,7 @@ class App extends Component <IProps> {
   }
 }
 
-const mapStateToProps = ({ main: { login: { status } } }) => ({
+const mapStateToProps = ({ login: { status } }) => ({
   loginStatus: status,
 });
 

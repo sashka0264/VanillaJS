@@ -1,9 +1,10 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-shadow */
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setBasketStatusTC, logOutTC } from '../../redux/actions';
+import { logOutTC } from '../../redux/reducers/loginReducer';
+import { setBasketStatusTC } from '../../redux/reducers/basketReducer';
 import Navbar from './Navbar/Navbar';
 
 interface IProps {
@@ -45,7 +46,7 @@ class NavbarContainer extends Component <IProps> {
 }
 
 const mapStateToProps = (
-  { main: { basket: { basketStatus, basketList }, login: { status, name } } },
+  { basket: { basketStatus, basketList }, login: { status, name } },
 ) => ({
   basketStatus,
   basketList,

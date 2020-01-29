@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import LoginReduxForm from './Login/Login';
-import { loginAC } from '../../redux/actions';
+import { loginAC } from '../../redux/reducers/loginReducer';
 
 const LoginContainer = ({ loginAC }) => {
   const onSubmit = ({ name }) => {

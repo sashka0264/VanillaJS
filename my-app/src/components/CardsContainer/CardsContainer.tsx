@@ -1,7 +1,8 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getCardsTC, addBasketProductAC, removeBasketProductAC } from '../../redux/actions';
+import { getCardsTC } from '../../redux/reducers/cardsReducer';
+import { addBasketProductAC, removeBasketProductAC } from '../../redux/reducers/basketReducer';
 import Cards from './Cards/Cards';
 import dataAPI from '../../services/DataAPI';
 
@@ -66,7 +67,7 @@ class CardsContainer extends Component <IProps> {
 }
 
 const mapStateToProps = (
-  { main: { cards: { spinner, listOfCards }, basket: { basketStatus, basketList } } } : any,
+  { cards: { spinner, listOfCards }, basket: { basketStatus, basketList } },
 ) => ({
   spinner,
   listOfCards,

@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Pages from './Pages/Pages';
-import { initializePagesTC, setUsePageTC } from '../../redux/actions';
+import { initializePagesTC, setUsePageTC } from '../../redux/reducers/pagesReducer';
 
 
 interface IProps {
@@ -75,7 +75,7 @@ class PagesContainer extends Component <IProps, IState> {
 }
 
 const mapStateToProps = (
-  { main: { pages: { usePage, pagesList }, basket: { basketStatus } } },
+  { pages: { usePage, pagesList }, basket: { basketStatus } },
 ) => ({
   usePage,
   pagesList,

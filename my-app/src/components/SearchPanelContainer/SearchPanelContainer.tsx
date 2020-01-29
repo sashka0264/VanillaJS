@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SearchPanel from './SearchPanel/SearchPanel';
-import { getCardsTC } from '../../redux/actions';
+import { getCardsTC } from '../../redux/reducers/cardsReducer';
 import dataAPI from '../../services/DataAPI';
 
 class SearchPanelContainer extends Component {
@@ -113,7 +113,7 @@ class SearchPanelContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ main: { basket: { basketStatus, basketList } } }) => ({
+const mapStateToProps = ({ basket: { basketStatus, basketList } }) => ({
   basketStatus,
   basketList,
 });
