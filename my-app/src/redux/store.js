@@ -1,5 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable one-var */
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { reducer as form } from 'redux-form';
 import login from './reducers/loginReducer';
@@ -15,5 +16,13 @@ const reducers = combineReducers({
   cards,
 });
 
-const store = createStore(reducers, applyMiddleware(thunkMiddleware));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)));
+
+// const store = createStore(
+//   reducers,
+//   applyMiddleware(thunkMiddleware),
+// );
+// если без redux-dev-tools
+
 export default store;
