@@ -16,16 +16,20 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
   getCardsTC = (basketStatus, basketList) => async (dispatch) => {
     dispatch(setCardsStatusAC(true));
     let data;
-    if (basketStatus) {
-      const transform = basketList.map((item) => item.id).join('|');
-      data = await dataAPI.getBasketData(transform);
-    } else {
-      data = await dataAPI.getData();
+    try {
+      if (basketStatus) {
+        const transform = basketList.map((item) => item.id).join('|');
+        data = await dataAPI.getBasketData(transform);
+      } else {
+        data = await dataAPI.getData();
+      }
+      dispatch(setListOfCardsAC(data));
+      setTimeout(() => {
+        dispatch(setCardsStatusAC(false));
+      }, 1000);
+    } catch (err) {
+      console.error(`${err.message}. Пожалуйста, проверьте соединение и повторите попытку... `);
     }
-    setTimeout(() => {
-      dispatch(setCardsStatusAC(false));
-    }, 1000);
-    dispatch(setListOfCardsAC(data));
   };
 
 const initialState = {
