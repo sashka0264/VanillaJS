@@ -137,7 +137,7 @@ const Card = (
 
       <button
         type="button"
-        onClick={basketClicked ? onCardDeleted : onCardClicked}
+        onClick={(e) => (basketClicked ? onCardClicked(e, false) : onCardClicked(e, true))}
         className={basketClicked ? style.cardInBasket : style.cardAdd}
       >
         {basketClicked ? 'Добавлено в корзину' : 'Добавить'}

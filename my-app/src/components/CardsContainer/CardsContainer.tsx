@@ -42,14 +42,13 @@ class CardsContainer extends Component <IProps> {
     localStorage.setItem('beers-basket', JSON.stringify(basketList));
   }
 
-  onCardClicked = (e) => {
-    const { addBasketProductAC } = this.props;
-    addBasketProductAC({ id: +e.target.parentElement.id });
-  }
-
-  onCardDeleted = (e) => {
-    const { removeBasketProductAC } = this.props;
-    removeBasketProductAC(+e.target.parentElement.id);
+  onCardClicked = (e, status) => {
+    const { addBasketProductAC, removeBasketProductAC } = this.props;
+    if (status) {
+      addBasketProductAC({ id: +e.target.parentElement.id });
+    } else {
+      removeBasketProductAC(+e.target.parentElement.id);
+    }
   }
 
   render() {
@@ -59,7 +58,6 @@ class CardsContainer extends Component <IProps> {
         basketList={basketList}
         spinner={spinner}
         listOfCards={listOfCards}
-        onCardDeleted={this.onCardDeleted}
         onCardClicked={this.onCardClicked}
       />
     );
