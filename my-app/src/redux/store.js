@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable one-var */
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import {
+  createStore, applyMiddleware, combineReducers, compose,
+} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { reducer as form } from 'redux-form';
 import login from './reducers/loginReducer';

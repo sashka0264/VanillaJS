@@ -2,9 +2,9 @@
 /* eslint-disable one-var */
 import React, { Component } from 'react';
 import { Provider, connect } from 'react-redux';
-
-import { BrowserRouter as Router, withRouter, Redirect, Route } from 'react-router-dom';
-
+import {
+  BrowserRouter as Router, withRouter, Redirect, Route,
+} from 'react-router-dom';
 import CardsContainer from './components/CardsContainer/CardsContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
 import PagesContainer from './components/PagesContainer/PagesContainer';
@@ -60,3 +60,4 @@ const mapStateToProps = ({ login: { status } }) => ({
 
 const AppWithState = connect(mapStateToProps, {})(App);
 const AppWithRouter = withRouter(AppWithState);
+

@@ -26,6 +26,7 @@ const LoginForm = ({ handleSubmit }:any) => (
         name="date"
         className={style.appLoginDate}
         component={DateInputControl}
+        type="date"
         validate={[required, maxDateLength]}
       />
 
@@ -40,6 +41,7 @@ const LoginForm = ({ handleSubmit }:any) => (
 
       <Field
         name="email"
+        type="email"
         className={style.appLoginEmail}
         component={LoginInputControl}
         placeholder="Email"

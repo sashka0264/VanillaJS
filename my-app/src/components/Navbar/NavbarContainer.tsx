@@ -55,3 +55,4 @@ const mapStateToProps = (
 });
 
 export default connect(mapStateToProps, { setBasketStatusTC, logOutTC })(NavbarContainer);
+
