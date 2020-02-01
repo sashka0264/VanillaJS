@@ -1,7 +1,9 @@
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable one-var */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-shadow */
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { logOutTC } from '../../redux/reducers/loginReducer';
 import { setBasketStatusTC } from '../../redux/reducers/basketReducer';
@@ -16,34 +18,27 @@ interface IProps {
   logOutTC: () => void,
 }
 
-class NavbarContainer extends Component <IProps> {
-  onBasketClicked = () => {
-    const { basketStatus, setBasketStatusTC } = this.props;
+const NavbarContainer = React.memo(function NavbarContainer({
+  setBasketStatusTC, basketStatus, loginStatus, logOutTC, basketList, loginName,
+}:IProps) {
+  const onBasketClicked = () => {
     setBasketStatusTC(!basketStatus);
-  }
+  };
 
-  onLogOut = () => {
-    const { logOutTC } = this.props;
-    logOutTC();
-  }
+  const onLogOut = () => logOutTC();
 
-  render() {
-    const {
-        basketStatus, basketList, loginName, loginStatus,
-      } = this.props,
-      { length } = basketList;
-    return (
-      <Navbar
-        onLogOut={this.onLogOut}
-        loginStatus={loginStatus}
-        length={length}
-        onBasketClicked={this.onBasketClicked}
-        basketStatus={basketStatus}
-        loginName={loginName}
-      />
-    );
-  }
-}
+  return (
+    <Navbar
+      onLogOut={onLogOut}
+      loginStatus={loginStatus}
+      length={basketList.length}
+      onBasketClicked={onBasketClicked}
+      basketStatus={basketStatus}
+      loginName={loginName}
+    />
+  );
+});
+
 
 const mapStateToProps = (
   { basket: { basketStatus, basketList }, login: { status, name } },
@@ -55,4 +50,3 @@ const mapStateToProps = (
 });
 
 export default connect(mapStateToProps, { setBasketStatusTC, logOutTC })(NavbarContainer);
-

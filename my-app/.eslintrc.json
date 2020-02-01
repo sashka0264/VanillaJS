@@ -25,9 +25,11 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "import/no-unresolved": [2, { "commonjs": true }],
+        "import/no-unresolved": [2, { "ignore": ["./"] }],
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
         "no-underscore-dangle": ["error", { "allowAfterThis": true }],
-        "one-var": ["error", "always"]
+        "one-var": ["error", "consecutive"],
+        "import/extensions": ["error", "never"],
+        "no-restricted-globals": ["error", "event", "fdescribe"]
     }
 }

@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React, { Component } from 'react';
+import React, { Component, ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import { getCardsTC } from '../../redux/reducers/cardsReducer';
 import { addBasketProductAC, removeBasketProductAC } from '../../redux/reducers/basketReducer';
@@ -42,7 +42,7 @@ class CardsContainer extends Component <IProps> {
     localStorage.setItem('beers-basket', JSON.stringify(basketList));
   }
 
-  onCardClicked = (e, status) => {
+  onCardClicked = (e: ChangeEvent<any>, status) => {
     const { addBasketProductAC, removeBasketProductAC } = this.props;
     if (status) {
       addBasketProductAC({ id: +e.target.parentElement.id });

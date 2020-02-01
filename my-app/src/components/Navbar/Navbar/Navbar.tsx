@@ -4,7 +4,7 @@ import style from './Navbar.module.css';
 import closeImage from './img/close.png';
 import basketImage from './img/basket.png';
 
-interface IProps {
+interface NavbarProps {
   length: number,
   onBasketClicked: () => void,
   basketStatus: boolean,
@@ -13,14 +13,14 @@ interface IProps {
   onLogOut: () => void,
 }
 
-const Navbar = ({
+const Navbar: React.FC<NavbarProps> = ({
   length,
   onBasketClicked,
   basketStatus,
   loginStatus,
   loginName,
   onLogOut,
-}:IProps) => (
+}) => (
   <div className={style.navbar}>
     {
       loginStatus ? (
