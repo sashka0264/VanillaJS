@@ -1,12 +1,12 @@
 import React from 'react';
 
-interface IProps {
+interface ElementProps {
   value: Array<any> | number | string,
   title: string,
   wrapper?: boolean,
 }
 
-const Element = ({ value, title, wrapper }: IProps) => (
+const Element: React.FC<ElementProps> = ({ value, title, wrapper }:ElementProps) => (
   <>
     {wrapper
       ? (

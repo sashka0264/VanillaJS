@@ -1,19 +1,18 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import Card from './Card/Card';
 import Spinner from '../../../common/Spinner/Spinner';
 import style from './Cards.module.css';
 
-interface IProps {
+interface CardsProps {
   spinner: boolean,
   listOfCards: null | Array<any>,
-  onCardClicked: (e: any, status: any) => void,
+  onCardClicked: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, status: boolean) => void,
   basketList: Array<{id: number}>,
 }
 
-const Cards = ({
+const Cards: React.FC<CardsProps> = ({
   spinner, listOfCards, onCardClicked, basketList,
-} : IProps) => {
+} : CardsProps) => {
   if (spinner) return <div className={style.cards}><Spinner /></div>;
 
   const data = listOfCards && listOfCards.map((item) => {
@@ -25,6 +24,7 @@ const Cards = ({
         basketClicked,
         onCardClicked,
       };
+    // eslint-disable-next-line react/jsx-props-no-spreading
     return <Card {...cardProps} />;
   });
 

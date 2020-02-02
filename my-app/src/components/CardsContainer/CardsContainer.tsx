@@ -1,53 +1,63 @@
-/* eslint-disable no-shadow */
-import React, { Component, ChangeEvent } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+// eslint-disable-next-line no-unused-vars
+import { match } from 'react-router-dom';
 import { getCardsTC } from '../../redux/reducers/cardsReducer';
 import { addBasketProductAC, removeBasketProductAC } from '../../redux/reducers/basketReducer';
 import Cards from './Cards/Cards';
 import dataAPI from '../../services/DataAPI';
 
-export interface IProps {
+interface CardsContainerProps {
   spinner: boolean,
-  listOfCards: null | Array<any>,
+  listOfCards: null | Array<{id: number}>,
   basketList: Array<{id: number}>,
   addBasketProductAC: ({ id: number }) => void,
   removeBasketProductAC: (x: number) => void,
-  match: any,
-  getCardsTC: (x: boolean, y: any) => void,
+  match: match<{page?: string | undefined}>,
+  getCardsTC: (x: boolean, y: Array<{id: number}>) => void,
   basketStatus: boolean,
 }
 
-class CardsContainer extends Component <IProps> {
+class CardsContainer extends Component <CardsContainerProps> {
   componentDidMount() {
     const {
-      getCardsTC, basketStatus, basketList, match: { params: { page } },
-    } = this.props;
+      // eslint-disable-next-line no-shadow
+        getCardsTC, basketStatus, basketList, match: { params: { page } },
+      } = this.props,
+      pageNumber: number = Number(page);
 
-    if (page <= dataAPI.pages && page > 0) {
-      dataAPI.usePage = +page;
+    if (pageNumber <= dataAPI.pages && pageNumber > 0) {
+      dataAPI.usePage = pageNumber;
       getCardsTC(basketStatus, basketList);
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: {basketStatus: boolean}) {
     const {
-      getCardsTC, basketList, basketStatus, match: { params: { page } },
-    } = this.props;
+      // eslint-disable-next-line no-shadow
+        getCardsTC, basketList, basketStatus, match: { params: { page } },
+      } = this.props,
+      pageNumber: number = Number(page);
 
-    if (dataAPI.usePage !== +page || basketStatus !== prevProps.basketStatus) {
-      dataAPI.usePage = +page;
+    if (dataAPI.usePage !== pageNumber || basketStatus !== prevProps.basketStatus) {
+      dataAPI.usePage = pageNumber;
       getCardsTC(basketStatus, basketList);
     }
 
     localStorage.setItem('beers-basket', JSON.stringify(basketList));
   }
 
-  onCardClicked = (e: ChangeEvent<any>, status) => {
-    const { addBasketProductAC, removeBasketProductAC } = this.props;
+  onCardClicked = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, status: boolean) => {
+    // eslint-disable-next-line no-shadow
+    const { addBasketProductAC, removeBasketProductAC } = this.props,
+      element = e.target as HTMLButtonElement,
+      card = element.closest('.card') as HTMLDivElement,
+      id: number = Number(card.id);
+
     if (status) {
-      addBasketProductAC({ id: +e.target.parentElement.id });
+      addBasketProductAC({ id });
     } else {
-      removeBasketProductAC(+e.target.parentElement.id);
+      removeBasketProductAC(id);
     }
   }
 

@@ -1,12 +1,11 @@
 /* eslint-disable camelcase */
-
 import React from 'react';
 import nextId from 'react-id-generator';
 import style from './Card.module.css';
 import noPhoto from './img/noPhoto.png';
 import Element from './Element/Element';
 
-interface IArray {
+interface Ingredients {
   name: string,
   amount: {
     value: number,
@@ -16,7 +15,7 @@ interface IArray {
   attribute?: string,
 }
 
-interface IProps {
+interface CardProps {
   name: string,
   tagline: string,
   first_brewed: string,
@@ -39,48 +38,44 @@ interface IProps {
     unit: string,
   },
   ingredients: {
-    malt: Array <IArray>,
-    hops: Array <IArray>,
+    malt: Array <Ingredients>,
+    hops: Array <Ingredients>,
     yeast: string,
-    map: any,
   },
   food_pairing: Array<string>,
   brewers_tips: string,
-  onCardClicked?: any,
-  id: any,
+  onCardClicked: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, status: boolean) => void,
+  id: string,
   basketClicked: boolean,
-  onCardDeleted?: any,
 }
 
-const Card = (
-  {
-    name,
-    tagline,
-    first_brewed,
-    image_url,
-    description,
-    abv,
-    ibu,
-    target_fg,
-    target_og,
-    ebc,
-    srm,
-    ph,
-    attenuation_level,
-    boil_volume,
-    volume,
-    ingredients,
-    food_pairing,
-    brewers_tips,
-    onCardClicked,
-    id,
-    basketClicked,
-    onCardDeleted,
-  }: IProps,
-) => {
+const Card: React.FC<CardProps> = ({
+  name,
+  tagline,
+  first_brewed,
+  image_url,
+  description,
+  abv,
+  ibu,
+  target_fg,
+  target_og,
+  ebc,
+  srm,
+  ph,
+  attenuation_level,
+  boil_volume,
+  volume,
+  ingredients,
+  food_pairing,
+  brewers_tips,
+  onCardClicked,
+  id,
+  basketClicked,
+}:CardProps) => {
   const createId = () => nextId();
   return (
-    <div className={style.card} id={id}>
+    // eslint-disable-next-line no-useless-concat
+    <div className={`${style.card} ` + 'card'} id={id}>
       <div className={style.cardTitle}>
         {`${name} `}
         <span className={style.cardBrewed}>{`(${first_brewed.replace(/\//g, '.')})`}</span>
@@ -142,7 +137,6 @@ const Card = (
       >
         {basketClicked ? 'Добавлено в корзину' : 'Добавить'}
       </button>
-
     </div>
   );
 };

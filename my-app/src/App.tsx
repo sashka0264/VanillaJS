@@ -17,7 +17,7 @@ import SearchPanelContainer from './components/SearchPanelContainer/SearchPanelC
 import LoginContainer from './components/LoginContainer/LoginContainer';
 import style from './App.module.css';
 
-export const AppContainer: React.FC = () => (
+const AppContainer: React.FC<{}> = () => (
   <Provider store={store}>
     <Router>
       <AppWithRouter />
