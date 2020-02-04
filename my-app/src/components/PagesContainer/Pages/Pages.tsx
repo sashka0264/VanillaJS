@@ -18,15 +18,16 @@ const Pages = ({
   pages, usePage, paginatorView, onLeft, onRight,
 }: iProps) => {
   if (!pages || !usePage) return null;
+  const pagesLength = Math.ceil(pages.length / 4);
   return (
     <ul className={style.pages}>
       {
        paginatorView !== 1 && <img className={style.pagesArrow} src={left} alt="left" onClick={onLeft} />
       }
       {
-        pages.map((item, i, arr) => {
-          if (i >= (paginatorView - 1) * Math.ceil(arr.length / 4)
-          && i < paginatorView * (Math.ceil(arr.length / 4))) {
+        pages.map((item, i) => {
+          if (i >= (paginatorView - 1) * pagesLength
+          && i < paginatorView * pagesLength) {
             return (
               <NavLink className={style.page} key={item} to={`/${item}`}>
                 {item}
@@ -37,7 +38,7 @@ const Pages = ({
         })
       }
       {
-       (paginatorView !== Math.ceil(pages.length / 4)) && <img className={style.pagesArrow} src={right} alt="right" onClick={onRight} />
+       (paginatorView !== pagesLength) && <img className={style.pagesArrow} src={right} alt="right" onClick={onRight} />
       }
     </ul>
   );
