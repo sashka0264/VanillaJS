@@ -55,9 +55,9 @@ class CardsContainer extends Component <CardsContainerProps> {
       id: number = Number(card.id);
 
     if (status) {
-      addBasketProductAC({ id });
-    } else {
       removeBasketProductAC(id);
+    } else {
+      addBasketProductAC({ id });
     }
   }
 

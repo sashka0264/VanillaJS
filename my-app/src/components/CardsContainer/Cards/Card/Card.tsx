@@ -132,7 +132,7 @@ const Card: React.FC<CardProps> = ({
 
       <button
         type="button"
-        onClick={(e) => (basketClicked ? onCardClicked(e, false) : onCardClicked(e, true))}
+        onClick={(e) => onCardClicked(e, basketClicked)}
         className={basketClicked ? style.cardInBasket : style.cardAdd}
       >
         {basketClicked ? 'Добавлено в корзину' : 'Добавить'}
