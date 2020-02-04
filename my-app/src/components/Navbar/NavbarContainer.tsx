@@ -15,11 +15,11 @@ interface IProps {
   basketList: Array<{id: number}>,
   loginStatus: boolean,
   loginName: null | string,
-  logOutTC: () => void,
+  logOutTC: () => void
 }
 
 const NavbarContainer = React.memo(function NavbarContainer({
-  setBasketStatusTC, basketStatus, loginStatus, logOutTC, basketList, loginName,
+  setBasketStatusTC, basketStatus, loginStatus, logOutTC, basketList, loginName
 }:IProps) {
   const onBasketClicked = () => {
     setBasketStatusTC(!basketStatus);
@@ -41,12 +41,12 @@ const NavbarContainer = React.memo(function NavbarContainer({
 
 
 const mapStateToProps = (
-  { basket: { basketStatus, basketList }, login: { status, name } },
+  { basket: { basketStatus, basketList }, login: { status, name } }
 ) => ({
   basketStatus,
   basketList,
   loginStatus: status,
-  loginName: name,
+  loginName: name
 });
 
 export default connect(mapStateToProps, { setBasketStatusTC, logOutTC })(NavbarContainer);

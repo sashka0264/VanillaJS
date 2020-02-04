@@ -4,10 +4,10 @@ export const LOGIN = 'LOGIN',
 
   loginAC = (name) => ({
     type: LOGIN,
-    name,
+    name
   }),
   logOutAC = () => ({
-    type: LOGOUT,
+    type: LOGOUT
   }),
 
   logOutTC = () => (dispatch) => {
@@ -17,7 +17,7 @@ export const LOGIN = 'LOGIN',
 
 const initialState = {
   status: localStorage['beers-login'] ? JSON.parse(localStorage['beers-login']).status : false,
-  name: localStorage['beers-login'] ? JSON.parse(localStorage['beers-login']).name : null,
+  name: localStorage['beers-login'] ? JSON.parse(localStorage['beers-login']).name : null
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -26,13 +26,13 @@ const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         status: false,
-        name: null,
+        name: null
       };
     case LOGIN:
       return {
         ...state,
         status: true,
-        name: action.name,
+        name: action.name
       };
     default:
       return state;

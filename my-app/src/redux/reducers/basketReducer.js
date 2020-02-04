@@ -14,7 +14,7 @@ export const SET_BASKET_STATUS = 'SET-BASKET-STATUS',
 
 const initialState = {
   basketStatus: localStorage['basket-status'] ? JSON.parse(localStorage['basket-status']) : false,
-  basketList: localStorage['beers-basket'] ? JSON.parse(localStorage['beers-basket']) : [],
+  basketList: localStorage['beers-basket'] ? JSON.parse(localStorage['beers-basket']) : []
 };
 
 const basketReducer = (state = initialState, action) => {
@@ -22,20 +22,20 @@ const basketReducer = (state = initialState, action) => {
     case REMOVE_BASKET_PRODUCT:
       return {
         ...state,
-        basketList: state.basketList.filter((item) => item.id !== action.id),
+        basketList: state.basketList.filter((item) => item.id !== action.id)
       };
     case ADD_BASKET_PRODUCT:
       return {
         ...state,
         basketList: [
           ...state.basketList,
-          action.product,
-        ],
+          action.product
+        ]
       };
     case SET_BASKET_STATUS:
       return {
         ...state,
-        basketStatus: action.status,
+        basketStatus: action.status
       };
     default:
       return state;

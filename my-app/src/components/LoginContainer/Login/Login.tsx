@@ -2,7 +2,7 @@ import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { LoginInputControl, DateInputControl } from '../../../common/FormControl/FormControl';
 import {
-  required, maxLengthCreator, minLengthCreator, emailValidator,
+  required, maxLengthCreator, minLengthCreator, emailValidator
 } from '../../../common/helpers/validators';
 import style from './Login.module.css';
 
@@ -11,11 +11,11 @@ const maxLength = maxLengthCreator(35),
   maxDateLength = maxLengthCreator(10);
 
 interface LoginFormProps {
-  handleSubmit: any,
+  handleSubmit: any
 }
 // eslint-disable-next-line one-var
 const LoginForm: React.FC<LoginFormProps> = ({
-  handleSubmit,
+  handleSubmit
 }:LoginFormProps) => (
   <div className={style.login}>
     <form onSubmit={handleSubmit} className={style.appLoginBlock}>

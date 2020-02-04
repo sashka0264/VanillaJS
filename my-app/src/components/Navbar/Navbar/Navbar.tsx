@@ -10,7 +10,7 @@ interface NavbarProps {
   basketStatus: boolean,
   loginStatus: boolean,
   loginName: null | string,
-  onLogOut: () => void,
+  onLogOut: () => void
 }
 
 const Navbar: React.FC<NavbarProps> = ({

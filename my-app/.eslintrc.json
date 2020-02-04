@@ -1,3 +1,4 @@
+/*eslint linebreak-style: ["error", "windows"]*/
 {
     "env": {
         "browser": true,
@@ -30,6 +31,7 @@
         "no-underscore-dangle": ["error", { "allowAfterThis": true }],
         "one-var": ["error", "consecutive"],
         "import/extensions": ["error", "never"],
-        "no-restricted-globals": ["error", "event", "fdescribe"]
+        "no-restricted-globals": ["error", "event", "fdescribe"],
+        "comma-dangle": ["error", "never"]
     }
 }

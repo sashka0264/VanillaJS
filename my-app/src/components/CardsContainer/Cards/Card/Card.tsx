@@ -9,10 +9,10 @@ interface Ingredients {
   name: string,
   amount: {
     value: number,
-    unit: string,
+    unit: string
   },
   add?: string,
-  attribute?: string,
+  attribute?: string
 }
 
 interface CardProps {
@@ -31,22 +31,22 @@ interface CardProps {
   attenuation_level: number,
   boil_volume: {
     value: number,
-    unit: string,
+    unit: string
   },
   volume: {
     value: number,
-    unit: string,
+    unit: string
   },
   ingredients: {
     malt: Array <Ingredients>,
     hops: Array <Ingredients>,
-    yeast: string,
+    yeast: string
   },
   food_pairing: Array<string>,
   brewers_tips: string,
   onCardClicked: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, status: boolean) => void,
   id: string,
-  basketClicked: boolean,
+  basketClicked: boolean
 }
 
 const Card: React.FC<CardProps> = ({
@@ -70,7 +70,7 @@ const Card: React.FC<CardProps> = ({
   brewers_tips,
   onCardClicked,
   id,
-  basketClicked,
+  basketClicked
 }:CardProps) => {
   const createId = () => nextId();
   return (

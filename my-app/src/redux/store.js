@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable one-var */
 import {
-  createStore, applyMiddleware, combineReducers, compose,
+  createStore, applyMiddleware, combineReducers, compose
 } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { reducer as form } from 'redux-form';
@@ -15,7 +15,7 @@ const reducers = combineReducers({
   form,
   login,
   basket,
-  cards,
+  cards
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

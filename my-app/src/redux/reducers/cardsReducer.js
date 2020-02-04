@@ -6,11 +6,11 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
 
   setCardsStatusAC = (status) => ({
     type: SET_CARDS_STATUS,
-    status,
+    status
   }),
   setListOfCardsAC = (list) => ({
     type: SET_LIST_OF_CARDS,
-    list,
+    list
   }),
 
   getCardsTC = (basketStatus, basketList) => async (dispatch) => {
@@ -34,7 +34,7 @@ export const SET_CARDS_STATUS = 'SET-CARDS-STATUS',
 
 const initialState = {
   spinner: false,
-  listOfCards: null,
+  listOfCards: null
 };
 
 const cardsReducer = (state = initialState, action) => {
@@ -42,12 +42,12 @@ const cardsReducer = (state = initialState, action) => {
     case SET_LIST_OF_CARDS:
       return {
         ...state,
-        listOfCards: action.list,
+        listOfCards: action.list
       };
     case SET_CARDS_STATUS:
       return {
         ...state,
-        spinner: action.status,
+        spinner: action.status
       };
     default:
       return state;

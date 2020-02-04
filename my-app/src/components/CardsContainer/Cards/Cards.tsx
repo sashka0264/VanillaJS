@@ -7,11 +7,11 @@ interface CardsProps {
   spinner: boolean,
   listOfCards: null | Array<any>,
   onCardClicked: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, status: boolean) => void,
-  basketList: Array<{id: number}>,
+  basketList: Array<{id: number}>
 }
 
 const Cards: React.FC<CardsProps> = ({
-  spinner, listOfCards, onCardClicked, basketList,
+  spinner, listOfCards, onCardClicked, basketList
 } : CardsProps) => {
   if (spinner) return <div className={style.cards}><Spinner /></div>;
 
@@ -22,7 +22,7 @@ const Cards: React.FC<CardsProps> = ({
         id: item.id,
         key: item.id,
         basketClicked,
-        onCardClicked,
+        onCardClicked
       };
     // eslint-disable-next-line react/jsx-props-no-spreading
     return <Card {...cardProps} />;

@@ -4,12 +4,12 @@ import LoginReduxForm from './Login/Login';
 import { loginAC } from '../../redux/reducers/loginReducer';
 
 interface LoginContainerProps {
-  loginAC: (x: string) => void,
+  loginAC: (x: string) => void
 }
 
 const LoginContainer: React.FC<LoginContainerProps> = ({
   // eslint-disable-next-line no-shadow
-  loginAC,
+  loginAC
 }:LoginContainerProps) => {
   const onSubmit = ({ name }:{ name: string }):void => {
     localStorage.setItem('beers-login', JSON.stringify({ status: true, name }));

@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   withRouter,
   Redirect,
-  Route,
+  Route
 } from 'react-router-dom';
 import { Provider, connect } from 'react-redux';
 // eslint-disable-next-line no-unused-vars
@@ -58,7 +58,7 @@ class App extends PureComponent <{location: Location, loginStatus: boolean}> {
 }
 
 const mapStateToProps = ({ login: { status } }) => ({
-    loginStatus: status,
+    loginStatus: status
   }),
   AppWithState = connect(mapStateToProps, {})(App),
   AppWithRouter = withRouter(AppWithState);

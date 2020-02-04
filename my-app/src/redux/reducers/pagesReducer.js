@@ -26,7 +26,7 @@ export const SET_USE_PAGE = 'SET-USE-PAGE',
 
 const initialState = {
   usePage: null,
-  pagesList: null,
+  pagesList: null
 };
 
 const pagesReducer = (state = initialState, action) => {
@@ -35,12 +35,12 @@ const pagesReducer = (state = initialState, action) => {
     case SET_PAGES:
       return {
         ...state,
-        pagesList: action.pagesList,
+        pagesList: action.pagesList
       };
     case SET_USE_PAGE:
       return {
         ...state,
-        usePage: action.usePage,
+        usePage: action.usePage
       };
     default:
       return state;

@@ -15,14 +15,14 @@ interface CardsContainerProps {
   removeBasketProductAC: (x: number) => void,
   match: match<{page?: string | undefined}>,
   getCardsTC: (x: boolean, y: Array<{id: number}>) => void,
-  basketStatus: boolean,
+  basketStatus: boolean
 }
 
 class CardsContainer extends Component <CardsContainerProps> {
   componentDidMount() {
     const {
       // eslint-disable-next-line no-shadow
-        getCardsTC, basketStatus, basketList, match: { params: { page } },
+        getCardsTC, basketStatus, basketList, match: { params: { page } }
       } = this.props,
       pageNumber: number = Number(page);
 
@@ -35,7 +35,7 @@ class CardsContainer extends Component <CardsContainerProps> {
   componentDidUpdate(prevProps: {basketStatus: boolean}) {
     const {
       // eslint-disable-next-line no-shadow
-        getCardsTC, basketList, basketStatus, match: { params: { page } },
+        getCardsTC, basketList, basketStatus, match: { params: { page } }
       } = this.props,
       pageNumber: number = Number(page);
 
@@ -75,15 +75,15 @@ class CardsContainer extends Component <CardsContainerProps> {
 }
 
 const mapStateToProps = (
-  { cards: { spinner, listOfCards }, basket: { basketStatus, basketList } },
+  { cards: { spinner, listOfCards }, basket: { basketStatus, basketList } }
 ) => ({
   spinner,
   listOfCards,
   basketStatus,
-  basketList,
+  basketList
 });
 
 
 export default connect(
-  mapStateToProps, { getCardsTC, addBasketProductAC, removeBasketProductAC },
+  mapStateToProps, { getCardsTC, addBasketProductAC, removeBasketProductAC }
 )(CardsContainer);

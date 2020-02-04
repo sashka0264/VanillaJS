@@ -3,7 +3,7 @@ import React from 'react';
 interface ElementProps {
   value: Array<any> | number | string,
   title: string,
-  wrapper?: boolean,
+  wrapper?: boolean
 }
 
 const Element: React.FC<ElementProps> = ({ value, title, wrapper }:ElementProps) => (

@@ -11,7 +11,7 @@ interface iProps {
   usePage: number | null,
   paginatorView: number,
   onLeft: () => void,
-  onRight: () => void,
+  onRight: () => void
 }
 
 const Pages = ({

@@ -15,12 +15,12 @@ interface IProps {
   pagesList: Array<number> | null,
   initializePagesTC: () => void,
   setUsePageTC: (x: number) => void,
-  basketStatus: boolean,
+  basketStatus: boolean
 }
 
 interface IState {
   redirect: boolean,
-  paginatorView: number,
+  paginatorView: number
 }
 
 class PagesContainer extends Component <IProps, IState> {
@@ -28,7 +28,7 @@ class PagesContainer extends Component <IProps, IState> {
     super(props);
     this.state = {
       redirect: false,
-      paginatorView: 1,
+      paginatorView: 1
     };
   }
 
@@ -75,11 +75,11 @@ class PagesContainer extends Component <IProps, IState> {
 }
 
 const mapStateToProps = (
-  { pages: { usePage, pagesList }, basket: { basketStatus } },
+  { pages: { usePage, pagesList }, basket: { basketStatus } }
 ) => ({
   usePage,
   pagesList,
-  basketStatus,
+  basketStatus
 });
 
 export default connect(mapStateToProps, { initializePagesTC, setUsePageTC })(PagesContainer);
