@@ -1,9 +1,13 @@
+/* eslint-disable no-useless-concat */
 /* eslint-disable camelcase */
 import React from 'react';
-import nextId from 'react-id-generator';
 import style from './Card.module.css';
-import noPhoto from './img/noPhoto.png';
-import Element from './Element/Element';
+import CardTitle from './CardTitle/CardTitle';
+import CardSubitle from './CardSubtitle/CardSubtitle';
+import BeerImage from './BeerImage/BeerImage';
+import CardDescription from './CardDescription/CardDescription';
+import CardIngredients from './CardIngredients/CardIngredients';
+import CardProperties from './CardProperties/CardProperties';
 
 interface Ingredients {
   name: string,
@@ -72,63 +76,37 @@ const Card: React.FC<CardProps> = ({
   id,
   basketClicked
 }:CardProps) => {
-  const createId = () => nextId();
   return (
-    // eslint-disable-next-line no-useless-concat
     <div className={`${style.card} ` + 'card'} id={id}>
-      <div className={style.cardTitle}>
-        {`${name} `}
-        <span className={style.cardBrewed}>{`(${first_brewed.replace(/\//g, '.')})`}</span>
-      </div>
+      <CardTitle
+        name={name}
+        firstBrewed={first_brewed}
+      />
 
-      <div className={style.cardSubtitle}>{tagline}</div>
+      <CardSubitle tagline={tagline} />
 
-      <img className={image_url ? style.cardImage : style.NoCardImage} alt="beer" src={image_url || noPhoto} />
+      <BeerImage imageUrl={image_url} />
 
-      <div className={style.cardDescription}>{description}</div>
+      <CardDescription description={description} />
 
-      <div className={style.cardProperties}>
-        <Element title="VOLUME - " wrapper value={`${volume.value} ${volume.unit}`} />
-        <Element title="ABV - " wrapper value={abv} />
-        <Element title="IBU - " wrapper value={ibu} />
-        <Element title="TARGET FG - " wrapper value={target_fg} />
-        <Element title="TARGET OG - " wrapper value={target_og} />
-        <Element title="EBC - " wrapper value={ebc} />
-        <Element title="SRM - " wrapper value={srm} />
-        <Element title="PH - " wrapper value={ph} />
-        <Element title="BOIL VOLUME - " wrapper value={`${boil_volume.value} ${boil_volume.unit}`} />
-        <Element title="ATTENUATION LEVEL - " wrapper value={attenuation_level} />
-      </div>
+      <CardProperties
+        volume={volume}
+        abv={abv}
+        ibu={ibu}
+        targetFg={target_fg}
+        targetOg={target_og}
+        ebc={ebc}
+        srm={srm}
+        ph={ph}
+        boilVolume={boil_volume}
+        attenuationLevel={attenuation_level}
+      />
 
-      <div className={style.cardIngredients}>
-        <Element
-          title="MALT:"
-          value={ingredients.malt.map((item) => (
-            <span key={createId()}>
-              <span>{item.name}</span>
-              <span>
-                {` ${item.amount.value} `}
-                {` ${item.amount.unit} `}
-              </span>
-            </span>
-          ))}
-        />
-        <Element
-          title="HOPS:"
-          value={ingredients.hops.map((item) => (
-            <span key={createId()}>
-              <span>{item.name}</span>
-              <span>
-                {` ${item.amount.value} `}
-                {` ${item.amount.unit} `}
-              </span>
-            </span>
-          ))}
-        />
-        <Element title="YEAST:" value={ingredients.yeast} />
-        <Element title="FOOD PAIRING:" value={food_pairing.map((item) => <span key={createId()}>{item}</span>)} />
-        <Element title="BREWERS TIPS:" value={brewers_tips} />
-      </div>
+      <CardIngredients
+        ingredients={ingredients}
+        brewersTips={brewers_tips}
+        foodPairing={food_pairing}
+      />
 
       <button
         type="button"

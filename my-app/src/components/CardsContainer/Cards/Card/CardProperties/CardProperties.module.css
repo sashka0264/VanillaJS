@@ -1,0 +1,15 @@
+.cardProperties {
+  color: #b3b3b3;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardProperties span {
+  margin-top: 5px;
+}
+
+.cardProperties span span {
+  color: black;
+  border-bottom: 1px solid #e6e6e6;
+}
