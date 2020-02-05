@@ -5,7 +5,7 @@ import { getCardsTC } from '../../redux/reducers/cardsReducer';
 import dataAPI from '../../services/DataAPI';
 
 
-class SearchPanelContainer extends Component <{basketStatus: boolean, basketList: {id: number}}, any> {
+class SearchPanelContainer extends Component <{basketStatus: boolean, basketList: {id: number}}> {
 
   set: any = {}
 
@@ -81,7 +81,6 @@ class SearchPanelContainer extends Component <{basketStatus: boolean, basketList
   }
 
   render() {
-    console.log(this.state)
     return (
       <SearchPanel inputs={this.state} set={this.set} startSearch={this.startSearch} />
     );

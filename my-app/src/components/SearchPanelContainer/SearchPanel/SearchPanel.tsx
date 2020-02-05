@@ -10,7 +10,7 @@ const SearchPanel = ({ inputs, set, startSearch }) => (
             key={i}
             placeholder={item}
             onInput={({ target: { value } }: any) => set[item](value)}
-            value={inputs.item}
+            value={inputs[item]}
           />
         ))
       }
