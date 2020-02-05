@@ -1,5 +1,4 @@
 import React from 'react';
-import style from './CardDescription.module.css';
 
 interface Ingredients {
   name: string,
