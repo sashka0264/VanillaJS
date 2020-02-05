@@ -1,7 +1,5 @@
 import React from 'react';
 import Card from './Card/Card';
-import Spinner from '../../../common/Spinner/Spinner';
-import style from './Cards.module.css';
 
 interface CardsProps {
   spinner: boolean,
@@ -11,11 +9,10 @@ interface CardsProps {
 }
 
 const Cards: React.FC<CardsProps> = ({
-  spinner, listOfCards, onCardClicked, basketList
+  listOfCards, onCardClicked, basketList
 } : CardsProps) => {
-  if (spinner) return <div className={style.cards}><Spinner /></div>;
 
-  const data = listOfCards && listOfCards.map((item) => {
+  const cardsList = listOfCards && listOfCards.map((item) => {
     const basketClicked = basketList.some(({ id }) => item.id === id),
       cardProps = {
         ...item,
@@ -28,13 +25,7 @@ const Cards: React.FC<CardsProps> = ({
     return <Card {...cardProps} />;
   });
 
-  return (
-    <div className={style.cards}>
-      {
-        data
-      }
-    </div>
-  );
+  return <>{ cardsList }</>;
 };
 
 export default Cards;

@@ -6,6 +6,8 @@ import { getCardsTC } from '../../redux/reducers/cardsReducer';
 import { addBasketProductAC, removeBasketProductAC } from '../../redux/reducers/basketReducer';
 import Cards from './Cards/Cards';
 import dataAPI from '../../services/DataAPI';
+import Spinner from '../../common/Spinner/Spinner';
+import style from './CardsContainer.module.css';
 
 interface CardsContainerProps {
   spinner: boolean,
@@ -63,13 +65,16 @@ class CardsContainer extends Component <CardsContainerProps> {
 
   render() {
     const { spinner, listOfCards, basketList } = this.props;
+    if (spinner) return <div className={style.cards}><Spinner /></div>;
     return (
-      <Cards
-        basketList={basketList}
-        spinner={spinner}
-        listOfCards={listOfCards}
-        onCardClicked={this.onCardClicked}
-      />
+      <div className={style.cards}>
+        <Cards
+          basketList={basketList}
+          spinner={spinner}
+          listOfCards={listOfCards}
+          onCardClicked={this.onCardClicked}
+        />
+      </div>
     );
   }
 }
