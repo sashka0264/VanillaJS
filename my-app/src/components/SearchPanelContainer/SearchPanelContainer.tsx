@@ -4,61 +4,10 @@ import SearchPanel from './SearchPanel/SearchPanel';
 import { getCardsTC } from '../../redux/reducers/cardsReducer';
 import dataAPI from '../../services/DataAPI';
 
-class SearchPanelContainer extends Component {
-  set = {
-    name: (name) => {
-      this.setState({ name });
-      dataAPI.beerName = name;
-    },
-    yeast: (yeast) => {
-      this.setState({ yeast });
-      dataAPI.yeast = yeast;
-    },
-    food: (food) => {
-      this.setState({ food });
-      dataAPI.food = food;
-    },
-    malt: (malt) => {
-      this.setState({ malt });
-      dataAPI.malt = malt;
-    },
-    hops: (hops) => {
-      this.setState({ hops });
-      dataAPI.hops = hops;
-    },
-    minABV: (minABV) => {
-      this.setState({ minABV });
-      dataAPI.minABV = minABV;
-    },
-    maxABV: (maxABV) => {
-      this.setState({ maxABV });
-      dataAPI.maxABV = maxABV;
-    },
-    minIBU: (minIBU) => {
-      this.setState({ minIBU });
-      dataAPI.minIBU = minIBU;
-    },
-    maxIBU: (maxIBU) => {
-      this.setState({ maxIBU });
-      dataAPI.maxIBU = maxIBU;
-    },
-    minEBC: (minEBC) => {
-      this.setState({ minEBC });
-      dataAPI.minEBC = minEBC;
-    },
-    maxEBC: (maxEBC) => {
-      this.setState({ maxEBC });
-      dataAPI.maxEBC = maxEBC;
-    },
-    from: (from) => {
-      this.setState({ from });
-      dataAPI.periodFrom = from;
-    },
-    to: (to) => {
-      this.setState({ to });
-      dataAPI.periodTo = to;
-    },
-  }
+
+class SearchPanelContainer extends Component <{basketStatus: boolean, basketList: {id: number}}, any> {
+
+  set: any = {}
 
   constructor(props) {
     super(props);
@@ -75,15 +24,40 @@ class SearchPanelContainer extends Component {
       minEBC: '',
       maxEBC: '',
       from: '',
-      to: '',
+      to: ''
     };
+  }
+
+  componentDidMount() {
+    const items = ['name', 'yeast', 'food', 'malt', 'hops', 'minABV', 'maxABV', 'minIBU', 'maxIBU', 'minEBC', 'maxEBC', 'from', 'to'];
+
+    items.forEach((item) => {
+      const value = item;
+      this.set[value] = (arg) => {
+        this.setState({ [value]: arg });
+        switch (value) {
+          case 'name':
+            dataAPI.beerName = arg;
+            break;
+          case 'from':
+            dataAPI.periodFrom = arg;
+            break;
+          case 'to':
+            dataAPI.periodTo = arg;
+            break;
+          default:
+            dataAPI[value] = arg;
+            break;
+        }
+      };
+    });
   }
 
   componentDidUpdate(prevProps) {
     const { basketStatus } = this.props as any;
     if (basketStatus !== prevProps.basketStatus) {
       const {
-        name, yeast, food, malt, hops, minABV, maxABV, minIBU, maxIBU, minEBC, maxEBC, from, to,
+        name, yeast, food, malt, hops, minABV, maxABV, minIBU, maxIBU, minEBC, maxEBC, from, to
       } = this.set;
       name('');
       yeast('');
@@ -107,6 +81,7 @@ class SearchPanelContainer extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <SearchPanel inputs={this.state} set={this.set} startSearch={this.startSearch} />
     );
@@ -115,7 +90,7 @@ class SearchPanelContainer extends Component {
 
 const mapStateToProps = ({ basket: { basketStatus, basketList } }) => ({
   basketStatus,
-  basketList,
+  basketList
 });
 
 export default connect(mapStateToProps, { getCardsTC })(SearchPanelContainer);
