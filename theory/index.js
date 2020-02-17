@@ -1,48 +1,10 @@
-/* Типы данных в JavaScript?
-
-1 булевый тип, строка, число, undefined, null, символ, BigInt
-
-2 обьекты
-
-Как работает цепочка протовипов?
-
-у объектов нет prototype, только у Функций: str.__proto__ === String.prototype
-
-
-
-*/
-
-const createProgrammer = (name) => {
-  const programmer = {name: name}
-  return {
-    ...programmer,
-    ...canCode(programmer)
-  }
-}
-const canCode = ({name}) => {
-  return {
-    code: () => console.log(`${name} is coding...`)
-  }
-}
-const canReact = (name) => {
-  return {
-    react: () => console.log(`${name} knows React...`)
-  }
-}
-const canNode = (name) => {
-  return {
-    node: () => console.log(`${name} knows Node...`)
-  }
-}
-const createFullStack = (name) => {
-  return {
-    ...createProgrammer(name),
-    ...canReact(name),
-    ...canNode(name),
-  }
+const map = {
+  1: [1, 1, 1, 1, 1, 1],
+  2: [1, 0, 0, 0, 0, 1],
+  3: [1, 0, 0, 0, 0, 1],
+  4: [1, 0, 0, p, 0, 1],
+  5: [1, 0, 0, 0, 0, 1],
+  6: [1, 0, 0, 0, 0, 1],
+  7: [1, 1, 1, 1, 1, 1]
 }
 
-const sasha = createFullStack("Sasha");
-sasha.react();
-sasha.node();
-sasha.code();
