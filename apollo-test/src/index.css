@@ -1,0 +1,9 @@
+body {
+  background-color: antiquewhite;
+}
+
+.element {
+  background-color: white;
+  margin: 10px;
+  padding: 20px;
+}

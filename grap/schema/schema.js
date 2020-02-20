@@ -5,14 +5,14 @@ const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLSchema, GraphQLInt, 
 
 // ------------ НАШИ ДАННЫЕ ------------
 const movies = [
-  {id: '1', name: 'Титаник', genre: 'Драма', directorID: '1'},
-  {id: '2', name: 'Крепкий орешек', genre: 'Боевик', directorID: '2'},
-  {id: '3', name: 'Аватар', genre: 'Фантастика', directorID: '1'}
+  {id: 1, name: 'Титаник', genre: 'Драма', directorID: 1},
+  {id: 2, name: 'Крепкий орешек', genre: 'Боевик', directorID: 2},
+  {id: 3, name: 'Аватар', genre: 'Фантастика', directorID: 1}
 ];
 
 const directors = [
-  {id: '1', name: 'Джеймс Кэмерон', age: 65},
-  {id: '2', name: 'Джон Мактирнан', age: 69}
+  {id: 1, name: 'Джеймс Кэмерон', age: 65},
+  {id: 2, name: 'Джон Мактирнан', age: 69}
 ];
 // ------------ НАШИ ДАННЫЕ ------------
 
@@ -26,7 +26,7 @@ const MovieType = new GraphQLObjectType({
     director: {
       type: DirectorType, 
       resolve(parent, args) {
-        return directors.find((director) => director.id === parent.id)
+        return directors.find((director) => director.id === parent.directorID)
       }
     }
   })
@@ -52,23 +52,49 @@ const Query = new GraphQLObjectType({
   fields: {
     movie: {
       type: MovieType, 
-      args: {id: { type: GraphQLID }},
+      args: {id: { type: GraphQLInt }},
       resolve(parent, args) {
         return movies.find((movie) => movie.id === args.id)
       }
     },
     director: {
       type: DirectorType, 
-      args: {id: { type: GraphQLID }},
+      args: {id: { type: GraphQLInt }},
       resolve(parent, args) {
         return directors.find((director) => director.id === args.id)
+      }
+    },
+    movies: {
+      type: new GraphQLList(MovieType),
+      resolve(parent, args) {
+        return movies;
+      }
+    },
+    directors: {
+      type: new GraphQLList(DirectorType),
+      resolve(parent, args) {
+        return directors;
       }
     }
   }
 });
 // ------------ ФУНКЦИОНАЛ ------------
 
-
 module.exports = new GraphQLSchema({
   query: Query
 });
+
+// ------------ СО СТОРОНЫ ФРОНТА ПОЛУЧАЕМ ДАННЫЕ ОТ ЗАПУЩЕННОГО СЕРВЕРА ------------
+// let query = `{
+// 	directors {
+//     id
+// 	}
+// }`;
+// fetch("http://localhost:3005/graphql", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({ query })
+// })
+//  .then(res => res.json())
+//  .then(res => console.log(res.data));
+// ------------ СО СТОРОНЫ ФРОНТА ПОЛУЧАЕМ ДАННЫЕ ОТ ЗАПУЩЕННОГО СЕРВЕРА ------------
