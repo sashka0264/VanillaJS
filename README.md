@@ -90,7 +90,7 @@ function getStorage() {
   if (storage) {
     return storage;
   }
-  storage = new StorGE();
+  storage = new Storage();
   return storage;
 }
 ```
