@@ -77,13 +77,9 @@ Network Interaction
 **Основные паттерны проектирования:**
 * Singleton (обьект, который существует в системе в единственном экземпляре)
 ```
-const instance1 = {
-  name: 'singleton';
-},
-  instance2 = {
-    name: 'singleton';
-  };
-instance1 === instance2 // false
+const instance1 = {name: 'singleton';},
+  instance2 = {name: 'singleton';};
+instance1 !== instance2 // true
 
 class ShredengersCat {
   constructor(state = true) {
