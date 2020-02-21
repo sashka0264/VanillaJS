@@ -86,9 +86,7 @@ class ShredengersCat {
   }
 }
 function getCat(cat) {
-  if (cat) {
-    return cat;
-  }
+  if (cat) return cat;
   return new ShredengersCat();
 }
 let cat = new ShredengersCat();
