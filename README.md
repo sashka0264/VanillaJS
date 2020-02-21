@@ -77,26 +77,26 @@ Network Interaction
 **Основные паттерны проектирования:**
 * Singleton (обьект, который существует в системе в единственном экземпляре)
 ```
-const instance1 = {name: 'singleton';},
-  instance2 = {name: 'singleton';};
+const instance1 = {name: 'singleton'}, instance2 = {name: 'singleton'};
 instance1 !== instance2 // true
+
+let cat;
 
 class ShredengersCat {
   constructor(state = true) {
-    this.alive = state;
+    if (cat) {
+      return cat
+    } else {
+      cat = this;
+      this.alive = state;
+    }
   }
 }
-function getCat(cat) {
-  if (cat) {
-    return cat;
-  }
-  return new ShredengersCat();
-}
-let cat = new ShredengersCat();
-getCat(cat);
+
+cat = new ShredengersCat(); // все последующие созданные коты будут просто ссылкой на предыдущего
 ```
-* Factory
 * Module
+* Factory
 * Decorator
 
 Фабричный метод - создаешь основной класс (Фабрику) с методами, которые возвращают через new другие классы, наделяя их нужными свойствами (или 1 класс, но с разными свойствами).
