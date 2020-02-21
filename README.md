@@ -111,7 +111,7 @@ const catsFactory = new CatsFactory();
 const barsik = catsFactory.create("active");
 console.log(barsik);
 ```
-* Absract Factory - это надстройка над другими фабриками (чтобы создавать инстансы не только одного класса, но и других)
+* Absract Factory - это надстройка над другими фабриками (создание инстансов не только одного класса, но и других)
 * Module
 * Decorator
 
