@@ -74,8 +74,28 @@ Network Interaction
 * YAGNI (You aren't gonna need it - вам это не понадобится)
 * Парето (20% усилий => 80 % результата, 80% усилий => 20 % результата - умей расставлять приориететы)
 
-**Основные паттерны проектирования**
-* Singleton
+**Основные паттерны проектирования:**
+* Singleton (обьект, который существует в системе в единственном экземпляре)
+```
+const instance1 = {
+  name: 'singleton';
+},
+  instance2 = {
+    name: 'singleton';
+  };
+
+instance1 === instance2 // false
+
+let storage;
+
+function getStorage() {
+  if (storage) {
+    return storage;
+  }
+  storage = new StorGE();
+  return storage;
+}
+```
 * Factory
 * Module
 * Decorator
