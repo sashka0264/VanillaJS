@@ -92,6 +92,25 @@ function getCat(cat) {
 let cat = new ShredengersCat();
 getCat(cat);
 ```
+* Factory method (создание класса, который будет создавать обьекты на основании каких-то входных данных)
+```
+class CatsFactory {
+  create(type) {
+    if (type === "active") return new Cat("black", 15, "male");
+    if (type === "calm") return new Cat("orange", 7, "female");
+  }
+}
+class Cat {
+  constructor(color, weight, gender) {
+    this.color = color;
+    this.weight = weight;
+    this.gender = gender;
+  }
+}
+const catsFactory = new CatsFactory();
+const barsik = catsFactory.create("active");
+console.log(barsik);
+```
 * Module
 * Factory
 * Decorator
