@@ -85,14 +85,19 @@ const instance1 = {
   };
 instance1 === instance2 // false
 
-let storage;
-function getStorage() {
-  if (storage) {
-    return storage;
+class ShredengersCat {
+  constructor(state = true) {
+    this.alive = state;
   }
-  storage = new Storage();
-  return storage;
 }
+function getCat(cat) {
+  if (cat) {
+    return cat;
+  }
+  return new ShredengersCat();
+}
+let cat = new ShredengersCat();
+getCat(cat);
 ```
 * Factory
 * Module
