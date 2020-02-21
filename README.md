@@ -111,11 +111,9 @@ const catsFactory = new CatsFactory();
 const barsik = catsFactory.create("active");
 console.log(barsik);
 ```
+* Absract Factory
 * Module
-* Factory
 * Decorator
-
-Фабричный метод - создаешь основной класс (Фабрику) с методами, которые возвращают через new другие классы, наделяя их нужными свойствами (или 1 класс, но с разными свойствами).
 
 **Императивное программирование** - описываю порядок действий.
 **Деклоративное программирование** - описываю процесс (пример, function declaration).
