@@ -83,11 +83,9 @@ const instance1 = {
   instance2 = {
     name: 'singleton';
   };
-
 instance1 === instance2 // false
 
 let storage;
-
 function getStorage() {
   if (storage) {
     return storage;
