@@ -80,20 +80,19 @@ Network Interaction
 const instance1 = {name: 'singleton'}, instance2 = {name: 'singleton'};
 instance1 !== instance2 // true
 
-let cat;
-
 class ShredengersCat {
   constructor(state = true) {
-    if (cat) {
-      return cat
-    } else {
-      cat = this;
-      this.alive = state;
-    }
+    this.alive = state;
   }
 }
-
-cat = new ShredengersCat(); // все последующие созданные коты будут просто ссылкой на предыдущего
+function getCat(cat) {
+  if (cat) {
+    return cat;
+  }
+  return new ShredengersCat();
+}
+let cat = new ShredengersCat();
+getCat(cat);
 ```
 * Module
 * Factory
