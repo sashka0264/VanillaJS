@@ -110,7 +110,7 @@ const barsik = catsFactory.create("active");
 console.log(barsik);
 ```
 * Absract Factory - надстройка над другими фабриками (создание обьектов разных фабрик)
-* Prototype - копирование обьектов через метод родительского класса
+* Prototype - копирование обьектов с минимальными затратами памяти
 ```
 class Cat {
   constructor(color) {
