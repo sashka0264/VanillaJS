@@ -16,6 +16,8 @@
 * Общение с заказчиком важнее договора с ним.
 * Готовность вносить изменения в продукт важнее, чем следование заранее установленному плану.
 
+**Императивное программирование** - описываю порядок действий.
+**Деклоративное программирование** - описываю процесс (пример, function declaration).
 
 
 **Паттерны проектирования - MVC, MVVM, MVP.**
@@ -58,95 +60,6 @@ Network Interaction
 Patterns / Principles
 =====================
 
-**Основные принципы:**
-* S.O.L.I.D.
-```
-S - принцип единственной ответственности (1 класс, 1 решенная задача) 
-O - принцип открытости/закрытости (если в классе есть методы, их нельзя менять, а только расширять)
-L - наследующий класс должен дополнять, а не замещать поведение базового класса (ЛискОв)
-I - принцип разделения интерфейса (выгодно иметь не 1 большой, а несколько маленьких интерфейсов)
-D - принцип инверсии зависимостей (любые зависимости лучше выносить в абстракции/интерфейсы)
-```
-* DRI (Don’t repeat yourself - не дублируй)
-* KISS (Keep it short and simple - делай вещи проще)
-* YAGNI (You aren't gonna need it - вам это не понадобится)
-* Можешь еще добавить про закон Парето, что важно уметь расставлять приоритеты в решении задач
+[Основные принципы](./answers/principles.md)
 
-**Основные паттерны проектирования (структурные, порождающие и поведенческие)**
 [Основные паттерны проектирования](./answers/patterns.md)
-* Singleton (обьект, который существует в системе в единственном экземпляре)
-```
-const instance1 = {name: 'singleton'}, instance2 = {name: 'singleton'};
-instance1 !== instance2 // true
-
-class ShredengersCat {
-  constructor(state = true) {
-    this.alive = state;
-  }
-}
-function getCat(cat) {
-  if (cat) return cat;
-  return new ShredengersCat();
-}
-let cat = new ShredengersCat();
-getCat(cat);
-```
-* Factory method (создание класса, который будет создавать обьекты на основании каких-то входных данных)
-```
-class CatsFactory {
-  create(type) {
-    if (type === "active") return new Cat("black", 15, "male");
-    if (type === "calm") return new Cat("orange", 7, "female");
-  }
-}
-class Cat {
-  constructor(color, weight, gender) {
-    this.color = color;
-    this.weight = weight;
-    this.gender = gender;
-  }
-}
-const catsFactory = new CatsFactory();
-const barsik = catsFactory.create("active");
-console.log(barsik);
-```
-* Absract Factory - надстройка над другими фабриками (создание обьектов разных фабрик)
-* Prototype - копирование обьектов с минимальными затратами памяти
-```
-class Cat {
-  constructor(color) {
-    this.color = color;
-  }
-  copy() {
-    return new Cat(this.color)
-  }
-}
-const prototypeCat = new Cat("black");
-const cat2 = prototypeCat.copy();
-console.log(cat2);
-```
-* Builder 
-```
-class Cat {
-  constructor() {
-     this.color = "black";
-  }
-}
-class CatBuilder {
-  constructor() {
-     this.cat = new Cat();  
-  }
-  setColor(color) {
-    this.cat.color = color;
-    return this;
-  }
-}
-const newCat = new CatBuilder()
-  .setColor("white");
-console.log(newCat);
-```
-* Module
-* Decorator
-
-**Императивное программирование** - описываю порядок действий.
-**Деклоративное программирование** - описываю процесс (пример, function declaration).
