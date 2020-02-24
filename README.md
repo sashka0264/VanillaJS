@@ -124,6 +124,26 @@ const prototypeCat = new Cat("black");
 const cat2 = prototypeCat.copy();
 console.log(cat2);
 ```
+* Builder 
+```
+class Cat {
+  constructor() {
+     this.color = "black";
+  }
+}
+class CatBuilder {
+  constructor() {
+     this.cat = new Cat();  
+  }
+  setColor(color) {
+    this.cat.color = color;
+    return this;
+  }
+}
+const newCat = new CatBuilder()
+  .setColor("white");
+console.log(newCat);
+```
 * Module
 * Decorator
 
