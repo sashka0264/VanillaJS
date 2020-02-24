@@ -36,7 +36,7 @@
 Network Interaction
 =====================
 
-[Основная теория](./answers/network.md)
+[Общая теория](./answers/network.md)
 
 Patterns / Principles
 =====================

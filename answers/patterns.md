@@ -51,7 +51,7 @@ const prototypeCat = new Cat("black");
 const cat2 = prototypeCat.copy();
 console.log(cat2);
 ```
-* Builder 
+* Builder - создание надстройки над классом для вноса модификаций в обьект
 ```
 class Cat {
   constructor() {
@@ -66,9 +66,13 @@ class CatBuilder {
     this.cat.color = color;
     return this;
   }
+  build() {
+    return this.cat;
+  }
 }
 const newCat = new CatBuilder()
-  .setColor("white");
+  .setColor("white")
+  .build();
 console.log(newCat);
 ```
 * Module
