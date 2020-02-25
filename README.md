@@ -44,3 +44,5 @@ Patterns / Principles
 [Основные принципы](./answers/principles.md)
 
 [Основные паттерны проектирования](./answers/patterns.md)
+
+//
