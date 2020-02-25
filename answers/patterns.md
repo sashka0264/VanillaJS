@@ -5,19 +5,15 @@
 * Singleton (обьект, который существует в системе в единственном экземпляре)
 ```
 const instance1 = {name: 'singleton'}, instance2 = {name: 'singleton'};
-instance1 !== instance2 // true
+instance1 !== instance2 // создание обьектов с помощью литерала в JS - singleton
 
-class ShredengersCat {
-  constructor(state = true) {
-    this.alive = state;
+let instance;
+class Counter {
+  constructor() {
+    if (!instance) instance = this;
+    return instance;
   }
 }
-function getCat(cat) {
-  if (cat) return cat;
-  return new ShredengersCat();
-}
-let cat = new ShredengersCat();
-getCat(cat);
 ```
 * Factory method (создание класса, который будет создавать обьекты на основании каких-то входных данных)
 ```
@@ -116,3 +112,4 @@ const Greet = ({ render }) => <>
 * Lift state up - поднятие состояние компонентов до ближайшего общего предка, если оно нужно нескольким компонентам (вспомни, как ты поднимал state до уровень App на все приложение).
 
 * Container/Component - отделение логики от представления.
+* Observer/Observable
