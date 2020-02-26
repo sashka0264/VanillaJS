@@ -1,5 +1,7 @@
 Паттерны бывают порождающие, структурные и поведенческие. В примерах ниже приведены не все, а самые простые для запоминания.
 
+### Порождающие 
+
 * Singleton - обьект, который существует в системе в единственном экземпляре.
 ```
 const instance1 = {name: 'singleton'}, instance2 = {name: 'singleton'};
@@ -71,7 +73,22 @@ const newCat = new CatBuilder()
   .build();
 console.log(newCat);
 ```
-* Module
+* Module - сокрытие данных с помощью новой области видимости
+```
+const module = (() => {
+  let number = 0;
+  const setNumber = () => {
+    number += 1;
+  }
+  const getNumber = () => number;
+  return {
+    setNumber, 
+    getNumber
+  }
+})()
+module.setNumber();
+module.getNumber();
+```
 * Decorator
 
 ### Поведенческие 
@@ -92,7 +109,7 @@ class News {
 
 ### ФП
 * Каррирование - приведение функций к одному аргументу.
-* Композиция функций - передача функции вызов другой функции с определенным результатом (желательно написать красивую функцию высокого порядка compose).
+* Композиция - передача функции вызов другой функции с определенным результатом (желательно написать функцию высокого порядка compose).
 ```
 const upperCase = str => str.toUpperCase();
 const exclaim = str => `${str}!`;
