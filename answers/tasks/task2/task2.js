@@ -15,8 +15,35 @@
  в порядке следования по маршруту.
  **/
 
-function getRoute(tickets = []) {}
+function getRoute(tickets = []) {
+  const to = [], from = [];
+  tickets.forEach((item) => {
+    to.push(item.from);
+    from.push(item.to);
+  });
+  const reference = to.filter((item) => from.indexOf(item) === -1);
+  let member, result = [];
+  for (let x = 0; x < tickets.length; x++) {
+    tickets.forEach((item) => {
+      if (!member && item.from === reference[0]) {
+        result.push(item);
+        member = item.to;
+      } else {
+        if (item.from === member) {
+          result.push(item);
+          member = item.to;
+        }
+      }
+    })
+  }
+  return result;
+}
 
+getRoute([
+  { from: 'London', to: 'Moscow' },
+  { from: 'NY', to: 'London' },
+  { from: 'Moscow', to: 'SPb' }
+]);
 
 /*------------------*/
 /*    Test cases    */
