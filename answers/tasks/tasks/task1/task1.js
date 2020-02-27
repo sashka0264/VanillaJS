@@ -8,16 +8,7 @@
  **/
 
 function namespace(str) {
-  const arr = str.split('.');
-
-  const res = arr.reduceRight((LastFuncRes, nowItem) => {
-    if (!LastFuncRes) {
-      return { [ nowItem ] : {} }
-    }
-    return { [nowItem] : LastFuncRes }
-  }, null);
-
-  return res;
+  return str.split('.').reduceRight((acc, path) => ({ [path]: acc }), {});
 }
 
 /*------------------*/

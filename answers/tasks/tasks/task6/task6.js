@@ -8,11 +8,9 @@
  **/
 
 function compose(...functions) {
-  return (...init) => functions.reduceRight((lastFuncRes, nowItem, i, arr) => {
-    if (i === arr.length - 1) {
-      return nowItem(...init)
-    }
-    return nowItem(lastFuncRes)
+  return (...init) => functions.reduceRight((acc, fn, i, arr) => {
+    if (i === arr.length - 1) return fn(...init)
+    return fn(acc)
   }, init)
 }
 

@@ -11,5 +11,4 @@ function get(call, n = 5) {
     .catch(() => n > 1 ? get(call, n - 1) : Promise.reject(new Error()));
 }
 
-
 module.exports['solution'] = get;

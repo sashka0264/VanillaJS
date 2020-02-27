@@ -9,13 +9,7 @@
  **/
 
 function get(obj, path) {
-  const arr = path.split('.');
-   return arr.reduce((lastFuncRes, nowItem) => {
-    if (!lastFuncRes) {
-      return obj[nowItem];
-    }
-    return lastFuncRes[nowItem];
-  }, null);
+  return path.split('.').reduce((acc, path) => acc[path], obj);
 } 
 
 

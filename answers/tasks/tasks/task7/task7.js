@@ -14,20 +14,19 @@
 function transform(list, offset) {
   if (offset === 0) return list;
   if (offset > 0) {
-    let control = offset;
-    if (offset > list.length) control = offset - list.length;
-    
-    const left = list.filter((item, i) => i < control),
-      right = list.filter((item, i) => i >= control);
-    return [...right, ...left];
+      let control = offset;
+      if (offset > list.length) control = offset - list.length;
+
+      const left = list.slice(0, control),
+          right = list.slice(control, list.length);
+      return [...right, ...left];
   }
   if (offset < 0) {
-    let control = offset;
-    if (offset < -list.length) control = offset + list.length;
-
-    const right = list.filter((item, i, arr) => i >= arr.length + control),
-      left = list.filter((item, i, arr) => i < arr.length + control);
-    return [...right, ...left];
+      let control = offset;
+      if (offset < -list.length) control = offset + list.length;
+      const right = list.slice(list.length + control, list.length),
+          left = list.slice(0, list.length + control);
+      return [...right, ...left];
   }
 }
 

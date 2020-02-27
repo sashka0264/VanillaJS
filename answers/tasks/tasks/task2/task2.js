@@ -16,24 +16,27 @@
  **/
 
 function getRoute(tickets = []) {
-  const to = [], from = [];
-  tickets.forEach((item) => {
-    to.push(item.from);
-    from.push(item.to);
-  });
-  const reference = to.filter((item) => from.indexOf(item) === -1);
-  let member, result = [];
-  for (let x = 0; x < tickets.length; x++) {
-    tickets.forEach((item) => {
-      if (!member && item.from === reference[0]) {
-        result.push(item);
-        member = item.to;
-      } else if (item.from === member) {
-        result.push(item);
-        member = item.to;
-      }
-    })
+  const obj = {},
+    to = [],
+    from = [],
+    result = [];
+
+  tickets.forEach((item) => obj[item.from] = item.to);
+  for (let key in obj) {
+    to.push(key);
+    from.push(obj[key]);
   }
+  const start = to.filter((item) => from.indexOf(item) === -1)[0],
+    end = from.filter((item) => to.indexOf(item) === -1)[0];
+
+  function search(from) {
+    result.push({
+      from: from,
+      to: obj[from]
+    });
+    if (obj[from] !== end) search(obj[from]);
+  }
+  search(start)
   return result;
 }
 
@@ -42,25 +45,44 @@ function getRoute(tickets = []) {
 /*------------------*/
 
 
-const testcases = [
-  {
-    args: [
-      [
-        { from: 'London', to: 'Moscow' },
-        { from: 'New-York', to: 'London' },
-        { from: 'Moscow', to: 'SPb' },
-        { from: 'San-Francisco', to: 'New-York' }
-      ]
-    ],
-    result:
-      [
-        { from: 'San-Francisco', to: 'New-York' },
-        { from: 'New-York', to: 'London' },
-        { from: 'London', to: 'Moscow' },
-        { from: 'Moscow', to: 'SPb' }
-      ]
-  }
-];
+const testcases = [{
+  args: [
+    [{
+        from: 'London',
+        to: 'Moscow'
+      },
+      {
+        from: 'New-York',
+        to: 'London'
+      },
+      {
+        from: 'Moscow',
+        to: 'SPb'
+      },
+      {
+        from: 'San-Francisco',
+        to: 'New-York'
+      }
+    ]
+  ],
+  result: [{
+      from: 'San-Francisco',
+      to: 'New-York'
+    },
+    {
+      from: 'New-York',
+      to: 'London'
+    },
+    {
+      from: 'London',
+      to: 'Moscow'
+    },
+    {
+      from: 'Moscow',
+      to: 'SPb'
+    }
+  ]
+}];
 
 module.exports['testcases'] = testcases;
 module.exports['solution'] = getRoute;

@@ -11,8 +11,19 @@
  * Ограничение по памяти O(1).
  */
 
-function isPalindrome(str) {
-  
+function isPalindrome(str, i = 0) {
+  // const string = str.toLowerCase().replace(/[ ?’,]/g, ''); // в [] указан пробел и символ ? на удаление
+  const arr = str.toLowerCase().split('');
+
+  while (i < arr.length) {
+    if (arr[i] === '?' || arr[i] === '’' || arr[i] === ',' || arr[i] === ' ') {
+      arr.splice(i, 1);
+      i -= 1;
+    }
+    i += 1;
+  }
+  const reversed = [...arr].reverse();
+  return !arr.filter((item, i) => reversed[i] !== item).length;
 }
 
 
@@ -21,8 +32,7 @@ function isPalindrome(str) {
 /*------------------*/
 
 
-const testcases = [
-  {
+const testcases = [{
     args: [
       'Казак'
     ],

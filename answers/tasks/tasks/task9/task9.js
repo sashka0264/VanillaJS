@@ -16,17 +16,16 @@ function flatten(arr) {
   function search(arr1) {
     let control = true, 
       newArray = [];
-
     for (let i = 0; i < arr1.length; i++) {
       if (Array.isArray(arr1[i])) {
         control = false
-        let left = arr1.filter((item, index) => index < i),
-          right = arr1.filter((item, index) => index > i);
+        let left = arr1.slice(0, i),
+          right = arr1.slice(i + 1, arr1.length);
+        
         newArray = [...left, ...arr1[i], ...right];
         break;
       }
     }
-
     if (control === false) {
       search(newArray)
     } else {
