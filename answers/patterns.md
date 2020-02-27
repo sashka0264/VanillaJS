@@ -116,8 +116,8 @@ const exclaim = str => `${str}!`;
 const repeat = str => `${str} `.repeat(3);
 const compose = (...fns) => {
   return init => {
-    return fns.reduceRight((acc, fn) => fn(acc), init);
-  }
+    return fns.reduceRight((lastFuncRes, nowItem) => nowItem(lastFuncRes), init);
+  } // init заносится автоматически в lastFuncRes при первом вызове
 }
 const withСompose = compose(
   repeat,

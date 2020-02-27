@@ -7,10 +7,14 @@
 
  **/
 
-function compose() {
-  return function() {};
+function compose(...functions) {
+  return (...init) => functions.reduceRight((lastFuncRes, nowItem, i, arr) => {
+    if (i === arr.length - 1) {
+      return nowItem(...init)
+    }
+    return nowItem(lastFuncRes)
+  }, init)
 }
-
 
 /*------------------*/
 /*       Mock       */

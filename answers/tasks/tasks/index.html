@@ -9,29 +9,20 @@
 
 <body>
   <script>
-    // transform([1, 2, 3, 4, 5], 0) => [1, 2, 3, 4, 5]
-    // transform([1, 2, 3, 4, 5], -1) => [5, 1, 2, 3, 4]
-    function transform(list, offset) {
-      if (offset === 0) return list;
-      if (offset > 0) {
-        let control = offset;
-        if (offset > list.length) control = offset - list.length;
-        
-        const left = list.filter((item, i) => i < control),
-          right = list.filter((item, i) => i >= control);
-        return [...right, ...left];
-      }
-      if (offset < 0) {
-        let control = offset;
-        if (offset < -list.length) control = offset + list.length;
+    // compose(square, times2, sum)(3, 4) === square(times2(sum(3, 4)))
+    const sum = (x, y) => x + y;
+    const times2 = x => x * 2;
+    const square =  x => x * x;
 
-        const right = list.filter((item, i, arr) => i >= arr.length + control),
-          left = list.filter((item, i, arr) => i < arr.length + control);
-        return [...right, ...left];
-      }
+    function compose(...functions) {
+      return (...init) => functions.reduceRight((lastFuncRes, nowItem, i, arr) => {
+        if (i === arr.length - 1) {
+          return nowItem(...init)
+        }
+        return nowItem(lastFuncRes)
+      }, init)
     }
-    transform([1, 2, 3, 4, 5], -6)
-
+    console.log(compose(square, times2)(2))
   </script>
 </body>
 
