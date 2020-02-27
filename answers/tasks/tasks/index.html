@@ -9,20 +9,43 @@
 
 <body>
   <script>
-    // compose(square, times2, sum)(3, 4) === square(times2(sum(3, 4)))
-    const sum = (x, y) => x + y;
-    const times2 = x => x * 2;
-    const square =  x => x * x;
+    //      Дан список целых чисел, повторяющихся элементов в списке нет.
+    //  Нужно преобразовать это множество в строку,
+    //  сворачивая соседние по числовому ряду числа в диапазоны.
 
-    function compose(...functions) {
-      return (...init) => functions.reduceRight((lastFuncRes, nowItem, i, arr) => {
-        if (i === arr.length - 1) {
-          return nowItem(...init)
+    //  compress([1, 4, 5, 2, 3, 9, 8, 11, 0]) // '0-5,8-9,11'
+    //  compress([1, 4, 3, 2]) // '1-4'
+    //  compress([1, 4]) // '1,4'
+    function compress(list) {
+      const arr = list.sort((a, b) => a - b);
+      const newArr = [];
+      let control;
+      for (let i = 0; i < arr.length; i++) {
+        if (!control && control !== 0) control = arr[i];
+        if (i === 0 ) {
+          continue;
         }
-        return nowItem(lastFuncRes)
-      }, init)
+          if (arr[i] !== arr[i - 1] + 1) {
+            if (control !== arr[i - 1]) {
+              newArr.push(`${control}-${arr[i - 1]}`);
+            } else {
+              newArr.push(`${control}`);
+            }
+            if (i === arr.length - 1) {
+              newArr.push(`${arr[i]}`);
+            } else {
+              control = arr[i];
+            }
+          } else {
+            if (i === arr.length - 1) {
+              newArr.push(`${control}-${arr[i]}`);
+            }
+          }
+        
+      }
+      return newArr.join(',');
     }
-    console.log(compose(square, times2)(2))
+    console.log(compress([1, 4]))
   </script>
 </body>
 

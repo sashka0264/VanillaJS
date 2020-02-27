@@ -9,7 +9,32 @@
 
  **/
 
-function compress(list) {}
+function compress(list) {
+  const arr = list.sort((a, b) => a - b), newArr = [];
+  let control;
+
+  for (let i = 0; i < arr.length; i++) {
+    if (!control && control !== 0) control = arr[i];
+    if (i === 0) continue;
+
+    if (arr[i] !== arr[i - 1] + 1) {
+      if (control !== arr[i - 1]) {
+        newArr.push(`${control}-${arr[i - 1]}`); // если число не одиночное, пушим коллекцию
+      } else {
+        newArr.push(`${control}`); // если число одиночное, то пушим его
+      }
+      if (i === arr.length - 1) {
+        newArr.push(`${arr[i]}`); // если число последнее, пушим его
+      } else {
+        control = arr[i]; // если не последнее, то делаем новый control
+      }
+    } else {
+      if (i === arr.length - 1) newArr.push(`${control}-${arr[i]}`);
+    }
+  }
+
+  return newArr.join(',');
+}
 
 
 /*------------------*/
