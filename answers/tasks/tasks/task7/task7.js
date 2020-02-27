@@ -11,7 +11,25 @@
  transform([1, 2, 3, 4, 5], 4) => [5, 1, 2, 3, 4]
 **/
 
-function transform(list, offset) {}
+function transform(list, offset) {
+  if (offset === 0) return list;
+  if (offset > 0) {
+    let control = offset;
+    if (offset > list.length) control = offset - list.length;
+    
+    const left = list.filter((item, i) => i < control),
+      right = list.filter((item, i) => i >= control);
+    return [...right, ...left];
+  }
+  if (offset < 0) {
+    let control = offset;
+    if (offset < -list.length) control = offset + list.length;
+
+    const right = list.filter((item, i, arr) => i >= arr.length + control),
+      left = list.filter((item, i, arr) => i < arr.length + control);
+    return [...right, ...left];
+  }
+}
 
 
 /*------------------*/

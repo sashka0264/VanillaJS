@@ -9,19 +9,29 @@
 
 <body>
   <script>
-    const obj = {a: {b: {c: 4}}}
-    get(obj, 'a.b');
+    // transform([1, 2, 3, 4, 5], 0) => [1, 2, 3, 4, 5]
+    // transform([1, 2, 3, 4, 5], -1) => [5, 1, 2, 3, 4]
+    function transform(list, offset) {
+      if (offset === 0) return list;
+      if (offset > 0) {
+        let control = offset;
+        if (offset > list.length) control = offset - list.length;
+        
+        const left = list.filter((item, i) => i < control),
+          right = list.filter((item, i) => i >= control);
+        return [...right, ...left];
+      }
+      if (offset < 0) {
+        let control = offset;
+        if (offset < -list.length) control = offset + list.length;
 
-    function get(obj, path) {
-      const arr = path.split('.');
-      let res = arr.reduce((lastFuncRes, nowItem, i, arr) => {
-        if (!lastFuncRes) {
-          return obj[nowItem];
-        }
-        return lastFuncRes[nowItem];
-      }, null);
-      return res;
-    } 
+        const right = list.filter((item, i, arr) => i >= arr.length + control),
+          left = list.filter((item, i, arr) => i < arr.length + control);
+        return [...right, ...left];
+      }
+    }
+    transform([1, 2, 3, 4, 5], -6)
+
   </script>
 </body>
 
