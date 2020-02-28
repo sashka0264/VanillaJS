@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-
 <body>
-  <input id="kek" style="margin: 20px;">CLICK</input>
-
+  <div id="kek" style="width: 400px; height: 400px; background-color: blueviolet;">
+    <button style="margin: 20px;">CLICK</button>
+  </div>
+  
   <script>
     let x = document.getElementById("kek");
+    let button = x.querySelector('button');
 
-    // button.value = 1;
-    // button.removeAttribute('value');
+    button.addEventListener("click", (e) => {
+      alert('click on button')
+      e.preventDefault()
+    })
 
-    let user = {}
-    let descriptor = Object.getOwnPropertyDescriptor(x, 'value');
-    console.log(descriptor)
+    x.addEventListener('click', (e) => {
+      alert('click on kek')
+    })
   </script>
 </body>
-
 </html>
