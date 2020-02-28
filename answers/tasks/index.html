@@ -2,43 +2,19 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
 
 <body>
-    <script>
-        function flatten(arr) {
-  let res;
-  function search(arr1) {
-    let control = true, 
-      newArray = [];
+  <button onclick="alert('Обработчик!')" style="background-color: greenyellow; width: 100%; height: 50px;">
+    <em>Если вы кликните на <code>EM</code>, сработает обработчик на <code>DIV</code></em>
+  </button>
 
-    for (let i = 0; i < arr1.length; i++) {
-      if (Array.isArray(arr1[i])) {
-        control = false
-        let left = arr1.slice(0, i),
-          right = arr1.slice(i + 1, arr1.length);
-        
-        newArray = [...left, ...arr1[i], ...right];
-        break;
-      }
-    }
+  <script>
 
-    if (control === false) {
-      search(newArray)
-    } else {
-      res = arr1;
-    }
-  }
-  search(arr);
-  return res;
-}
-flatten(
-  [1, 'any [complex] string', null, function() {}, [1, 2, [3, '4'], 0], [], { a: 1 }]
- );
-    </script>
+  </script>
 </body>
 
 </html>

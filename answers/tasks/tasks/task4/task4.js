@@ -13,7 +13,7 @@
 
 function isPalindrome(str, i = 0) {
   // const string = str.toLowerCase().replace(/[ ?’,]/g, ''); // в [] указан пробел и символ ? на удаление
-  const arr = str.toLowerCase().split('');
+  const arr = str.toLowerCase().split(''); // charAt()
 
   while (i < arr.length) {
     if (arr[i] === '?' || arr[i] === '’' || arr[i] === ',' || arr[i] === ' ') {
