@@ -47,7 +47,7 @@ Patterns / Principles
 
 [Основные паттерны проектирования](./answers/patterns.md)
 
-Тестирование
+Testing
 =====================
 
 [Общая теория](./answers/tests.md)
