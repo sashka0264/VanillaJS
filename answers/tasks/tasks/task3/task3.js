@@ -6,27 +6,33 @@
  * со всей вложенной структурой, в котором ключи объектов заменены на camelCase.
  **/
 
-function edit(key) {
-  let arr = key.split(''),
-    res = [],
-    control = false;
+function toCamelCase(val) {
+  let data = JSON.stringify(val);
 
-  arr.forEach((item) => {
-    if (item !== '_') {
-      if (control) {
-        res.push(item.toUpperCase());
+  JSON.parse(data, (key, value) => {
+    if (isNaN(Number(key)) && key.indexOf('_') !== -1) {
+      let arr = key.split(''),
+        res = [],
         control = false;
-      } else {
-        res.push(item);
-      }
-    } else {
-      control = true;
-    }
-  });
-  return res.join('')
-} // Функция преобразует ключ в camelCase
 
-function toCamelCase(val) {}
+      arr.forEach((item) => {
+        if (item !== '_') {
+          if (control) {
+            res.push(item.toUpperCase());
+            control = false;
+          } else {
+            res.push(item);
+          }
+        } else {
+          control = true;
+        }
+      });
+      data = data.replace(key, res.join(''));
+    }
+    return value;
+  });
+  return JSON.parse(data);
+}
 
 
 /*------------------*/

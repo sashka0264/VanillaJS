@@ -6,80 +6,79 @@
  * со всей вложенной структурой, в котором ключи объектов заменены на camelCase.
  **/
 
-function edit(key) {
-  let arr = key.split(''),
-    res = [],
-    control = false;
 
-  arr.forEach((item) => {
-    if (item !== '_') {
-      if (control) {
-        res.push(item.toUpperCase());
-        control = false;
-      } else {
-        res.push(item);
-      }
-    } else {
-      control = true;
-    }
-  });
-  return res.join('')
-} // Функция преобразует ключ в camelCase
-
-function toCamelCase(val) {}
 
 
 /*------------------*/
 /*    Test cases    */
 /*------------------*/
 
+function toCamelCase(val) {
+  let data = JSON.stringify(val);
 
-const testcases = [
-  {
-    args: [
-      {
-        simple_prop: 'a',
-        empty_prop: null,
-        empty_obj_prop: {},
-        object_prop: {
-          inside_prop: 3
-        },
-        array_prop: [
-          {
-            inside_array_prop: 'b'
-          },
-          {
-            inside_array_prop: {
-              deep_inside_prop: 'c'
-            }
+  JSON.parse(data, (key, value) => {
+    if (isNaN(Number(key)) && key.indexOf('_') !== -1) {
+      let arr = key.split(''),
+        res = [],
+        control = false;
+
+      arr.forEach((item) => {
+        if (item !== '_') {
+          if (control) {
+            res.push(item.toUpperCase());
+            control = false;
+          } else {
+            res.push(item);
           }
-        ]
-      }
-    ],
-    result:
-      {
-        simpleProp: 'a',
-        emptyProp: null,
-        emptyObjProp: {},
-        objectProp: {
-          insideProp: 3
+        } else {
+          control = true;
+        }
+      });
+      data = data.replace(key, res.join(''));
+    }
+    return value;
+  });
+  return JSON.parse(data);
+}
+
+const testcases = [{
+    args: [{
+      simple_prop: 'a',
+      empty_prop: null,
+      empty_obj_prop: {},
+      object_prop: {
+        inside_prop: 3
+      },
+      array_prop: [{
+          inside_array_prop: 'b'
         },
-        arrayProp: [
-          {
-            insideArrayProp: 'b'
-          },
-          {
-            insideArrayProp: {
-              deepInsideProp: 'c'
-            }
+        {
+          inside_array_prop: {
+            deep_inside_prop: 'c'
           }
-        ]
-      }
+        }
+      ]
+    }],
+    result: {
+      simpleProp: 'a',
+      emptyProp: null,
+      emptyObjProp: {},
+      objectProp: {
+        insideProp: 3
+      },
+      arrayProp: [{
+          insideArrayProp: 'b'
+        },
+        {
+          insideArrayProp: {
+            deepInsideProp: 'c'
+          }
+        }
+      ]
+    }
   },
   {
-    args: [
-      {}
-    ],
+    args: [{}],
     result: {}
   }
 ];
