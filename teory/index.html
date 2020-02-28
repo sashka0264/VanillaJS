@@ -6,7 +6,22 @@
   <title>Document</title>
 </head>
 <body>
+  <div id="kek" style="width: 400px; height: 400px; background-color: blueviolet;">
+    <button style="margin: 20px;">CLICK</button>
+  </div>
   
-  <script src="index.js"></script>
+  <script>
+    let x = document.getElementById("kek");
+    let button = x.querySelector('button');
+
+    button.addEventListener("click", (e) => {
+      alert('click on button');
+      e.stopPropagation();
+    })
+
+    x.addEventListener('click', (e) => {
+      alert('click on kek')
+    })
+  </script>
 </body>
 </html>
