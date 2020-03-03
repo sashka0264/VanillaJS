@@ -15,7 +15,8 @@ Patterns / Principles
 
 [Основные принципы при разработке продукта](./answers/principles.md)
 
-[Основные паттерны проектирования под ООП и ФП](./answers/patterns.md)
+[Основные паттерны проектирования под ООП и ФП, архитектуры](./answers/patterns.md)
+
 
 Testing
 =====================
@@ -29,3 +30,7 @@ Git
 CSS 
 =====================
 [Flexbox](./answers/flexbox.md)
+
+Agile 
+=====================
+[Agile и его методологии](./answers/agile.md)
