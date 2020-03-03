@@ -11,8 +11,13 @@
   height: 50px;
   margin: 1px;
   color: white;
+  order: 3;
 }
 
-.item:nth-child(1) {
-  flex-shrink: 0;
+.five {
+  order: 0;
+}
+
+.four {
+  order: 1;
 }
