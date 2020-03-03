@@ -1,30 +1,30 @@
 Background
 =====================
 
-[Общие вопросы](./answers/all.md)
+[общие вопросы](./answers/all.md)
 
-[События и Event Loop](./answers/events.md)
+[события и Event Loop](./answers/events.md)
 
 Network Interaction
 =====================
 
-[Общая теория](./answers/network.md)
+[про сетевое взаимодействие, REST](./answers/network.md)
 
 Patterns / Principles
 =====================
 
-[Основные принципы](./answers/principles.md)
+[основные принципы при разработке продукта](./answers/principles.md)
 
-[Основные паттерны проектирования](./answers/patterns.md)
+[основные паттерны проектирования под ООП и ФП](./answers/patterns.md)
 
 Testing
 =====================
 
-[Общая теория](./answers/tests.md)
+[основная теория, про СI/CD](./answers/tests.md)
 
 Git
 =====================
-[Основные команды](./answers/git.md)
+[основные git-команды, как работать](./answers/git.md)
 
 CSS 
 =====================

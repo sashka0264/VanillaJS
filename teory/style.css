@@ -14,5 +14,5 @@
 }
 
 .item:nth-child(1) {
-  order: unset;
+  flex-shrink: 0;
 }
