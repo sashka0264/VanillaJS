@@ -1,4 +1,4 @@
-Background Knowledge
+Background
 =====================
 
 [Общие вопросы](./answers/all.md)
