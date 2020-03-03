@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
-  <div id="kek" style="width: 400px; height: 400px; background-color: blueviolet;">
-    <button style="margin: 20px;">CLICK</button>
-  </div>
-  
+  <button style="margin: 20px;">CLICK</button>
+
   <script>
-    let x = document.getElementById("kek");
-    let button = x.querySelector('button');
+    var start = null;
+    var element = document.querySelector('button');
 
-    button.addEventListener("click", (e) => {
-      alert('click on button')
-      e.preventDefault()
-    })
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      var progress = timestamp - start;
+      element.style.transform = 'translateX(' + Math.min(progress / 10, 200) + 'px)';
+      if (progress < 2000) {
+        requestAnimationFrame(step);
+      }
+    }
 
-    x.addEventListener('click', (e) => {
-      alert('click on kek')
-    })
+    requestAnimationFrame(step);
   </script>
 </body>
+
 </html>
